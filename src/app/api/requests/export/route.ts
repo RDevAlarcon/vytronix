@@ -26,12 +26,13 @@ export async function GET(req: NextRequest) {
   if (conds.length) query = query.where(and(...conds));
   const rows: ContactRequest[] = await query.orderBy(desc(contactRequests.createdAt));
 
-  const header = ["id","name","email","phone","status","created_at"].join(",");
+  const header = ["id","name","email","phone","message","status","created_at"].join(",");
   const lines = rows.map((r: ContactRequest) => [
     r.id,
     escapeCsv(r.name ?? ""),
     escapeCsv(r.email ?? ""),
     escapeCsv(r.phone ?? ""),
+    escapeCsv((r as unknown as { message?: string }).message ?? ""),
     (r as unknown as { status?: string }).status ?? "",
     r.createdAt ? new Date(r.createdAt as unknown as Date).toISOString() : ""
   ].join(","));

@@ -31,6 +31,7 @@ export const contactRequests = pgTable("contact_requests", {
   name: text("name").notNull(),
   email: text("email").notNull(),
   phone: text("phone").notNull(),
+  message: text("message").notNull().default(""),
   status: text("status").notNull().default("nuevo"),
   createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`),
 }, (t) => ({
