@@ -109,3 +109,5 @@ export default async function Dashboard({
     </div>
   );
 }
+import type { Metadata } from "next";
+export const metadata: Metadata = { robots: { index: false, follow: false } };

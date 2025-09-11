@@ -1,4 +1,16 @@
 import ContactForm from "@/components/ContactForm";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Soluciones web y móviles a tu medida",
+  description: "Desarrollo de sitios web, apps móviles e integraciones a la medida. Rendimiento, SEO y seguridad para tu negocio.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Soluciones web y móviles a tu medida",
+    description: "Sitios rápidos, seguros y escalables con tecnologías modernas.",
+    url: "/",
+  },
+};
 
 export default function Home() {
   return (
