@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
     escapeCsv(r.phone ?? ""),
     escapeCsv((r as unknown as { message?: string }).message ?? ""),
     (r as unknown as { status?: string }).status ?? "",
-    r.createdAt ? new Date(r.createdAt as unknown as Date).toISOString() : ""
+    r.createdAt ? formatDate(new Date(r.createdAt as unknown as Date)) : ""
   ].join(","));
   const csv = [header, ...lines].join("\n");
 
@@ -67,4 +67,11 @@ function escapeCsv(v: string) {
     return '"' + v.replace(/"/g, '""') + '"';
   }
   return v;
+}
+
+function formatDate(d: Date) {
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const yyyy = d.getFullYear();
+  return `${dd}/${mm}/${yyyy}`;
 }
