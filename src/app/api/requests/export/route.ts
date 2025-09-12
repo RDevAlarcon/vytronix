@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
     let query = db.select().from(contactRequests).$dynamic();
     if (conds.length) query = query.where(and(...conds));
     rows = await query.orderBy(desc(contactRequests.createdAt));
-  } catch (e) {
+  } catch {
     // Fallback si falta la columna message
     const base = sql`select "id","name","email","phone","status","created_at" from "contact_requests"`;
     const whereParts: SQL[] = [];
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
     const whereSql = whereParts.length ? sql` where ${sql.join(whereParts, sql` and `)}` : sql``;
     const res = await db.execute(sql`${base}${whereSql} order by "created_at" desc`);
     const raw = (res as unknown as { rows: Array<{ id:string; name:string; email:string; phone:string; status?: string; created_at: Date }> }).rows;
-    rows = raw.map((r) => ({ id: r.id, name: r.name, email: r.email, phone: r.phone, status: (r.status as any) ?? "nuevo", createdAt: r.created_at, message: "" })) as unknown as ContactRequest[];
+    rows = raw.map((r) => ({ id: r.id, name: r.name, email: r.email, phone: r.phone, status: (r.status as string | undefined) ?? "nuevo", createdAt: r.created_at, message: "" })) as unknown as ContactRequest[];
   }
 
   const header = ["id","name","email","phone","message","status","created_at"].join(",");

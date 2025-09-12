@@ -40,11 +40,10 @@ export async function POST(req: NextRequest) {
   const id = crypto.randomUUID();
   try {
     await db.insert(contactRequests).values({ id, name, email, phone, message });
-  } catch (e) {
+  } catch {
     // Fallback si la columna message aún no existe en la base
     await db.execute(sql`insert into "contact_requests" ("id","name","email","phone") values (${id}, ${name}, ${email}, ${phone})`);
   }
 
   return NextResponse.json({ ok: true });
 }
-

@@ -34,7 +34,7 @@ export default async function Dashboard({
   let items: ContactRequest[];
   try {
     items = await query.orderBy(desc(contactRequests.createdAt)).limit(50);
-  } catch (e: unknown) {
+  } catch {
     // Fallback si columnas nuevas (status/message) aún no existen
     const res = await db.execute(
       sql`select "id", "name", "email", "phone", "created_at" from "contact_requests" order by "created_at" desc limit ${50}`

@@ -25,7 +25,7 @@ export default async function AdminPage() {
       .from(contactRequests)
       .orderBy(desc(contactRequests.createdAt))
       .limit(10);
-  } catch (e) {
+  } catch {
     const res = await db.execute(
       sql`select "id","name","email","phone","status","created_at" from "contact_requests" order by "created_at" desc limit ${10}`
     );
@@ -35,7 +35,7 @@ export default async function AdminPage() {
       name: r.name,
       email: r.email,
       phone: r.phone,
-      status: (r.status as any) ?? "nuevo",
+      status: (r.status as string | undefined) ?? "nuevo",
       createdAt: r.created_at,
       message: "",
     })) as unknown as ContactRequest[];
@@ -49,7 +49,7 @@ export default async function AdminPage() {
       .where(eq(contactRequests.status, "ganado"))
       .orderBy(desc(contactRequests.createdAt))
       .limit(20);
-  } catch (e) {
+  } catch {
     const res = await db.execute(
       sql`select "id","name","email","phone","status","created_at" from "contact_requests" where "status" = 'ganado' order by "created_at" desc limit ${20}`
     );
@@ -59,7 +59,7 @@ export default async function AdminPage() {
       name: r.name,
       email: r.email,
       phone: r.phone,
-      status: (r.status as any) ?? "ganado",
+      status: (r.status as string | undefined) ?? "ganado",
       createdAt: r.created_at,
       message: "",
     })) as unknown as ContactRequest[];
@@ -207,4 +207,3 @@ export default async function AdminPage() {
 }
 import type { Metadata } from "next";
 export const metadata: Metadata = { robots: { index: false, follow: false } };
-

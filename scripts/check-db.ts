@@ -21,9 +21,9 @@ async function main() {
      from contact_requests
      order by created_at desc
      limit 5`
-  ).catch((e: any)=>{
+  ).catch((e: unknown)=>{
     console.error('Select with status failed:', (e as Error).message);
-    return { rows: [] } as any;
+    return { rows: [] } as { rows: unknown[] };
   });
   console.log('sample rows:', res2.rows);
 

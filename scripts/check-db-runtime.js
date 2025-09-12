@@ -1,8 +1,9 @@
-require('dotenv').config();
-require('dotenv').config({ path: '.env.local' });
-const { Client } = require('pg');
-
-(async () => {
+;(async () => {
+  const { config } = await import('dotenv');
+  config();
+  const { config: load } = await import('dotenv');
+  load({ path: '.env.local' });
+  const { Client } = await import('pg');
   const url = process.env.DATABASE_URL;
   if (!url) throw new Error('DATABASE_URL not set');
   const client = new Client({ connectionString: url });
@@ -34,4 +35,3 @@ const { Client } = require('pg');
   console.error('DB check failed:', e.message);
   process.exit(1);
 });
-

@@ -44,7 +44,7 @@ export default async function SolicitudesAdminPage({
       .orderBy(desc(contactRequests.createdAt))
       .limit(size)
       .offset(offset);
-  } catch (e) {
+  } catch {
     const res = await db.execute(
       sql`select "id","name","email","phone","status","created_at" from "contact_requests" order by "created_at" desc limit ${size} offset ${offset}`
     );
@@ -154,4 +154,3 @@ export default async function SolicitudesAdminPage({
     </div>
   );
 }
-
