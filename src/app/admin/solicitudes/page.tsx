@@ -81,7 +81,7 @@ export default async function SolicitudesAdminPage({
   return (
     <div className="max-w-6xl mx-auto px-4 pt-16">
       <h1 className="text-2xl font-bold">Solicitudes de clientes</h1>
-      <p className="text-sm text-neutral-600 mt-2">Nombre, email y telÃ©fono de personas interesadas.</p>
+      <p className="text-sm text-neutral-600 mt-2">Nombre, email y teléfono de personas interesadas.</p>
 
       <form method="GET" className="mt-6 grid gap-3 md:grid-cols-[1fr_minmax(0,180px)_repeat(2,minmax(0,180px))_auto_auto] items-end">
         <label className="text-sm">
@@ -121,7 +121,7 @@ export default async function SolicitudesAdminPage({
             <tr>
               <th className="text-left p-2 border">Nombre</th>
               <th className="text-left p-2 border">Email</th>
-              <th className="text-left p-2 border">TelÃ©fono</th>
+              <th className="text-left p-2 border">Teléfono</th>
               <th className="text-left p-2 border">Mensaje</th>
               <th className="text-left p-2 border">Estado</th>
               <th className="text-left p-2 border">Fecha</th>
@@ -145,7 +145,7 @@ export default async function SolicitudesAdminPage({
       </div>
 
       <div className="flex items-center justify-between mt-4">
-        <div className="text-sm text-neutral-600">PÃ¡gina {page} de {totalPages} â€¢ {total} resultados</div>
+        <div className="text-sm text-neutral-600">Página {page} de {totalPages} total {total} resultados</div>
         <div className="flex gap-2">
           <Link className="px-3 py-1 border rounded" href={qs({ page: Math.max(1, page - 1) })}>Anterior</Link>
           <Link className="px-3 py-1 border rounded" href={qs({ page: Math.min(totalPages, page + 1) })}>Siguiente</Link>
@@ -154,3 +154,4 @@ export default async function SolicitudesAdminPage({
     </div>
   );
 }
+

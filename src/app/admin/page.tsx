@@ -97,7 +97,7 @@ export default async function AdminPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 pt-16">
       <h1 className="text-2xl font-bold">Panel de Administración</h1>
-      <p className="mt-2 text-sm text-neutral-600">Hola {user?.name || user?.email} — Rol: {user?.role}</p>
+      <p className="mt-2 text-sm text-neutral-600">Hola {user?.name || user?.email} - Rol: {user?.role}</p>
 
       <div className="mt-6 grid gap-6">
         <div className="p-4 border rounded-lg bg-white">
@@ -207,3 +207,4 @@ export default async function AdminPage() {
 }
 import type { Metadata } from "next";
 export const metadata: Metadata = { robots: { index: false, follow: false } };
+

@@ -112,5 +112,4 @@ export default function ResetPage() {
     </div>
   );
 }
-import type { Metadata } from "next";
-export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Restablecer contraseña" };
+
