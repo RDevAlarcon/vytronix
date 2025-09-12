@@ -3,14 +3,15 @@ import { z } from "zod";
 import { db } from "@/server/db/client";
 import { contactRequests } from "@/server/db/schema";
 import { rateLimit } from "@/server/utils/rate-limit";
+import { sql } from "drizzle-orm";
 
 export const runtime = "nodejs";
 
 const schema = z.object({
   name: z.string().min(1).max(100),
   email: z.string().email(),
-  phone: z.string().min(7).max(20).regex(/^[+\d().\-\s]+$/i, "Formato de telÃ©fono invÃ¡lido"),
-  message: z.string().min(10, "CuÃ©ntanos un poco mÃ¡s (mÃ­n. 10 caracteres)").max(1000, "MÃ¡ximo 1000 caracteres"),
+  phone: z.string().min(7).max(20).regex(/^[+\d().\-\s]+$/i, "Formato de teléfono inválido"),
+  message: z.string().min(10, "Cuéntanos un poco más (mín. 10 caracteres)").max(1000, "Máximo 1000 caracteres"),
 });
 
 export async function POST(req: NextRequest) {
@@ -46,3 +47,4 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ ok: true });
 }
+
