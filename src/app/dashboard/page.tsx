@@ -35,7 +35,7 @@ export default async function Dashboard({
   try {
     items = await query.orderBy(desc(contactRequests.createdAt)).limit(50);
   } catch (e: unknown) {
-    // Fallback si la columna `status` aún no existe (migración pendiente)
+    // Fallback si columnas nuevas (status/message) aún no existen
     const res = await db.execute(
       sql`select "id", "name", "email", "phone", "created_at" from "contact_requests" order by "created_at" desc limit ${50}`
     );
@@ -46,8 +46,9 @@ export default async function Dashboard({
       email: r.email,
       phone: r.phone,
       createdAt: r.created_at,
-      // default mientras no exista la columna en DB
-      status: "nuevo"
+      // defaults mientras no existan las columnas en DB
+      status: "nuevo",
+      message: "",
     })) as ContactRequest[];
   }
 
@@ -88,6 +89,7 @@ export default async function Dashboard({
                 <th className="text-left p-2 border">Nombre</th>
                 <th className="text-left p-2 border">Email</th>
                 <th className="text-left p-2 border">Teléfono</th>
+                <th className="text-left p-2 border">Mensaje</th>
                 <th className="text-left p-2 border">Estado</th>
                 <th className="text-left p-2 border">Fecha</th>
               </tr>
@@ -98,6 +100,9 @@ export default async function Dashboard({
                   <td className="p-2 border">{r.name}</td>
                   <td className="p-2 border">{r.email}</td>
                   <td className="p-2 border">{r.phone}</td>
+                  <td className="p-2 border max-w-[280px]">
+                    <span title={(r as any).message} className="line-clamp-2 block">{(r as any).message}</span>
+                  </td>
                   <td className="p-2 border"><StatusSelect id={r.id} value={r.status} /></td>
                   <td className="p-2 border">{r.createdAt?.toISOString?.() ?? ""}</td>
                 </tr>
