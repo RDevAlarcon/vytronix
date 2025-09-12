@@ -3,17 +3,17 @@ import { useState } from "react";
 import { z } from "zod";
 
 const schema = z.object({
-  name: z.string().min(1, "Ingresa tu nombre").max(100, "MÃ¡ximo 100 caracteres"),
-  email: z.string().email("Email invÃ¡lido"),
+  name: z.string().min(1, "Ingresa tu nombre").max(100, "Máximo 100 caracteres"),
+  email: z.string().email("Email inválido"),
   phone: z
     .string()
-    .min(7, "TelÃ©fono demasiado corto")
-    .max(20, "MÃ¡ximo 20 caracteres")
-    .regex(/^[+\d().\-\s]+$/i, "Formato de telÃ©fono invÃ¡lido"),
+    .min(7, "Teléfono demasiado corto")
+    .max(20, "Maximo 20 caracteres")
+    .regex(/^[+\d().\-\s]+$/i, "Formato de teléfono inválido"),
   message: z
     .string()
-    .min(10, "CuÃ©ntanos un poco mÃ¡s (mÃ­n. 10 caracteres)")
-    .max(1000, "MÃ¡ximo 1000 caracteres"),
+    .min(10, "Cuentanos un poco más (mín. 10 caracteres)")
+    .max(1000, "Máximo 1000 caracteres"),
 });
 
 export default function ContactForm() {
@@ -81,13 +81,13 @@ export default function ContactForm() {
             {fieldErrs.email && <p className="text-red-600 text-sm mt-1">{fieldErrs.email}</p>}
           </div>
           <div>
-            <input className="border p-2 rounded w-full" placeholder="TelÃ©fono" value={phone} onChange={(e)=>{ setPhone(e.target.value); if (fieldErrs.phone) validateField("phone", e.target.value); }} onBlur={(e)=> validateField("phone", e.target.value)} />
+            <input className="border p-2 rounded w-full" placeholder="Teléfono" value={phone} onChange={(e)=>{ setPhone(e.target.value); if (fieldErrs.phone) validateField("phone", e.target.value); }} onBlur={(e)=> validateField("phone", e.target.value)} />
             {fieldErrs.phone && <p className="text-red-600 text-sm mt-1">{fieldErrs.phone}</p>}
           </div>
           <div>
             <textarea
               className="border p-2 rounded w-full h-28 resize-vertical"
-              placeholder="CuÃ©ntanos quÃ© necesitas (alcance, plazos, presupuesto, etc.)"
+              placeholder="Cuéntanos que necesitas (alcance, plazos, presupuesto, etc.)"
               value={message}
               onChange={(e)=>{ setMessage(e.target.value); if (fieldErrs.message) validateField("message", e.target.value); }}
               onBlur={(e)=> validateField("message", e.target.value)}

@@ -38,10 +38,27 @@ export default async function SolicitudesAdminPage({
   const total = Number((totalRes[0] as unknown as { count: number }).count || 0);
   const totalPages = Math.max(1, Math.ceil(total / size));
 
-  const items: ContactRequest[] = await base
-    .orderBy(desc(contactRequests.createdAt))
-    .limit(size)
-    .offset(offset);
+  let items: ContactRequest[];
+  try {
+    items = await base
+      .orderBy(desc(contactRequests.createdAt))
+      .limit(size)
+      .offset(offset);
+  } catch (e) {
+    const res = await db.execute(
+      sql`select "id","name","email","phone","status","created_at" from "contact_requests" order by "created_at" desc limit ${size} offset ${offset}`
+    );
+    const rows = (res as unknown as { rows: Array<{ id: string; name: string; email: string; phone: string; status?: string; created_at: Date }> }).rows;
+    items = rows.map((r) => ({
+      id: r.id,
+      name: r.name,
+      email: r.email,
+      phone: r.phone,
+      status: (r.status as any) ?? "nuevo",
+      createdAt: r.created_at,
+      message: "",
+    })) as unknown as ContactRequest[];
+  }
 
   const qs = (overrides: Record<string, string | number | undefined>) => {
     const params = new URLSearchParams({ q, status, from, to, page: String(page), size: String(size) });
@@ -127,4 +144,3 @@ export default async function SolicitudesAdminPage({
     </div>
   );
 }
-

@@ -22,9 +22,24 @@ export async function GET(req: NextRequest) {
   if (fromDate && !isNaN(fromDate.getTime())) conds.push(gte(contactRequests.createdAt, fromDate));
   if (toDate && !isNaN(toDate.getTime())) conds.push(lte(contactRequests.createdAt, toDate));
 
-  let query = db.select().from(contactRequests).$dynamic();
-  if (conds.length) query = query.where(and(...conds));
-  const rows: ContactRequest[] = await query.orderBy(desc(contactRequests.createdAt));
+  let rows: ContactRequest[];
+  try {
+    let query = db.select().from(contactRequests).$dynamic();
+    if (conds.length) query = query.where(and(...conds));
+    rows = await query.orderBy(desc(contactRequests.createdAt));
+  } catch (e) {
+    // Fallback si falta la columna message
+    const base = sql`select "id","name","email","phone","status","created_at" from "contact_requests"`;
+    const whereParts: SQL[] = [];
+    if (q) whereParts.push(sql`"email" ilike ${"%" + q + "%"}`);
+    if (status) whereParts.push(sql`"status" = ${status}`);
+    if (fromDate && !isNaN(fromDate.getTime())) whereParts.push(sql`"created_at" >= ${fromDate}`);
+    if (toDate && !isNaN(toDate.getTime())) whereParts.push(sql`"created_at" <= ${toDate}`);
+    const whereSql = whereParts.length ? sql` where ${sql.join(whereParts, sql` and `)}` : sql``;
+    const res = await db.execute(sql`${base}${whereSql} order by "created_at" desc`);
+    const raw = (res as unknown as { rows: Array<{ id:string; name:string; email:string; phone:string; status?: string; created_at: Date }> }).rows;
+    rows = raw.map((r) => ({ id: r.id, name: r.name, email: r.email, phone: r.phone, status: (r.status as any) ?? "nuevo", createdAt: r.created_at, message: "" })) as unknown as ContactRequest[];
+  }
 
   const header = ["id","name","email","phone","message","status","created_at"].join(",");
   const lines = rows.map((r: ContactRequest) => [

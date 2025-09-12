@@ -18,18 +18,52 @@ export default async function AdminPage() {
     .from(contactRequests)
     .groupBy(contactRequests.status);
 
-  const latest: ContactRequest[] = await db
-    .select()
-    .from(contactRequests)
-    .orderBy(desc(contactRequests.createdAt))
-    .limit(10);
+  let latest: ContactRequest[];
+  try {
+    latest = await db
+      .select()
+      .from(contactRequests)
+      .orderBy(desc(contactRequests.createdAt))
+      .limit(10);
+  } catch (e) {
+    const res = await db.execute(
+      sql`select "id","name","email","phone","status","created_at" from "contact_requests" order by "created_at" desc limit ${10}`
+    );
+    const rows = (res as unknown as { rows: Array<{ id: string; name: string; email: string; phone: string; status?: string; created_at: Date }> }).rows;
+    latest = rows.map((r) => ({
+      id: r.id,
+      name: r.name,
+      email: r.email,
+      phone: r.phone,
+      status: (r.status as any) ?? "nuevo",
+      createdAt: r.created_at,
+      message: "",
+    })) as unknown as ContactRequest[];
+  }
 
-  const completed: ContactRequest[] = await db
-    .select()
-    .from(contactRequests)
-    .where(eq(contactRequests.status, "ganado"))
-    .orderBy(desc(contactRequests.createdAt))
-    .limit(20);
+  let completed: ContactRequest[];
+  try {
+    completed = await db
+      .select()
+      .from(contactRequests)
+      .where(eq(contactRequests.status, "ganado"))
+      .orderBy(desc(contactRequests.createdAt))
+      .limit(20);
+  } catch (e) {
+    const res = await db.execute(
+      sql`select "id","name","email","phone","status","created_at" from "contact_requests" where "status" = 'ganado' order by "created_at" desc limit ${20}`
+    );
+    const rows = (res as unknown as { rows: Array<{ id: string; name: string; email: string; phone: string; status?: string; created_at: Date }> }).rows;
+    completed = rows.map((r) => ({
+      id: r.id,
+      name: r.name,
+      email: r.email,
+      phone: r.phone,
+      status: (r.status as any) ?? "ganado",
+      createdAt: r.created_at,
+      message: "",
+    })) as unknown as ContactRequest[];
+  }
 
   const label = (s?: string) =>
     s === "en_proceso" ? "En proceso" : s === "ganado" ? "Ganado" : s === "perdido" ? "Perdido" : "Nuevo";
