@@ -60,6 +60,16 @@ export default async function SolicitudesAdminPage({
     })) as unknown as ContactRequest[];
   }
 
+  const fmt = (d?: unknown) => {
+    try {
+      const date = d instanceof Date ? d : new Date(d as any);
+      if (isNaN(date.getTime())) return "";
+      return new Intl.DateTimeFormat("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" }).format(date);
+    } catch {
+      return "";
+    }
+  };
+
   const qs = (overrides: Record<string, string | number | undefined>) => {
     const params = new URLSearchParams({ q, status, from, to, page: String(page), size: String(size) });
     Object.entries(overrides).forEach(([k, v]) => {
@@ -127,7 +137,7 @@ export default async function SolicitudesAdminPage({
                   <span title={(r as any).message} className="line-clamp-2 block">{(r as any).message}</span>
                 </td>
                 <td className="p-2 border"><StatusSelect id={r.id} value={r.status} /></td>
-                <td className="p-2 border">{r.createdAt?.toISOString?.() ?? ""}</td>
+                <td className="p-2 border">{fmt(r.createdAt)}</td>
               </tr>
             ))}
           </tbody>

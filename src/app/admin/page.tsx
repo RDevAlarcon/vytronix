@@ -84,6 +84,16 @@ export default async function AdminPage() {
     }
   };
 
+  const fmt = (d?: unknown) => {
+    try {
+      const date = d instanceof Date ? d : new Date(d as any);
+      if (isNaN(date.getTime())) return "";
+      return new Intl.DateTimeFormat("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" }).format(date);
+    } catch {
+      return "";
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 pt-16">
       <h1 className="text-2xl font-bold">Panel de Administración</h1>
@@ -140,7 +150,7 @@ export default async function AdminPage() {
                           {label((r.status as unknown as string) ?? undefined)}
                         </span>
                       </td>
-                      <td className="p-2 border">{r.createdAt?.toISOString?.() ?? ""}</td>
+                      <td className="p-2 border">{fmt(r.createdAt)}</td>
                       <td className="p-2 border"><CompleteButton id={r.id} status={r.status as unknown as string} /></td>
                     </tr>
                   ))}
@@ -181,7 +191,7 @@ export default async function AdminPage() {
                           {label((r.status as unknown as string) ?? undefined)}
                         </span>
                       </td>
-                      <td className="p-2 border">{r.createdAt?.toISOString?.() ?? ""}</td>
+                      <td className="p-2 border">{fmt(r.createdAt)}</td>
                     </tr>
                   ))}
                 </tbody>
