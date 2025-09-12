@@ -86,7 +86,10 @@ export default async function AdminPage() {
 
   const fmt = (d?: unknown) => {
     try {
-      const date = d instanceof Date ? d : new Date(d as any);
+      let date: Date | null = null;
+      if (d instanceof Date) date = d;
+      else if (typeof d === "string" || typeof d === "number") date = new Date(d);
+      else return "";
       if (isNaN(date.getTime())) return "";
       return new Intl.DateTimeFormat("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" }).format(date);
     } catch {

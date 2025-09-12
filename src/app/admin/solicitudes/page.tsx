@@ -54,7 +54,7 @@ export default async function SolicitudesAdminPage({
       name: r.name,
       email: r.email,
       phone: r.phone,
-      status: (r.status as any) ?? "nuevo",
+      status: (r.status as string | undefined) ?? "nuevo",
       createdAt: r.created_at,
       message: "",
     })) as unknown as ContactRequest[];
@@ -62,7 +62,10 @@ export default async function SolicitudesAdminPage({
 
   const fmt = (d?: unknown) => {
     try {
-      const date = d instanceof Date ? d : new Date(d as any);
+      let date: Date | null = null;
+      if (d instanceof Date) date = d;
+      else if (typeof d === "string" || typeof d === "number") date = new Date(d);
+      else return "";
       if (isNaN(date.getTime())) return "";
       return new Intl.DateTimeFormat("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" }).format(date);
     } catch {
@@ -134,7 +137,7 @@ export default async function SolicitudesAdminPage({
                 <td className="p-2 border">{r.email}</td>
                 <td className="p-2 border">{r.phone}</td>
                 <td className="p-2 border max-w-[280px]">
-                  <span title={(r as any).message} className="line-clamp-2 block">{(r as any).message}</span>
+                  <span title={r.message as string} className="line-clamp-2 block">{r.message as string}</span>
                 </td>
                 <td className="p-2 border"><StatusSelect id={r.id} value={r.status} /></td>
                 <td className="p-2 border">{fmt(r.createdAt)}</td>
