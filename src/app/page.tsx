@@ -28,7 +28,19 @@ export default function Home() {
             <a href="#servicios" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Ver servicios</a>
           </div>
         </div>
-        <div className="h-64 md:h-80 bg-gradient-to-br from-neutral-200 to-neutral-100 rounded-xl border" />
+        <div className="h-64 md:h-80 rounded-xl border overflow-hidden bg-black/5">
+          <video
+            className="w-full h-full object-cover"
+            src="/LogoVideo.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </section>
 
       <section id="servicios" className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-3 gap-6">
@@ -47,4 +59,3 @@ export default function Home() {
     </>
   );
 }
-
