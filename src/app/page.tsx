@@ -46,9 +46,25 @@ export default function Home() {
 
       <section id="servicios" className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-3 gap-6">
         {[
-          { title: "Apps móviles", src: "/apps.png", alt: "Apps móviles" },
-          { title: "Sitios web", src: "/sitiosweb.jpg", alt: "Sitios web" },
-          { title: "Integraciones & APIs", src: "/integracionesapi.jpg", alt: "Integraciones y APIs" },
+          {
+            title: "Apps móviles",
+            src: "/apps.png",
+            alt: "Apps móviles",
+            desc:
+              "Diseño y desarrollo de apps móviles nativas o multiplataforma, listas para escalar. Arquitectura escalable, alto rendimiento, calidad de código y QA automatizado. Integraciones seguras, para llevar tu idea a producción.",
+          },
+          {
+            title: "Sitios web",
+            src: "/sitiosweb.jpg",
+            alt: "Sitios web",
+            desc: "Entrega ágil, calidad de código y soporte.",
+          },
+          {
+            title: "Integraciones & APIs",
+            src: "/integracionesapi.jpg",
+            alt: "Integraciones y APIs",
+            desc: "Entrega ágil, calidad de código y soporte.",
+          },
         ].map((card) => (
           <div key={card.title} className="group p-6 rounded-2xl border bg-white shadow-sm transition hover:shadow-md hover:border-neutral-300">
             <div className="mb-3 h-40 w-full overflow-hidden rounded-xl border bg-neutral-100">
@@ -62,7 +78,7 @@ export default function Home() {
               />
             </div>
             <h3 className="font-semibold mb-2">{card.title}</h3>
-            <p className="text-sm text-neutral-600">Entrega ágil, calidad de código y soporte.</p>
+            <p className="text-sm text-neutral-600">{card.desc}</p>
           </div>
         ))}
       </section>
