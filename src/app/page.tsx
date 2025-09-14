@@ -57,13 +57,13 @@ export default function Home() {
             title: "Sitios web",
             src: "/sitiosweb.jpg",
             alt: "Sitios web",
-            desc: "Entrega ágil, calidad de código y soporte.",
+            desc: "Landing pages y sitios web rápidos, accesibles y listos para convertir. E-commerce y Corporativos. Diseño responsivo, rendimiento de primera y arquitectura moderna lista para crecer.",
           },
           {
             title: "Integraciones & APIs",
             src: "/integracionesapi.jpg",
             alt: "Integraciones y APIs",
-            desc: "Entrega ágil, calidad de código y soporte.",
+            desc: "Conectamos tu producto con pagos, CRM y terceros. Integraciones seguras y escalables para tu operación.",
           },
         ].map((card) => (
           <div key={card.title} className="group p-6 rounded-2xl border bg-white shadow-sm transition hover:shadow-md hover:border-neutral-300">
