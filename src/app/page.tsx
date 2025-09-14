@@ -50,14 +50,14 @@ export default function Home() {
           { title: "Sitios web", src: "/sitiosweb.jpg", alt: "Sitios web" },
           { title: "Integraciones & APIs", src: "/integracionesapi.jpg", alt: "Integraciones y APIs" },
         ].map((card) => (
-          <div key={card.title} className="p-6 rounded-2xl border bg-white shadow-sm">
+          <div key={card.title} className="group p-6 rounded-2xl border bg-white shadow-sm transition hover:shadow-md hover:border-neutral-300">
             <div className="mb-3 h-40 w-full overflow-hidden rounded-xl border bg-neutral-100">
               <Image
                 src={card.src}
                 alt={card.alt}
                 width={800}
                 height={400}
-                className="h-40 w-full object-cover"
+                className="h-40 w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:transform-none"
                 priority={false}
               />
             </div>
