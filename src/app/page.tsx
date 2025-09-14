@@ -1,4 +1,4 @@
-import ContactForm from "@/components/ContactForm";
+Ôªøimport ContactForm from "@/components/ContactForm";
 import type { Metadata } from "next";
 import Image from "next/image";
 
@@ -57,7 +57,7 @@ export default function Home() {
             title: "Sitios web",
             src: "/sitiosweb.jpg",
             alt: "Sitios web",
-            desc: "Landing pages, sitios web r·pidos, E-commerce y Corporativos, accesibles y listos para convertir. DiseÒo responsivo, rendimiento de primera y arquitectura moderna lista para crecer.",
+            desc: "Landing pages, sitios web r√°pidos, E-commerce y Corporativos, accesibles y listos para convertir. Dise√±o responsivo, rendimiento de primera y arquitectura moderna lista para crecer.",
           },
           {
             title: "Integraciones & APIs",
@@ -90,5 +90,3 @@ export default function Home() {
     </>
   );
 }
-
-
