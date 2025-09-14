@@ -57,7 +57,7 @@ export default function Home() {
             title: "Sitios web",
             src: "/sitiosweb.jpg",
             alt: "Sitios web",
-            desc: "Landing pages y sitios web r√°pidos, accesibles y listos para convertir. E-commerce y Corporativos. Dise√±o responsivo, rendimiento de primera y arquitectura moderna lista para crecer.",
+            desc: "Landing pages, sitios web r·pidos, E-commerce y Corporativos, accesibles y listos para convertir. DiseÒo responsivo, rendimiento de primera y arquitectura moderna lista para crecer.",
           },
           {
             title: "Integraciones & APIs",
@@ -90,4 +90,5 @@ export default function Home() {
     </>
   );
 }
+
 
