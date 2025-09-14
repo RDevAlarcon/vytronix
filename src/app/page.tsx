@@ -83,9 +83,37 @@ export default function Home() {
         ))}
       </section>
 
-      <section id="contacto" className="max-w-3xl mx-auto px-4 py-14">
-        {/* Formulario de solicitudes de clientes */}
-        <ContactForm />
+      <section id="contacto" className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-6 items-start">
+        <div>
+          {/* Formulario de solicitudes de clientes */}
+          <ContactForm />
+        </div>
+        <aside className="p-6 rounded-2xl border bg-white shadow-sm grid gap-4">
+          <div>
+            <h3 className="font-semibold text-lg">Contáctanos</h3>
+            <p className="mt-1 text-sm text-neutral-600">Av. Lo Errazuriz 1701, Cerrillos, Región Metropolitana</p>
+            <p className="mt-1 text-sm text-neutral-600">Teléfono: +56 9 65658099</p>
+            <p className="mt-1 text-sm text-neutral-600">Email: <a className="underline" href="mailto:vytronixspa@gmail.com">vytronixspa@gmail.com</a></p>
+          </div>
+          <div>
+            <h4 className="font-medium">Horarios de atención</h4>
+            <ul className="mt-1 text-sm text-neutral-700">
+              <li>Lunes–Jueves: 9:00–18:00</li>
+              <li>Viernes: 9:00–14:00</li>
+              <li>Sáb/Dom y festivos: Cerrado</li>
+            </ul>
+          </div>
+          <div className="grid">
+            <iframe
+              title="Mapa de ubicación"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3327.011746923971!2d-70.71161892436947!3d-33.50107150010632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662dbb0731e770b%3A0x227f08eb5a170159!2sLo%20Errazuriz%201701%2C%20Cerrillos%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses-419!2scl!4v1757882737853!5m2!1ses-419!2scl"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full h-64 md:h-72 rounded-xl border"
+              allowFullScreen
+            />
+          </div>
+        </aside>
       </section>
     </>
   );
