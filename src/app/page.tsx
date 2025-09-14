@@ -1,5 +1,6 @@
 import ContactForm from "@/components/ContactForm";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Soluciones web y móviles a tu medida",
@@ -44,9 +45,23 @@ export default function Home() {
       </section>
 
       <section id="servicios" className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-3 gap-6">
-        {["Apps móviles", "Sitios web", "Integraciones & APIs"].map((t) => (
-          <div key={t} className="p-6 rounded-2xl border bg-white shadow-sm">
-            <h3 className="font-semibold mb-2">{t}</h3>
+        {[
+          { title: "Apps móviles", src: "/apps.png", alt: "Apps móviles" },
+          { title: "Sitios web", src: "/sitiosweb.jpg", alt: "Sitios web" },
+          { title: "Integraciones & APIs", src: "/integracionesapi.jpg", alt: "Integraciones y APIs" },
+        ].map((card) => (
+          <div key={card.title} className="p-6 rounded-2xl border bg-white shadow-sm">
+            <div className="mb-3 h-40 w-full overflow-hidden rounded-xl border bg-neutral-100">
+              <Image
+                src={card.src}
+                alt={card.alt}
+                width={800}
+                height={400}
+                className="h-40 w-full object-cover"
+                priority={false}
+              />
+            </div>
+            <h3 className="font-semibold mb-2">{card.title}</h3>
             <p className="text-sm text-neutral-600">Entrega ágil, calidad de código y soporte.</p>
           </div>
         ))}
@@ -59,3 +74,4 @@ export default function Home() {
     </>
   );
 }
+
