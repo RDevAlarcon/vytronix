@@ -1,4 +1,5 @@
 import Script from "next/script";
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -134,7 +135,7 @@ export default function QuienesSomosPage() {
           <p className="mt-1 text-sm">Agenda una llamada o envíanos tu idea para una propuesta.</p>
         </div>
         <div className="flex gap-3 md:justify-end">
-          <a href="/\#contacto" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Contactar</a>
+          <Link href="/#contacto" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Contactar</Link>
           <a href="https://wa.me/56965658099?text=Hola,%20quiero%20hablar%20con%20Vytronix" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">WhatsApp</a>
         </div>
       </section>
