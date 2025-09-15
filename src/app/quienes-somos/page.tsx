@@ -60,7 +60,7 @@ export default function QuienesSomosPage() {
           <div className="p-6 rounded-2xl border bg-white shadow-sm">
             <h2 className="text-xl font-semibold">Visión</h2>
             <p className="mt-2 text-neutral-700">
-              Ser el partner tecnológico de referencia en Chile y LATAM, reconocido por impacto medible y tiempos de entrega cortos.
+              Ser el partner tecnológico de referencia en Chile y LATAM, reconocido por impacto medible y tiempos de entrega competitivos.
             </p>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function QuienesSomosPage() {
           <h2 className="text-xl font-semibold">Valores</h2>
           <ul className="mt-2 grid gap-2 text-neutral-700 text-sm">
             <li>
-              <span className="font-medium">Innovación con propósito:</span> prototipamos en días y validamos con datos.
+              <span className="font-medium">Innovación con propósito:</span> prototipamos en poco tiempo y validamos con datos.
             </li>
             <li>
               <span className="font-medium">Colaboración:</span> sprints con feedback semanal y visibilidad total.
@@ -108,7 +108,7 @@ export default function QuienesSomosPage() {
           </div>
           <div className="p-4 rounded-xl border bg-neutral-50">
             <h3 className="font-medium">2. Prototipo</h3>
-            <p className="mt-1">Demo navegable para validar dirección en días/semanas.</p>
+            <p className="mt-1">Demo navegable para validar dirección en poco tiempo.</p>
           </div>
           <div className="p-4 rounded-xl border bg-neutral-50">
             <h3 className="font-medium">3. Desarrollo y entrega</h3>
@@ -139,3 +139,4 @@ export default function QuienesSomosPage() {
     </div>
   );
 }
+
