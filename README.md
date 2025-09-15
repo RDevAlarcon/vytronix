@@ -1,3 +1,54 @@
+## Vytronix
+
+Aplicación Next.js con gestión de solicitudes de contacto, autenticación con JWT en cookie y panel de administración.
+
+### Requisitos
+
+- Node 18+ y npm
+- Base de datos PostgreSQL (variable `DATABASE_URL`)
+
+### Configuración
+
+1) Copia el archivo `.env.example` a `.env.local` y completa los valores:
+
+   - `DATABASE_URL`: cadena de conexión a Postgres
+   - `JWT_SECRET`: cadena aleatoria larga (para firmar el JWT)
+   - (Opcional) `RESEND_API_KEY` y `MAIL_FROM` para envío de correo de recuperación
+   - (Opcional) `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME` para el seed
+
+2) Instala dependencias e inicia en desarrollo:
+
+```bash
+npm install
+npm run dev
+```
+
+3) (Opcional) Asegura columnas nuevas si tu DB es antigua:
+
+```bash
+npm run db:apply:message   # agrega columna message si falta
+npm run db:apply:status    # agrega columna status si falta
+npm run db:check           # inspecciona columnas/filas de ejemplo
+```
+
+4) (Opcional) Crea un usuario administrador inicial (idempotente):
+
+```bash
+npm run seed:admin
+```
+
+### Scripts
+
+- `npm run dev` / `build` / `start`: ciclo de Next.js
+- `npm run db:generate` / `db:migrate`: Drizzle Kit
+- `npm run db:apply:message` / `db:apply:status`: migraciones utilitarias (compatibilidad)
+- `npm run db:check`: verificación de esquema y muestra de datos
+- `npm run seed:admin`: crea un admin usando variables `ADMIN_*`
+
+---
+
+Documentación base de Next.js a continuación.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

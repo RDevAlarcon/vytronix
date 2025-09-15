@@ -46,7 +46,10 @@ export async function POST(req: NextRequest) {
 
   const url = new URL("/reset", req.url);
   url.searchParams.set("token", token);
-  await sendPasswordResetEmail(email, url.toString());
+  const sendRes = await sendPasswordResetEmail(email, url.toString());
+  if (!sendRes.ok) {
+    console.error('Password reset email failed:', sendRes.error);
+  }
 
   return res;
 }
