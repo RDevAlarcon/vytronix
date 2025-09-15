@@ -70,9 +70,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <Image src="/logo.png" alt="Vytronix" width={160} height={40} priority className="h-10 w-auto origin-left scale-125 md:scale-[1.61]" />
             </Link>
             <nav className="flex gap-4 text-sm items-center">
-              <a href="/quienes-somos">Quiénes somos</a>
-              <a href="#servicios">Servicios</a>
-              <a href="#contacto">Contacto</a>
+              <Link href="/quienes-somos">Quiénes somos</Link>
+              <Link href="/#servicios">Servicios</Link>
+              <Link href="/#contacto">Contacto</Link>
               {user ? (
                 <>
                   {user.role === "admin" ? (
@@ -88,7 +88,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   </form>
                 </>
               ) : (
-                <a href="/login" className="px-3 py-1 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Ingresar</a>
+                <Link href="/login" className="px-3 py-1 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Ingresar</Link>
               )}
             </nav>
           </div>
