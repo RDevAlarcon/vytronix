@@ -41,14 +41,5 @@ body {
 
 /* Logo helpers */
 
-/* UI adjustments for slogan placement (Option A) */
-header .text-neutral-600 { display: none !important; }
-footer.border-t::before {
-  content: "TecnologÃ­a que transforma, soluciones que conectan.";
-  display: block;
-  text-align: center;
-  color: #525252; /* neutral-600 */
-  font-style: italic;
-  padding-top: 0.75rem; /* pt-3 */
-}
+
 
