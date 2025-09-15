@@ -28,7 +28,9 @@
       return;
     }
 
-    const id = (globalThis.crypto?.randomUUID?.() || require('crypto').randomUUID()).toString();
+    // Usar import ESM para evitar require() prohibido por lint
+    const { randomUUID } = await import('crypto');
+    const id = randomUUID();
     const passwordHash = await bcrypt.hash(ADMIN_PASSWORD, 12);
 
     await client.query(
@@ -41,4 +43,3 @@
     await client.end();
   }
 })().catch((e) => { console.error('Seed failed:', e.message); process.exit(1); });
-
