@@ -121,7 +121,9 @@ export default function QuienesSomosPage() {
       <section className="p-6 rounded-2xl border bg-white shadow-sm">
         <h2 className="text-xl font-semibold">Tecnologías y prácticas</h2>
         <p className="mt-2 text-neutral-700 text-sm">
-          TypeScript, Next.js, React, Node.js, PostgreSQL, CI/CD, pruebas automatizadas, accesibilidad, SEO técnico y buenas prácticas de seguridad.
+          Usamos herramientas modernas y seguras para construir sitios y aplicaciones confiables y rápidos.
+          Trabajamos con pruebas automáticas, revisiones de calidad y despliegues controlados para evitar errores.
+          Cuidamos la accesibilidad, el posicionamiento en buscadores (SEO) y la seguridad de tu información.
         </p>
       </section>
 
