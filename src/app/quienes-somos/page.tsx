@@ -107,12 +107,12 @@ export default function QuienesSomosPage() {
             <p className="mt-1">Objetivos, alcance y priorización. Definimos éxito y restricciones.</p>
           </div>
           <div className="p-4 rounded-xl border bg-neutral-50">
-            <h3 className="font-medium">2. Prototipo</h3>
-            <p className="mt-1">Demo navegable para validar dirección en poco tiempo.</p>
+            <h3 className="font-medium">2. Desarrollo</h3>
+            <p className="mt-1">Construcción iterativa con QA, seguridad y revisiones de avance.</p>
           </div>
           <div className="p-4 rounded-xl border bg-neutral-50">
-            <h3 className="font-medium">3. Desarrollo y entrega</h3>
-            <p className="mt-1">Sprints con QA, seguridad y monitoreo. Soporte post‑lanzamiento.</p>
+            <h3 className="font-medium">3. Entrega</h3>
+            <p className="mt-1">Puesta en producción, documentación y soporte post‑lanzamiento.</p>
           </div>
         </div>
       </section>
