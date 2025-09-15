@@ -19,7 +19,7 @@ export default function Home() {
     <>
       <section className="max-w-6xl mx-auto px-4 pt-16 pb-20 grid md:grid-cols-2 gap-8 items-center">
         <div>
-          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
+          <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">
             Tecnología que transforma, soluciones que conectan.
           </h1>
           <p className="mt-4 text-neutral-600">
