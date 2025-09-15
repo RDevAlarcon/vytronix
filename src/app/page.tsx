@@ -2,7 +2,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Soluciones web y móviles a tu medida",
