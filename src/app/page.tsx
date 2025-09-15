@@ -1,6 +1,7 @@
 ﻿import ContactForm from "@/components/ContactForm";
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Soluciones web y móviles a tu medida",
@@ -93,8 +94,8 @@ export default function Home() {
             </p>
           </div>
           <div className="flex gap-3 md:justify-end">
-            <a href="/quienes-somos" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Conoce más</a>
-            <a href="/#contacto" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Contáctanos</a>
+            <Link href="/quienes-somos" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Conoce más</Link>
+            <Link href="/#contacto" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Contáctanos</Link>
           </div>
         </div>
       </section>
