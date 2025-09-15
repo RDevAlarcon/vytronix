@@ -69,6 +69,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Link href="/" className="flex items-center" aria-label="Ir al inicio">
               <Image src="/logo.png" alt="Vytronix" width={160} height={40} priority className="h-10 w-auto origin-left scale-125 md:scale-[1.61]" />
             </Link>
+            <div className="hidden md:block text-sm text-neutral-600">
+              Tecnología que transforma, soluciones que conectan.
+            </div>
             <nav className="flex gap-4 text-sm items-center">
               <a href="/quienes-somos">Quiénes somos</a>
               <a href="#servicios">Servicios</a>
@@ -95,6 +98,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </header>
         <main>{children}</main>
         <footer className="border-t mt-20">
+          <div className="max-w-6xl mx-auto px-4 pt-4 text-sm text-neutral-700">“Tecnología que transforma, soluciones que conectan.”</div>
           <div className="max-w-6xl mx-auto px-4 py-6 text-sm">© {new Date().getFullYear()} Vytronix</div>
         </footer>
 
