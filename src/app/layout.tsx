@@ -1,77 +1,4 @@
-﻿import "@/app/globals.css";
-import type { Metadata } from "next";
-import { cookies } from "next/headers";
-import Link from "next/link";
-import { verifyJwt } from "@/server/auth/jwt";
-import Image from "next/image";
-import Script from "next/script";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "http://localhost:3000";
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "Vytronix";
-
-export const metadata: Metadata = {
-  title: "Vytronix | Soluciones Web & Móviles",
-  description: "Desarrollo a medida y soluciones tecnológicas"
-};
-
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("auth")?.value || "";
-  const user = await verifyJwt<{ email: string; name?: string; role?: string }>(token);
-
-  const telephone = "+569 65658099";
-  const address = {
-    streetAddress: "Av. Lo Errazuriz 1701",
-    addressLocality: "Cerrillos",
-    addressRegion: "Región Metropolitana",
-    addressCountry: "CL",
-  };
-
-  return (
-    <html lang="es">
-      <body className="min-h-screen">
-        {/* JSON-LD: Organization & WebSite */}
-        <Script id="ld-json-org" type="application/ld+json" strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: SITE_NAME,
-              url: SITE_URL,
-              logo: new URL("/logo.png", SITE_URL).toString(),
-              telephone,
-              address: { "@type": "PostalAddress", ...address },
-              openingHoursSpecification: [
-                { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday"], opens: "09:00", closes: "18:00" },
-                { "@type": "OpeningHoursSpecification", dayOfWeek: ["Friday"], opens: "09:00", closes: "14:00" }
-              ],
-              sameAs: [],
-            }),
-          }}
-        />
-        <Script id="ld-json-website" type="application/ld+json" strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: SITE_NAME,
-              url: SITE_URL,
-              potentialAction: {
-                "@type": "SearchAction",
-                target: `${SITE_URL}/?q={search_term_string}`,
-                "query-input": "required name=search_term_string",
-              },
-            }),
-          }}
-        />
-        <header className="sticky top-0 bg-white/80 backdrop-blur border-b">
-          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <Link href="/" className="flex items-center" aria-label="Ir al inicio">
-              <Image src="/logo.png" alt="Vytronix" width={160} height={40} priority className="h-10 w-auto origin-left scale-125 md:scale-[1.61]" />
-            </Link>
-            <div className="hidden md:block text-sm text-neutral-600">
-              Tecnología que transforma, soluciones que conectan.
-            </div>
+﻿i
             <nav className="flex gap-4 text-sm items-center">
               <a href="/quienes-somos">Quiénes somos</a>
               <a href="#servicios">Servicios</a>
@@ -98,7 +25,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </header>
         <main>{children}</main>
         <footer className="border-t mt-20">
-          <div className="max-w-6xl mx-auto px-4 pt-4 text-sm text-neutral-700">“Tecnología que transforma, soluciones que conectan.”</div>
           <div className="max-w-6xl mx-auto px-4 py-6 text-sm">© {new Date().getFullYear()} Vytronix</div>
         </footer>
 
@@ -119,3 +45,5 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     </html>
   );
 }
+
+
