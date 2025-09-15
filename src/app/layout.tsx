@@ -70,6 +70,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <Image src="/logo.png" alt="Vytronix" width={160} height={40} priority className="h-10 w-auto origin-left scale-125 md:scale-[1.61]" />
             </Link>
             <nav className="flex gap-4 text-sm items-center">
+              <a href="/quienes-somos">Quiénes somos</a>
               <a href="#servicios">Servicios</a>
               <a href="#contacto">Contacto</a>
               {user ? (
