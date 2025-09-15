@@ -80,7 +80,7 @@ export default function QuienesSomosPage() {
               <span className="font-medium">Sostenibilidad:</span> infraestructura optimizada y consumo responsable.
             </li>
             <li>
-              <span className="font-medium">Excelencia técnica:</span> tests, seguridad y CI/CD desde el día uno.
+              <span className="font-medium">Calidad técnica:</span> pruebas automáticas, seguridad de tu información y despliegues seguros y automatizados desde el primer día.
             </li>
           </ul>
         </div>
@@ -139,4 +139,3 @@ export default function QuienesSomosPage() {
     </div>
   );
 }
-
