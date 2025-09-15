@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Soluciones web y móviles a tu medida",
@@ -20,13 +21,13 @@ export default function Home() {
       <section className="max-w-6xl mx-auto px-4 pt-16 pb-20 grid md:grid-cols-2 gap-8 items-center">
         <div>
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
-            Soluciones web y móviles a tu medida
+            Tecnología que transforma, soluciones que conectan.
           </h1>
           <p className="mt-4 text-neutral-600">
-            Desarrollamos productos rápidos, seguros y escalables para tu negocio.
+            Impulsamos tu crecimiento con tecnología a medida.
           </p>
           <div className="mt-6 flex gap-3">
-            <a href="/register" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Crear cuenta</a>
+            <Link href="/register" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Crear cuenta</Link>
             <a href="#servicios" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Ver servicios</a>
           </div>
         </div>
@@ -45,7 +46,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="servicios" className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-3 gap-6">
+      <section id="servicios" className="max-w-6xl mx-auto px-4 py-14">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold">Soluciones web y móviles a tu medida</h2>
+          <p className="mt-1 text-neutral-600">Desarrollamos productos rápidos, seguros y escalables para tu negocio.</p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
         {[
           {
             title: "Apps móviles",
@@ -82,6 +88,7 @@ export default function Home() {
             <p className="text-sm text-neutral-600">{card.desc}</p>
           </div>
         ))}
+        </div>
       </section>
 
       {/* Teaser: Quiénes somos */}
@@ -135,3 +142,4 @@ export default function Home() {
     </>
   );
 }
+
