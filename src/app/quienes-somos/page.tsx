@@ -41,7 +41,7 @@ export default function QuienesSomosPage() {
         </div>
         <div className="p-6 rounded-2xl border bg-white shadow-sm">
           <ul className="grid gap-2 text-sm text-neutral-700">
-            <li>• Entregas en semanas, no meses</li>
+            <li>• Entregas por etapas y plazos realistas</li>
             <li>• Comunicación directa y transparente</li>
             <li>• Seguridad, rendimiento y SEO desde el día uno</li>
           </ul>
@@ -139,4 +139,3 @@ export default function QuienesSomosPage() {
     </div>
   );
 }
-
