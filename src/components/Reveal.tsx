@@ -1,14 +1,15 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type Props = {
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof HTMLElementTagNameMap;
   className?: string;
-  children: React.ReactNode;
+  children: ReactNode;
   delayMs?: number;
 };
 
-export default function Reveal({ as: Tag = "div", className = "", children, delayMs = 0 }: Props) {
+export default function Reveal({ as = "div", className = "", children, delayMs = 0 }: Props) {
+  const Tag: any = as;
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
 
@@ -37,7 +38,5 @@ export default function Reveal({ as: Tag = "div", className = "", children, dela
   const hidden = "opacity-0 translate-y-4";
   const shown = "opacity-100 translate-y-0";
 
-  // @ts-expect-error dynamic tag
   return <Tag ref={ref as any} className={`${base} ${visible ? shown : hidden} ${className}`}>{children}</Tag>;
 }
-
