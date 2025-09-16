@@ -1,5 +1,6 @@
 import Script from "next/script";
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -34,19 +35,61 @@ export default function QuienesSomosPage() {
 
       {/* Hero */}
       <section className="grid md:grid-cols-2 gap-8 items-center">
-        <div>
+        <Reveal>
           <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">Quiénes somos</h1>
           <p className="mt-4 text-neutral-700">
             Impulsamos a pymes y startups con software a medida rápido, seguro y escalable, alineado a objetivos del negocio.
           </p>
-        </div>
-        <div className="p-6 rounded-2xl border bg-white shadow-sm">
+        </Reveal>
+        <Reveal delayMs={120} className="p-6 rounded-2xl border bg-white shadow-sm">
           <h2 className="text-xl font-semibold">Lo que entregamos</h2>
           <ul className="grid gap-2 text-sm text-neutral-700">
             <li>• Entregas por etapas, plazos que se cumplen.</li>
             <li>• Comunicación directa y transparente.</li>
             <li>• Seguridad, performance y SEO desde el día uno</li>
           </ul>
+        </Reveal>
+      </section>
+
+      {/* Preguntas frecuentes */}
+      <section className="p-6 rounded-2xl border bg-white shadow-sm">
+        <h2 className="text-xl font-semibold">Preguntas frecuentes</h2>
+        <div className="mt-3 grid gap-2">
+          <details className="p-3 rounded border bg-neutral-50">
+            <summary className="cursor-pointer font-medium">¿Cuánto se demora un proyecto?</summary>
+            <div className="mt-1 text-sm text-neutral-700">Depende del alcance. Trabajamos por etapas y definimos plazos realistas al inicio.</div>
+          </details>
+          <details className="p-3 rounded border bg-neutral-50">
+            <summary className="cursor-pointer font-medium">¿Cómo se estructura el pago?</summary>
+            <div className="mt-1 text-sm text-neutral-700">Por hitos acordados y entregables claros. Sin sorpresas.</div>
+          </details>
+          <details className="p-3 rounded border bg-neutral-50">
+            <summary className="cursor-pointer font-medium">¿El código es mío?</summary>
+            <div className="mt-1 text-sm text-neutral-700">Sí. Entregamos repositorio y documentación al finalizar.</div>
+          </details>
+        </div>
+      </section>
+
+      {/* Garantías / Compromisos */}
+      <section className="p-6 rounded-2xl border bg-white shadow-sm">
+        <h2 className="text-xl font-semibold">Garantías y compromisos</h2>
+        <div className="mt-3 grid md:grid-cols-4 gap-3 text-sm">
+          <div className="p-4 rounded-xl border bg-neutral-50">
+            <div className="font-medium">Presupuesto claro</div>
+            <div className="mt-1 text-neutral-700">Precio por alcance, sin sorpresas.</div>
+          </div>
+          <div className="p-4 rounded-xl border bg-neutral-50">
+            <div className="font-medium">Demo temprana</div>
+            <div className="mt-1 text-neutral-700">Ves avances navegables antes de decidir.</div>
+          </div>
+          <div className="p-4 rounded-xl border bg-neutral-50">
+            <div className="font-medium">Seguridad y rendimiento</div>
+            <div className="mt-1 text-neutral-700">Buenas prácticas desde el día uno.</div>
+          </div>
+          <div className="p-4 rounded-xl border bg-neutral-50">
+            <div className="font-medium">Soporte</div>
+            <div className="mt-1 text-neutral-700">Acompañamiento post‑lanzamiento incluido.</div>
+          </div>
         </div>
       </section>
 
