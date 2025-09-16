@@ -2,15 +2,13 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type Props = {
-  as?: keyof HTMLElementTagNameMap;
   className?: string;
   children: ReactNode;
   delayMs?: number;
 };
 
-export default function Reveal({ as = "div", className = "", children, delayMs = 0 }: Props) {
-  const Tag: any = as;
-  const ref = useRef<HTMLElement | null>(null);
+export default function Reveal({ className = "", children, delayMs = 0 }: Props) {
+  const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -38,5 +36,5 @@ export default function Reveal({ as = "div", className = "", children, delayMs =
   const hidden = "opacity-0 translate-y-4";
   const shown = "opacity-100 translate-y-0";
 
-  return <Tag ref={ref as any} className={`${base} ${visible ? shown : hidden} ${className}`}>{children}</Tag>;
+  return <div ref={ref} className={`${base} ${visible ? shown : hidden} ${className}`}>{children}</div>;
 }
