@@ -107,7 +107,7 @@ export default function QuienesSomosPage() {
           </div>
           <div className="p-4 rounded-xl border bg-neutral-50">
             <div className="font-medium">Soporte</div>
-            <div className="mt-1 text-neutral-700">Acompañamiento post‑lanzamiento incluido.</div>
+            <div className="mt-1 text-neutral-700">Acompañamiento post-lanzamiento incluido.</div>
           </div>
         </div>
       </section>
@@ -118,7 +118,7 @@ export default function QuienesSomosPage() {
         <ul className="mt-2 grid gap-2 text-neutral-700 text-sm">
           <li>• Iteraciones con hitos y aprobación en cada fase.</li>
           <li>• Precio cerrado por alcance. Sin sorpresas.</li>
-          <li>• Soporte post‑lanzamiento incluido.</li>
+          <li>• Soporte post-lanzamiento incluido.</li>
           <li>• Accesibilidad, rendimiento y seguridad.</li>
           <li>• Hablamos por tu canal favorito y respondemos rápido.</li>
         </ul>
@@ -138,7 +138,7 @@ export default function QuienesSomosPage() {
           </div>
           <div className="p-4 rounded-xl border bg-neutral-50">
             <h3 className="font-medium">3. Entrega</h3>
-            <p className="mt-1">Puesta en producción, documentación y soporte post‑lanzamiento.</p>
+            <p className="mt-1">Puesta en producción, documentación y soporte post-lanzamiento.</p>
           </div>
         </div>
       </section>
@@ -180,7 +180,7 @@ export default function QuienesSomosPage() {
         </div>
         <div className="flex gap-3 md:justify-end">
           <Link href="/#contacto" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Contactar</Link>
-          <a href="https://wa.me/56965658099?text=Hola,%20quiero%20hablar%20con%20Vytronix" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">WhatsApp</a>
+          <a href="https://wa.me/56921657978?text=Hola,%20quiero%20hablar%20con%20Vytronix" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">WhatsApp</a>
         </div>
       </section>
     </div>

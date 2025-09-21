@@ -19,7 +19,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const token = cookieStore.get("auth")?.value || "";
   const user = await verifyJwt<{ email: string; name?: string; role?: string }>(token);
 
-  const telephone = "+569 65658099";
+  const telephone = "+569 21657978";
   const address = {
     streetAddress: "Av. Lo Errazuriz 1701",
     addressLocality: "Cerrillos",
@@ -103,7 +103,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         {/* WhatsApp floating button */}
         <a
-          href="https://wa.me/56965658099?text=Hola,%20vengo%20del%20sitio%20de%20Vytronix.%20Me%20gustaría%20recibir%20asesoría.%20Mi%20nombre%20es%20___."
+          href="https://wa.me/56921657978?text=Hola,%20vengo%20del%20sitio%20de%20Vytronix.%20Me%20gustaría%20recibir%20asesoría.%20Mi%20nombre%20es%20___."
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Contactar por WhatsApp"

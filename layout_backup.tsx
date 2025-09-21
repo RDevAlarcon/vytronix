@@ -30,7 +30,7 @@
 
         {/* WhatsApp floating button */}
         <a
-          href="https://wa.me/56965658099?text=Hola,%20vengo%20del%20sitio%20de%20Vytronix.%20Me%20gustar%C3%ADa%20recibir%20asesor%C3%ADa.%20Mi%20nombre%20es%20___."
+          href="https://wa.me/56921657978?text=Hola,%20vengo%20del%20sitio%20de%20Vytronix.%20Me%20gustar%C3%ADa%20recibir%20asesor%C3%ADa.%20Mi%20nombre%20es%20___."
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Contactar por WhatsApp"
