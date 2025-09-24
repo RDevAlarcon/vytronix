@@ -5,6 +5,7 @@ import { verifyJwt } from "@/server/auth/jwt";
 import { db } from "@/server/db/client";
 import { users } from "@/server/db/schema";
 import ProfileNameForm from "./ProfileNameForm";
+import LandingDiscountButton from "./LandingDiscountButton";
 import DiscountCountdown from "./DiscountCountdown";
 
 type UserJwt = { sub?: string; email?: string; name?: string; role?: string };
@@ -21,6 +22,10 @@ export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 const dateFormatter = new Intl.DateTimeFormat("es-CL", { dateStyle: "long" });
+const currencyFormatter = new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 });
+const BASE_PRICE = 40000;
+const DISCOUNT_RATE = 0.1;
+const IVA_RATE = 0.19;
 
 export default async function ProfilePage() {
   const cookieStore = await cookies();
@@ -60,6 +65,9 @@ export default async function ProfilePage() {
   const discountExpiresLabel = discountExpiresAt ? dateFormatter.format(discountExpiresAt) : null;
 
   const discountUrl = process.env.NEXT_PUBLIC_LANDING_DISCOUNT_URL || process.env.LANDING_DISCOUNT_URL || "";
+  const discountedPrice = Math.round(BASE_PRICE * (1 - DISCOUNT_RATE));
+  const ivaAmount = Math.round(discountedPrice * IVA_RATE);
+  const totalAmount = discountedPrice + ivaAmount;
 
   return (
     <div className="max-w-3xl mx-auto px-4 pt-16">
@@ -95,28 +103,18 @@ export default async function ProfilePage() {
               <span className="text-sm text-neutral-500">No pudimos calcular la fecha de expiración. Contáctanos para ayudarte.</span>
             )}
             <div className="mt-3 grid gap-1 text-sm text-neutral-600">
-              <div><span className="font-semibold text-neutral-800">Precio referencial:</span> $200.000 CLP + IVA</div>
-              <div>Incluye 1 sección, header/footer, links a redes sociales, SEO técnico y botón de WhatsApp.</div>
+              <div><span className="font-semibold text-neutral-800">Precio base:</span> {currencyFormatter.format(BASE_PRICE)} + IVA</div>
+              <div><span className="font-semibold text-neutral-800">Descuento 10%:</span> -{currencyFormatter.format(BASE_PRICE - discountedPrice)} (precio con descuento {currencyFormatter.format(discountedPrice)})</div>
+              <div><span className="font-semibold text-neutral-800">IVA 19%:</span> {currencyFormatter.format(ivaAmount)}</div>
+              <div><span className="font-semibold text-neutral-800">Total a pagar:</span> {currencyFormatter.format(totalAmount)}</div>
+              <div>Incluye 1 sección, header/footer, links a redes sociales, SEO técnico, botón de WhatsApp, hosting y dominio por 1 año.</div>
               <div>Plazo de entrega: 10 días hábiles. Garantía: 10 días por falla técnica.</div>
-              <div className="text-xs text-neutral-500">Precio no incluye hosting ni dominio.</div>
+              <div className="text-xs text-neutral-500">Renovación de hosting y dominio a partir del segundo año se cotiza por separado.</div>
             </div>
           </div>
-          {discountUrl ? (
-            <a
-              href={discountUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-4 py-2 rounded-md bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] transition-colors"
-            >
-              Canjear descuento
-            </a>
-          ) : (
-            <span className="text-sm text-neutral-500">Pronto podrás canjear tu descuento desde aquí.</span>
-          )}
+          <LandingDiscountButton fallbackUrl={discountUrl || undefined} />
         </div>
       </div>
     </div>
   );
 }
-
-
