@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, index, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, index, uniqueIndex, integer, jsonb } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
 export const users = pgTable("users", {
@@ -8,6 +8,8 @@ export const users = pgTable("users", {
   passwordHash: text("password_hash").notNull(),
   role: text("role").notNull().default("user"),
   createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`),
+  landingDiscountConsumedAt: timestamp("landing_discount_consumed_at", { withTimezone: true }),
+  landingDiscountPaymentId: text("landing_discount_payment_id"),
 }, (t) => ({
   emailUq: uniqueIndex("users_email_uq").on(t.email),
   createdIdx: index("users_created_idx").on(t.createdAt),
@@ -49,6 +51,25 @@ export const leads = pgTable("leads", {
 }, (t) => ({
   emailIdx: index("leads_email_idx").on(t.email),
   createdIdx: index("leads_created_idx").on(t.createdAt),
+}));
+
+export const landingPayments = pgTable("landing_payments", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  externalReference: text("external_reference").notNull(),
+  status: text("status").notNull(),
+  statusDetail: text("status_detail"),
+  transactionAmount: integer("transaction_amount").notNull(),
+  currencyId: text("currency_id").notNull(),
+  paymentMethodId: text("payment_method_id"),
+  paymentTypeId: text("payment_type_id"),
+  payerEmail: text("payer_email"),
+  mpCreatedAt: timestamp("mp_created_at", { withTimezone: true }),
+  rawPayload: jsonb("raw_payload"),
+  createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`),
+}, (t) => ({
+  userIdx: index("landing_payments_user_idx").on(t.userId),
+  referenceIdx: index("landing_payments_reference_idx").on(t.externalReference),
 }));
 
 export type ContactRequest = typeof contactRequests.$inferSelect;

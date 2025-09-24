@@ -1,11 +1,12 @@
 ﻿import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { eq } from "drizzle-orm";
+
 import { verifyJwt } from "@/server/auth/jwt";
 import { db } from "@/server/db/client";
 import { users } from "@/server/db/schema";
 import ProfileNameForm from "./ProfileNameForm";
-import LandingDiscountButton from "./LandingDiscountButton";
+import LandingPaymentBrick from "./LandingPaymentBrick";
 import DiscountCountdown from "./DiscountCountdown";
 
 type UserJwt = { sub?: string; email?: string; name?: string; role?: string };
@@ -16,6 +17,8 @@ type DbUser = {
   name: string | null;
   role: string;
   createdAt: Date | null;
+  landingDiscountConsumedAt: Date | null;
+  landingDiscountPaymentId: string | null;
 };
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
@@ -23,7 +26,7 @@ export const metadata: Metadata = { robots: { index: false, follow: false } };
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 const dateFormatter = new Intl.DateTimeFormat("es-CL", { dateStyle: "long" });
 const currencyFormatter = new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 });
-const BASE_PRICE = 40000;
+const BASE_PRICE = 200000;
 const DISCOUNT_RATE = 0.1;
 const IVA_RATE = 0.19;
 
@@ -41,6 +44,8 @@ export default async function ProfilePage() {
         name: users.name,
         role: users.role,
         createdAt: users.createdAt,
+        landingDiscountConsumedAt: users.landingDiscountConsumedAt,
+        landingDiscountPaymentId: users.landingDiscountPaymentId,
       })
       .from(users)
       .where(eq(users.id, jwtUser.sub))
@@ -54,7 +59,7 @@ export default async function ProfilePage() {
 
   const initials = (displayName || displayEmail || "?")
     .split(" ")
-    .map((p) => p[0])
+    .map((part) => part[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
@@ -64,6 +69,11 @@ export default async function ProfilePage() {
   const discountExpiresIso = discountExpiresAt?.toISOString();
   const discountExpiresLabel = discountExpiresAt ? dateFormatter.format(discountExpiresAt) : null;
 
+  const discountConsumedAt = dbUser?.landingDiscountConsumedAt ?? null;
+  const landingDiscountPaymentId = dbUser?.landingDiscountPaymentId ?? null;
+  const discountConsumedLabel = discountConsumedAt ? dateFormatter.format(discountConsumedAt) : null;
+  const hasActiveDiscount = !discountConsumedAt;
+
   const discountUrl = process.env.NEXT_PUBLIC_LANDING_DISCOUNT_URL || process.env.LANDING_DISCOUNT_URL || "";
   const discountedPrice = Math.round(BASE_PRICE * (1 - DISCOUNT_RATE));
   const ivaAmount = Math.round(discountedPrice * IVA_RATE);
@@ -72,9 +82,7 @@ export default async function ProfilePage() {
   return (
     <div className="max-w-3xl mx-auto px-4 pt-16">
       <h1 className="text-2xl font-bold">Mi Perfil</h1>
-      {displayRole === "admin" && (
-        <p className="mt-2 text-sm text-neutral-600">Rol: admin</p>
-      )}
+      {displayRole === "admin" && <p className="mt-2 text-sm text-neutral-600">Rol: admin</p>}
 
       <div className="mt-6 p-6 rounded-2xl border bg-white shadow-sm grid md:grid-cols-[120px_1fr] gap-6 items-center">
         <div className="w-24 h-24 rounded-full bg-neutral-200 border flex items-center justify-center text-neutral-700 font-semibold">
@@ -112,7 +120,31 @@ export default async function ProfilePage() {
               <div className="text-xs text-neutral-500">Renovación de hosting y dominio a partir del segundo año se cotiza por separado.</div>
             </div>
           </div>
-          <LandingDiscountButton fallbackUrl={discountUrl || undefined} />
+          <div className="grid gap-3 max-w-xs w-full">
+            {hasActiveDiscount ? (
+              <>
+                <LandingPaymentBrick totalAmount={totalAmount} payerEmail={displayEmail || undefined} fallbackUrl={discountUrl || undefined} />
+                {discountUrl ? (
+                  <a
+                    href={discountUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-neutral-500 hover:text-neutral-700 underline"
+                  >
+                    Prefer to use the Mercado Pago link? Open it here.
+                  </a>
+                ) : null}
+              </>
+            ) : (
+              <div className="rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800">
+                Ya canjeaste tu descuento{discountConsumedLabel ? ` el ${discountConsumedLabel}` : ""}.
+                {landingDiscountPaymentId && (
+                  <span className="block text-xs text-green-700">Pago Mercado Pago #{landingDiscountPaymentId}.</span>
+                )}
+                <span className="block text-xs text-green-700">Si necesitas otra propuesta, contáctanos directamente.</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
