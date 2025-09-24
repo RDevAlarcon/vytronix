@@ -70,8 +70,6 @@ export default async function ProfilePage() {
   const discountExpiresLabel = discountExpiresAt ? dateFormatter.format(discountExpiresAt) : null;
 
   const discountConsumedAt = dbUser?.landingDiscountConsumedAt ?? null;
-  const landingDiscountPaymentId = dbUser?.landingDiscountPaymentId ?? null;
-  const discountConsumedLabel = discountConsumedAt ? dateFormatter.format(discountConsumedAt) : null;
   const hasActiveDiscount = !discountConsumedAt;
 
   const discountUrl = process.env.NEXT_PUBLIC_LANDING_DISCOUNT_URL || process.env.LANDING_DISCOUNT_URL || "";
@@ -139,20 +137,15 @@ export default async function ProfilePage() {
           <div className="p-6 grid gap-4 md:flex md:items-start md:justify-between">
             <div className="grid gap-2 text-neutral-800 max-w-xl">
               <div>
-                <h2 className="text-2xl font-bold">¡Gracias por tu compra!</h2>
+                <h2 className="text-2xl font-bold">¡Gracias por la confianza. Ya recibimos tu solicitud!</h2>
                 <p className="text-lg text-neutral-600">
-                  Ya canjeaste tu 10% de descuento{discountConsumedLabel ? ` el ${discountConsumedLabel}` : ""}.
+                  Te contactaremos a la brevedad para coordinar los próximos pasos!
                 </p>
               </div>
               <div className="grid gap-1 text-sm text-neutral-600">
-                <div>Estamos preparando tu landing page y pronto te contactaremos para coordinar los próximos pasos.</div>
                 <div>Incluye 1 sección, header/footer, links a redes sociales, SEO técnico, botón de WhatsApp, hosting y dominio por 1 año.</div>
                 <div>Plazo de entrega: 10 días hábiles. Garantía: 10 días por falla técnica.</div>
-                <div className="text-xs text-neutral-500">Renovación de hosting y dominio a partir del segundo año se cotiza por separado.</div>
               </div>
-              {landingDiscountPaymentId && (
-                <span className="text-xs text-neutral-500">Referencia Mercado Pago #{landingDiscountPaymentId}.</span>
-              )}
             </div>
           </div>
         )}
@@ -160,4 +153,3 @@ export default async function ProfilePage() {
     </div>
   );
 }
-
