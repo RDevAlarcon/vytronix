@@ -95,58 +95,69 @@ export default async function ProfilePage() {
       </div>
 
       <div className="mt-10 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 via-white to-white shadow-sm">
-        <div className="p-6 grid gap-4 md:flex md:items-center md:justify-between">
-          <div className="grid gap-2 text-neutral-800 max-w-xl">
-            <div>
-              <h2 className="text-2xl font-bold">Felicitaciones</h2>
-              <p className="text-lg text-neutral-600">Canjea tu 10% de descuento en tu primera landing page y comencemos hoy mismo.</p>
-            </div>
-            <p className="text-xs text-neutral-500">
-              Válido por 30 días desde que creaste tu cuenta
-              {discountExpiresLabel ? ` (caduca el ${discountExpiresLabel}).` : "."}
-            </p>
-            {discountExpiresIso ? (
-              <DiscountCountdown initialExpiresAt={discountExpiresIso} />
-            ) : (
-              <span className="text-sm text-neutral-500">No pudimos calcular la fecha de expiración. Contáctanos para ayudarte.</span>
-            )}
-            <div className="mt-3 grid gap-1 text-sm text-neutral-600">
-              <div><span className="font-semibold text-neutral-800">Precio base:</span> {currencyFormatter.format(BASE_PRICE)} + IVA</div>
-              <div><span className="font-semibold text-neutral-800">Descuento 10%:</span> -{currencyFormatter.format(BASE_PRICE - discountedPrice)} (precio con descuento {currencyFormatter.format(discountedPrice)})</div>
-              <div><span className="font-semibold text-neutral-800">IVA 19%:</span> {currencyFormatter.format(ivaAmount)}</div>
-              <div><span className="font-semibold text-neutral-800">Total a pagar:</span> {currencyFormatter.format(totalAmount)}</div>
-              <div>Incluye 1 sección, header/footer, links a redes sociales, SEO técnico, botón de WhatsApp, hosting y dominio por 1 año.</div>
-              <div>Plazo de entrega: 10 días hábiles. Garantía: 10 días por falla técnica.</div>
-              <div className="text-xs text-neutral-500">Renovación de hosting y dominio a partir del segundo año se cotiza por separado.</div>
-            </div>
-          </div>
-          <div className="grid gap-3 max-w-xs w-full">
-            {hasActiveDiscount ? (
-              <>
-                <LandingPaymentBrick totalAmount={totalAmount} payerEmail={displayEmail || undefined} fallbackUrl={discountUrl || undefined} />
-                {discountUrl ? (
-                  <a
-                    href={discountUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-neutral-500 hover:text-neutral-700 underline"
-                  >
-                    Prefer to use the Mercado Pago link? Open it here.
-                  </a>
-                ) : null}
-              </>
-            ) : (
-              <div className="rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800">
-                Ya canjeaste tu descuento{discountConsumedLabel ? ` el ${discountConsumedLabel}` : ""}.
-                {landingDiscountPaymentId && (
-                  <span className="block text-xs text-green-700">Pago Mercado Pago #{landingDiscountPaymentId}.</span>
-                )}
-                <span className="block text-xs text-green-700">Si necesitas otra propuesta, contáctanos directamente.</span>
+        {hasActiveDiscount ? (
+          <div className="p-6 grid gap-4 md:flex md:items-center md:justify-between">
+            <div className="grid gap-2 text-neutral-800 max-w-xl">
+              <div>
+                <h2 className="text-2xl font-bold">Felicitaciones</h2>
+                <p className="text-lg text-neutral-600">Canjea tu 10% de descuento en tu primera landing page y comencemos hoy mismo.</p>
               </div>
-            )}
+              <p className="text-xs text-neutral-500">
+                Válido por 30 días desde que creaste tu cuenta
+                {discountExpiresLabel ? ` (caduca el ${discountExpiresLabel}).` : "."}
+              </p>
+              {discountExpiresIso ? (
+                <DiscountCountdown initialExpiresAt={discountExpiresIso} />
+              ) : (
+                <span className="text-sm text-neutral-500">No pudimos calcular la fecha de expiración. Contáctanos para ayudarte.</span>
+              )}
+              <div className="mt-3 grid gap-1 text-sm text-neutral-600">
+                <div><span className="font-semibold text-neutral-800">Precio base:</span> {currencyFormatter.format(BASE_PRICE)} + IVA</div>
+                <div><span className="font-semibold text-neutral-800">Descuento 10%:</span> -{currencyFormatter.format(BASE_PRICE - discountedPrice)} (precio con descuento {currencyFormatter.format(discountedPrice)})</div>
+                <div><span className="font-semibold text-neutral-800">IVA 19%:</span> {currencyFormatter.format(ivaAmount)}</div>
+                <div><span className="font-semibold text-neutral-800">Total a pagar:</span> {currencyFormatter.format(totalAmount)}</div>
+                <div>Incluye 1 sección, header/footer, links a redes sociales, SEO técnico, botón de WhatsApp, hosting y dominio por 1 año.</div>
+                <div>Plazo de entrega: 10 días hábiles. Garantía: 10 días por falla técnica.</div>
+                <div className="text-xs text-neutral-500">Renovación de hosting y dominio a partir del segundo año se cotiza por separado.</div>
+              </div>
+            </div>
+            <div className="grid gap-3 max-w-xs w-full">
+              <LandingPaymentBrick totalAmount={totalAmount} payerEmail={displayEmail || undefined} fallbackUrl={discountUrl || undefined} />
+              {discountUrl ? (
+                <a
+                  href={discountUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-neutral-500 hover:text-neutral-700 underline"
+                >
+                  ¿Prefieres el enlace directo de Mercado Pago? Ábrelo aquí.
+                </a>
+              ) : null}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="p-6 grid gap-4 md:flex md:items-start md:justify-between">
+            <div className="grid gap-2 text-neutral-800 max-w-xl">
+              <div>
+                <h2 className="text-2xl font-bold">¡Gracias por tu compra!</h2>
+                <p className="text-lg text-neutral-600">
+                  Ya canjeaste tu 10% de descuento{discountConsumedLabel ? ` el ${discountConsumedLabel}` : ""}.
+                </p>
+              </div>
+              <div className="grid gap-1 text-sm text-neutral-600">
+                <div>Estamos preparando tu landing page y pronto te contactaremos para coordinar los próximos pasos.</div>
+                <div>Incluye 1 sección, header/footer, links a redes sociales, SEO técnico, botón de WhatsApp, hosting y dominio por 1 año.</div>
+                <div>Plazo de entrega: 10 días hábiles. Garantía: 10 días por falla técnica.</div>
+                <div className="text-xs text-neutral-500">Renovación de hosting y dominio a partir del segundo año se cotiza por separado.</div>
+              </div>
+              {landingDiscountPaymentId && (
+                <span className="text-xs text-neutral-500">Referencia Mercado Pago #{landingDiscountPaymentId}.</span>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 }
+
