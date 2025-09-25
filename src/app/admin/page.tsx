@@ -1,12 +1,25 @@
-import { cookies } from "next/headers";
+﻿import { cookies } from "next/headers";
 import { verifyJwt } from "@/server/auth/jwt";
 import { db } from "@/server/db/client";
-import { contactRequests, type ContactRequest } from "@/server/db/schema";
+import { contactRequests, type ContactRequest, landingPayments, users } from "@/server/db/schema";
 import { desc, sql, eq } from "drizzle-orm";
 import Link from "next/link";
 import CompleteButton from "@/components/CompleteButton";
 
 type UserJwt = { email: string; name?: string; role?: string };
+
+type PaidLanding = {
+  id: string;
+  userName: string | null;
+  userEmail: string | null;
+  userPhone: string | null;
+  status: string;
+  statusDetail: string | null;
+  mpCreatedAt: Date | null;
+  createdAt: Date | null;
+  transactionAmount: number;
+  currencyId: string;
+};
 
 export default async function AdminPage() {
   const cookieStore = await cookies();
@@ -39,6 +52,45 @@ export default async function AdminPage() {
       createdAt: r.created_at,
       message: "",
     })) as unknown as ContactRequest[];
+  }
+
+  let paidLandings: PaidLanding[];
+  try {
+    paidLandings = await db
+      .select({
+        id: landingPayments.id,
+        status: landingPayments.status,
+        statusDetail: landingPayments.statusDetail,
+        transactionAmount: landingPayments.transactionAmount,
+        currencyId: landingPayments.currencyId,
+        mpCreatedAt: landingPayments.mpCreatedAt,
+        createdAt: landingPayments.createdAt,
+        userName: users.name,
+        userEmail: users.email,
+        userPhone: users.phone,
+      })
+      .from(landingPayments)
+      .innerJoin(users, eq(users.id, landingPayments.userId))
+      .where(eq(landingPayments.status, "approved"))
+      .orderBy(desc(landingPayments.mpCreatedAt), desc(landingPayments.createdAt))
+      .limit(20);
+  } catch {
+    const res = await db.execute(
+      sql`select lp."id", lp."status", lp."status_detail", lp."transaction_amount", lp."currency_id", lp."mp_created_at", lp."created_at", u."name" as user_name, u."email" as user_email, u."phone" as user_phone from "landing_payments" lp join "users" u on u."id" = lp."user_id" where lp."status" = 'approved' order by coalesce(lp."mp_created_at", lp."created_at") desc limit ${20}`
+    );
+    const rows = (res as unknown as { rows: Array<{ id: string; status: string; status_detail: string | null; transaction_amount: number; currency_id: string; mp_created_at: Date | null; created_at: Date | null; user_name: string | null; user_email: string | null; user_phone: string | null }> }).rows;
+    paidLandings = rows.map((row) => ({
+      id: row.id,
+      status: row.status,
+      statusDetail: row.status_detail,
+      transactionAmount: row.transaction_amount,
+      currencyId: row.currency_id,
+      mpCreatedAt: row.mp_created_at,
+      createdAt: row.created_at,
+      userName: row.user_name,
+      userEmail: row.user_email,
+      userPhone: row.user_phone,
+    }));
   }
 
   let completed: ContactRequest[];
@@ -97,6 +149,53 @@ export default async function AdminPage() {
     }
   };
 
+  const fmtYmd = (value?: unknown) => {
+    try {
+      let date: Date | null = null;
+      if (value instanceof Date) date = value;
+      else if (typeof value === "string" || typeof value === "number") date = new Date(value);
+      else return "";
+      if (!date || isNaN(date.getTime())) return "";
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    } catch {
+      return "";
+    }
+  };
+
+  const formatAmount = (value: unknown, currency = "CLP") => {
+    if (typeof value !== "number") {
+      return "";
+    }
+    try {
+      return new Intl.NumberFormat("es-CL", {
+        style: "currency",
+        currency,
+        maximumFractionDigits: 0,
+      }).format(value);
+    } catch {
+      return `${value} ${currency}`;
+    }
+  };
+
+  const paymentStatusLabel = (status?: string | null) => {
+    if (!status) return "";
+    switch (status) {
+      case "approved":
+        return "Aprobado";
+      case "pending":
+        return "Pendiente";
+      case "rejected":
+        return "Rechazado";
+      case "in_process":
+        return "En proceso";
+      default:
+        return status;
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 pt-16">
       <h1 className="text-2xl font-bold">Panel de Administración</h1>
@@ -125,7 +224,7 @@ export default async function AdminPage() {
 
         <div className="p-4 border rounded-lg bg-white">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold">Últimas 10</h2>
+            <h2 className="font-semibold">Últimas 10 Solicitudes</h2>
             <Link href="/admin/solicitudes" className="text-sm underline">Ir a solicitudes</Link>
           </div>
           {latest.length ? (
@@ -167,7 +266,7 @@ export default async function AdminPage() {
 
         <div className="p-4 border rounded-lg bg-white">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold">Completados</h2>
+            <h2 className="font-semibold">Solicitudes Completadas</h2>
             <Link href="/admin/solicitudes" className="text-sm underline">Gestionar</Link>
           </div>
           {completed.length ? (
@@ -204,9 +303,55 @@ export default async function AdminPage() {
             <p className="text-sm text-neutral-600 mt-2">Aún no hay completados.</p>
           )}
         </div>
+
+        <div className="p-4 border rounded-lg bg-white">
+          <div className="flex items-center justify-between">
+            <h2 className="font-semibold">Landings pagadas</h2>
+          </div>
+          {paidLandings.length ? (
+            <div className="mt-3 overflow-x-auto">
+              <table className="min-w-full text-sm border">
+                <thead className="bg-neutral-100">
+                  <tr>
+                    <th className="text-left p-2 border">Nombre</th>
+                    <th className="text-left p-2 border">Email</th>
+                    <th className="text-left p-2 border">Teléfono</th>
+                    <th className="text-left p-2 border">Estado</th>
+                    <th className="text-left p-2 border">Fecha de pago</th>
+                    <th className="text-left p-2 border">Monto pagado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {paidLandings.map((payment) => (
+                    <tr key={payment.id} className="odd:bg-white even:bg-neutral-50">
+                      <td className="p-2 border">{payment.userName ?? "Sin nombre"}</td>
+                      <td className="p-2 border">{payment.userEmail ?? "Sin email"}</td>
+                      <td className="p-2 border">{payment.userPhone ?? "Sin teléfono"}</td>
+                      <td className="p-2 border">
+                        <div className="font-medium">{paymentStatusLabel(payment.status)}</div>
+                        {payment.statusDetail ? (
+                          <div className="text-xs text-neutral-500">{payment.statusDetail}</div>
+                        ) : null}
+                      </td>
+                      <td className="p-2 border">{fmtYmd(payment.mpCreatedAt ?? payment.createdAt)}</td>
+                      <td className="p-2 border">{formatAmount(payment.transactionAmount, payment.currencyId ?? "CLP")}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-sm text-neutral-600 mt-2">Aún no hay pagos registrados.</p>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 import type { Metadata } from "next";
 export const metadata: Metadata = { robots: { index: false, follow: false } };
+
+
+
+
+

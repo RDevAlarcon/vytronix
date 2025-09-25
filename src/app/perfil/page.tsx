@@ -9,7 +9,7 @@ import ProfileNameForm from "./ProfileNameForm";
 import LandingPaymentBrick from "./LandingPaymentBrick";
 import DiscountCountdown from "./DiscountCountdown";
 
-type UserJwt = { sub?: string; email?: string; name?: string; role?: string };
+type UserJwt = { sub?: string; email?: string; name?: string; role?: string; phone?: string };
 
 type DbUser = {
   id: string;
@@ -17,6 +17,7 @@ type DbUser = {
   name: string | null;
   role: string;
   createdAt: Date | null;
+  phone: string | null;
   landingDiscountConsumedAt: Date | null;
   landingDiscountPaymentId: string | null;
 };
@@ -44,6 +45,7 @@ export default async function ProfilePage() {
         name: users.name,
         role: users.role,
         createdAt: users.createdAt,
+        phone: users.phone,
         landingDiscountConsumedAt: users.landingDiscountConsumedAt,
         landingDiscountPaymentId: users.landingDiscountPaymentId,
       })
@@ -55,6 +57,7 @@ export default async function ProfilePage() {
 
   const displayEmail = dbUser?.email ?? jwtUser?.email ?? "";
   const displayName = dbUser?.name ?? jwtUser?.name ?? null;
+  const displayPhone = dbUser?.phone ?? jwtUser?.phone ?? null;
   const displayRole = dbUser?.role ?? jwtUser?.role ?? null;
 
   const initials = (displayName || displayEmail || "?")
@@ -87,7 +90,7 @@ export default async function ProfilePage() {
           {initials}
         </div>
         <div className="grid gap-2">
-          <ProfileNameForm initialName={displayName ?? undefined} email={displayEmail} />
+          <ProfileNameForm initialName={displayName ?? undefined} initialPhone={displayPhone ?? undefined} email={displayEmail} />
           <p className="text-xs text-neutral-500 mt-2">Próximamente podrás subir tu foto.</p>
         </div>
       </div>
