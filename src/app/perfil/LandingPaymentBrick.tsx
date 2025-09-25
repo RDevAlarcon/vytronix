@@ -61,6 +61,17 @@ declare global {
 }
 
 export default function LandingPaymentBrick({ totalAmount, payerEmail, fallbackUrl }: LandingPaymentBrickProps) {
+  const openFallbackUrl = (url?: string) => {
+    if (typeof url !== "string" || url.length === 0) {
+      return;
+    }
+
+    try {
+      window.open(url, "_blank", "noopener,noreferrer");
+    } catch {
+      // ignore
+    }
+  };
   const [error, setError] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const controllerRef = useRef<MercadoPagoBrickController | null>(null);
@@ -133,11 +144,7 @@ export default function LandingPaymentBrick({ totalAmount, payerEmail, fallbackU
                 const friendly = message ?? "Mercado Pago no tiene medios de pago habilitados";
                 if (fallbackUrl) {
                   setError(`${friendly}. Abriremos el enlace alternativo de Mercado Pago.`);
-                  try {
-                    window.open(fallbackUrl, "_blank", "noopener,noreferrer");
-                  } catch {
-                    // ignore
-                  }
+                  openFallbackUrl(fallbackUrl);
                 } else {
                   setError(`${friendly}. Revisa la configuracion de medios de pago en tu cuenta Mercado Pago.`);
                 }
