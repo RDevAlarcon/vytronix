@@ -183,11 +183,7 @@ export default function LandingPaymentBrick({ totalAmount, payerEmail, fallbackU
                   console.error("Payment submit error", err);
                   setError("No pudimos procesar el pago. Revisa los datos e intenta con otro medio. Detalle en consola.");
                   if (fallbackUrl) {
-                    try {
-                      window.open(fallbackUrl, "_blank", "noopener,noreferrer");
-                    } catch {
-                      // ignore
-                    }
+                    openFallbackUrl(fallbackUrl);
                   }
                   reject(err);
                 }
