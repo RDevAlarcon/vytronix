@@ -62,7 +62,10 @@ declare global {
 
 export default function LandingPaymentBrick({ totalAmount, payerEmail, fallbackUrl }: LandingPaymentBrickProps) {
   const openFallbackUrl = (url?: string) => {
-    if (typeof url !== "string" || url.length === 0) {
+    if (typeof url !== "string") {
+      return;
+    }
+    if (url.length === 0) {
       return;
     }
 
