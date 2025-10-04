@@ -106,6 +106,22 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Teaser: Proyectos */}
+      <section className="max-w-6xl mx-auto px-4 pb-14">
+        <div className="p-6 rounded-2xl border bg-white shadow-sm grid md:grid-cols-[1fr_auto] gap-4 items-center">
+          <div>
+            <h2 className="text-xl font-semibold">Proyectos</h2>
+            <p className="mt-1 text-neutral-700 text-sm">
+              Revisa casos con resultados medibles en e-commerce, logística, seguros y más industrias.
+            </p>
+          </div>
+          <div className="flex gap-3 md:justify-end">
+            <Link href="/proyectos" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Ver portafolio</Link>
+            <Link href="/#servicios" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Nuestros servicios</Link>
+          </div>
+        </div>
+      </section>
+
       <section id="contacto" className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-6 items-start">
         <div>
           {/* Formulario de solicitudes de clientes */}
