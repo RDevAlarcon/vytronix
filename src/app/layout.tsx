@@ -71,6 +71,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </Link>
             <nav className="flex gap-4 text-sm items-center">
               <Link href="/quienes-somos">Quiénes somos</Link>
+              <Link href="/proyectos">Proyectos</Link>
               <Link href="/#servicios">Servicios</Link>
               <Link href="/#contacto">Contacto</Link>
               {user ? (
