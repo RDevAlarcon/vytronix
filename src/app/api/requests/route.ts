@@ -12,9 +12,9 @@ const schema = z.object({
   email: z.string().email(),
   phone: z.string().min(7).max(20).regex(/^[+\d().\-\s]+$/i, "Formato de teléfono inválido"),
   message: z.string().min(10, "Cuéntanos un poco más (mín. 10 caracteres)").max(1000, "Máximo 1000 caracteres"),
-  acceptedPolicies: z.literal(true, {
-    errorMap: () => ({ message: "Debes aceptar la política de privacidad" }),
-  }),
+  acceptedPolicies: z
+    .boolean()
+    .refine((value) => value === true, { message: "Debes aceptar la política de privacidad" }),
 });
 
 export async function POST(req: NextRequest) {

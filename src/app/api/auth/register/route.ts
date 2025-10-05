@@ -11,9 +11,9 @@ const schema = z.object({
   email: z.string().email(),
   name: z.string().min(1).max(80),
   password: z.string().min(8).max(128),
-  acceptedPolicies: z.literal(true, {
-    errorMap: () => ({ message: "Debes aceptar la política de privacidad" }),
-  }),
+  acceptedPolicies: z
+    .boolean()
+    .refine((value) => value === true, { message: "Debes aceptar la política de privacidad" }),
 });
 
 export async function POST(req: Request) {
