@@ -96,9 +96,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </header>
         <main>{children}</main>
         <footer className="border-t mt-20">
-          <div className="max-w-6xl mx-auto px-4 py-6 text-sm text-center grid gap-1">
+          <div className="max-w-6xl mx-auto px-4 py-6 text-sm grid gap-2 justify-items-center text-center">
             <div className="text-neutral-600 italic">Tecnología que transforma, soluciones que conectan.</div>
-            <div>© {new Date().getFullYear()} Vytronix</div>
+            <div className="text-neutral-600">© {new Date().getFullYear()} Vytronix</div>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <Link href="/privacidad" className="underline">Política de Privacidad</Link>
+              <Link href="/terminos" className="underline">Términos y Condiciones</Link>
+            </div>
           </div>
         </footer>
 

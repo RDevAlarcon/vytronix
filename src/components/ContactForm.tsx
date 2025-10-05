@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -24,6 +25,8 @@ export default function ContactForm() {
   const [fieldErrs, setFieldErrs] = useState<{ name?: string; email?: string; phone?: string; message?: string }>({});
   const [sent, setSent] = useState(false);
   const [err, setErr] = useState("");
+  const [acceptedPolicies, setAcceptedPolicies] = useState(false);
+  const [consentErr, setConsentErr] = useState<string | null>(null);
 
   function validateField(key: keyof typeof fieldErrs, value: string) {
     let r;
@@ -39,10 +42,16 @@ export default function ContactForm() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setErr("");
+    setConsentErr(null);
+
     const parsed = schema.safeParse({ name, email, phone, message });
     if (!parsed.success) {
       const fe = parsed.error.flatten().fieldErrors;
       setFieldErrs({ name: fe.name?.[0], email: fe.email?.[0], phone: fe.phone?.[0], message: fe.message?.[0] });
+      return;
+    }
+    if (!acceptedPolicies) {
+      setConsentErr("Debes aceptar la Política de Privacidad y los Términos y Condiciones.");
       return;
     }
     const res = await fetch("/api/requests", {
@@ -52,9 +61,9 @@ export default function ContactForm() {
     });
     if (res.ok) {
       setSent(true);
-      setName(""); setEmail(""); setPhone(""); setMessage(""); setFieldErrs({});
+      setName(""); setEmail(""); setPhone(""); setMessage(""); setFieldErrs({}); setAcceptedPolicies(false);
     } else if (res.status === 429) {
-      setErr("Demasiadas solicitudes. Intenta mÃ¡s tarde.");
+      setErr("Demasiadas solicitudes. Intenta más tarde.");
     } else {
       try {
         const data = await res.json();
@@ -69,7 +78,7 @@ export default function ContactForm() {
     <div className="p-6 rounded-2xl border bg-white shadow-sm">
       <h3 className="font-semibold text-lg">Solicita nuestros servicios</h3>
       {sent ? (
-        <p className="text-sm text-neutral-700 mt-2">Â¡Gracias! Te contactaremos pronto.</p>
+        <p className="text-sm text-neutral-700 mt-2">¡Gracias! Te contactaremos pronto.</p>
       ) : (
         <form onSubmit={submit} className="grid gap-3 mt-3">
           <div>
@@ -94,6 +103,25 @@ export default function ContactForm() {
             />
             {fieldErrs.message && <p className="text-red-600 text-sm mt-1">{fieldErrs.message}</p>}
           </div>
+          <div className="flex items-start gap-2">
+            <input
+              id="contact-consent"
+              type="checkbox"
+              checked={acceptedPolicies}
+              onChange={(event) => {
+                setAcceptedPolicies(event.target.checked);
+                if (consentErr && event.target.checked) {
+                  setConsentErr(null);
+                }
+              }}
+              className="mt-1"
+              required
+            />
+            <label htmlFor="contact-consent" className="text-sm text-neutral-700">
+              Acepto la <Link href="/privacidad" className="underline">Política de Privacidad</Link> y los <Link href="/terminos" className="underline">Términos y Condiciones</Link> de Vytronix.
+            </label>
+          </div>
+          {consentErr && <p className="text-red-600 text-sm">{consentErr}</p>}
           {err && <p className="text-red-600 text-sm">{err}</p>}
           <button className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white" type="submit">Enviar</button>
         </form>
@@ -101,4 +129,3 @@ export default function ContactForm() {
     </div>
   );
 }
-
