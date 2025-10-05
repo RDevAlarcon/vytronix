@@ -20,6 +20,7 @@ type DbUser = {
   phone: string | null;
   landingDiscountConsumedAt: Date | null;
   landingDiscountPaymentId: string | null;
+  landingDiscountThankyouShown: boolean;
 };
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
@@ -48,6 +49,7 @@ export default async function ProfilePage() {
         phone: users.phone,
         landingDiscountConsumedAt: users.landingDiscountConsumedAt,
         landingDiscountPaymentId: users.landingDiscountPaymentId,
+        landingDiscountThankyouShown: users.landingDiscountThankyouShown,
       })
       .from(users)
       .where(eq(users.id, jwtUser.sub))
@@ -74,6 +76,15 @@ export default async function ProfilePage() {
 
   const discountConsumedAt = dbUser?.landingDiscountConsumedAt ?? null;
   const hasActiveDiscount = !discountConsumedAt;
+  const hasThankyouShown = dbUser?.landingDiscountThankyouShown ?? false;
+  const shouldShowThankyou = !hasActiveDiscount && !hasThankyouShown;
+
+  if (shouldShowThankyou && dbUser) {
+    await db
+      .update(users)
+      .set({ landingDiscountThankyouShown: true })
+      .where(eq(users.id, dbUser.id));
+  }
 
   const discountUrl = process.env.NEXT_PUBLIC_LANDING_DISCOUNT_URL || process.env.LANDING_DISCOUNT_URL || "";
   const discountedPrice = Math.round(BASE_PRICE * (1 - DISCOUNT_RATE));
@@ -136,7 +147,7 @@ export default async function ProfilePage() {
               ) : null}
             </div>
           </div>
-        ) : (
+        ) : shouldShowThankyou ? (
           <div className="p-6 grid gap-4 md:flex md:items-start md:justify-between">
             <div className="grid gap-2 text-neutral-800 max-w-xl">
               <div>
@@ -151,7 +162,12 @@ export default async function ProfilePage() {
               </div>
             </div>
           </div>
-        )}
+        ) : null}
+        {!hasActiveDiscount && !shouldShowThankyou ? (
+          <div className="p-6 text-neutral-700 text-sm">
+            Ya registramos tu pago y nuestro equipo coordinó la solicitud. Si necesitas ajustes escríbenos a <a href="mailto:vytronixspa@gmail.com" className="underline">vytronixspa@gmail.com</a> o por WhatsApp.
+          </div>
+        ) : null}
       </div>
     </div>
   );

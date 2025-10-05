@@ -11,6 +11,7 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`),
   landingDiscountConsumedAt: timestamp("landing_discount_consumed_at", { withTimezone: true }),
   landingDiscountPaymentId: text("landing_discount_payment_id"),
+  landingDiscountThankyouShown: boolean("landing_discount_thankyou_shown").notNull().default(false),
   acceptedPolicies: boolean("accepted_policies").notNull().default(false),
 }, (t) => ({
   emailUq: uniqueIndex("users_email_uq").on(t.email),

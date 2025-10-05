@@ -57,6 +57,13 @@
       "when": 1759685285000,
       "tag": "0009_record_consents",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1759687766000,
+      "tag": "0010_mark_landing_thankyou",
+      "breakpoints": true
     }
   ]
 }
