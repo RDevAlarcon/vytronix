@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import Image from "next/image";
 import { eq } from "drizzle-orm";
 
 import { verifyJwt } from "@/server/auth/jwt";
@@ -62,13 +63,6 @@ export default async function ProfilePage() {
   const displayPhone = dbUser?.phone ?? jwtUser?.phone ?? null;
   const displayRole = dbUser?.role ?? jwtUser?.role ?? null;
 
-  const initials = (displayName || displayEmail || "?")
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-
   const createdAt = dbUser?.createdAt ?? null;
   const discountExpiresAt = createdAt ? new Date(createdAt.getTime() + THIRTY_DAYS_MS) : null;
   const discountExpiresIso = discountExpiresAt?.toISOString();
@@ -97,12 +91,11 @@ export default async function ProfilePage() {
       {displayRole === "admin" && <p className="mt-2 text-sm text-neutral-600">Rol: admin</p>}
 
       <div className="mt-6 p-6 rounded-2xl border bg-white shadow-sm grid md:grid-cols-[120px_1fr] gap-6 items-center">
-        <div className="w-24 h-24 rounded-full bg-neutral-200 border flex items-center justify-center text-neutral-700 font-semibold">
-          {initials}
+        <div className="w-24 h-24 rounded-full overflow-hidden border">
+          <Image src="/vytronixuser.png" alt="Avatar de usuario" width={96} height={96} className="w-full h-full object-cover" priority />
         </div>
         <div className="grid gap-2">
           <ProfileNameForm initialName={displayName ?? undefined} initialPhone={displayPhone ?? undefined} email={displayEmail} />
-          <p className="text-xs text-neutral-500 mt-2">Próximamente podrás subir tu foto.</p>
         </div>
       </div>
 
