@@ -115,15 +115,15 @@ export default function ProyectosPage() {
         <h2 className="text-xl font-semibold">Lo que dicen nuestros clientes</h2>
         <div className="mt-3 grid md:grid-cols-3 gap-4 text-sm text-neutral-700">
           <blockquote className="p-4 rounded-xl border bg-neutral-50">
-            "Entregaron nuestro marketplace en tiempo récord con todos nuestros requerimientos."
+            &ldquo;Entregaron nuestro marketplace en tiempo récord con todos nuestros requerimientos.&rdquo;
             <div className="mt-2 text-neutral-500 text-xs">— CEO, Nitrocar</div>
           </blockquote>
           <blockquote className="p-4 rounded-xl border bg-neutral-50">
-            "Entrega super rapida de nuestra página web ahora tenemos visibilidad minuto a minuto."
+            &ldquo;Entrega super rapida de nuestra página web ahora tenemos visibilidad minuto a minuto.&rdquo;
             <div className="mt-2 text-neutral-500 text-xs">— Gerente Comercial, CandysCream </div>
           </blockquote>
           <blockquote className="p-4 rounded-xl border bg-neutral-50">
-            "El equipo de operaciones redujo tiempos de recoleccción gracias al tracking en vivo."
+            &ldquo;El equipo de operaciones redujo tiempos de recoleccción gracias al tracking en vivo.&rdquo;
             <div className="mt-2 text-neutral-500 text-xs">— Jefe de Recoleccion.</div>
           </blockquote>
         </div>
