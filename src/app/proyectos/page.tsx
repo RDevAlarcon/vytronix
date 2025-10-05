@@ -76,7 +76,7 @@ export default function ProyectosPage() {
             Diseñamos y construimos plataformas digitales listas para operar. Con foco en negocio, seguridad y desempeño, entregamos software que acelera ventas, operaciones y soporte.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/#contacto" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Agenda una demo</Link>
+            <Link href="/#contacto" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Agenda una cita</Link>
             <Link href="/#servicios" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Conoce nuestros servicios</Link>
           </div>
         </Reveal>
