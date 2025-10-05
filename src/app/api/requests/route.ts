@@ -12,6 +12,9 @@ const schema = z.object({
   email: z.string().email(),
   phone: z.string().min(7).max(20).regex(/^[+\d().\-\s]+$/i, "Formato de teléfono inválido"),
   message: z.string().min(10, "Cuéntanos un poco más (mín. 10 caracteres)").max(1000, "Máximo 1000 caracteres"),
+  acceptedPolicies: z.literal(true, {
+    errorMap: () => ({ message: "Debes aceptar la política de privacidad" }),
+  }),
 });
 
 export async function POST(req: NextRequest) {
@@ -39,10 +42,10 @@ export async function POST(req: NextRequest) {
 
   const id = crypto.randomUUID();
   try {
-    await db.insert(contactRequests).values({ id, name, email, phone, message });
+    await db.insert(contactRequests).values({ id, name, email, phone, message, acceptedPolicies: true });
   } catch {
     // Fallback si la columna message aún no existe en la base
-    await db.execute(sql`insert into "contact_requests" ("id","name","email","phone") values (${id}, ${name}, ${email}, ${phone})`);
+    await db.execute(sql`insert into "contact_requests" ("id","name","email","phone","accepted_policies") values (${id}, ${name}, ${email}, ${phone}, ${true})`);
   }
 
   return NextResponse.json({ ok: true });

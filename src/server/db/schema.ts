@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, index, uniqueIndex, integer, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, index, uniqueIndex, integer, jsonb, boolean } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
 export const users = pgTable("users", {
@@ -11,6 +11,7 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`),
   landingDiscountConsumedAt: timestamp("landing_discount_consumed_at", { withTimezone: true }),
   landingDiscountPaymentId: text("landing_discount_payment_id"),
+  acceptedPolicies: boolean("accepted_policies").notNull().default(false),
 }, (t) => ({
   emailUq: uniqueIndex("users_email_uq").on(t.email),
   createdIdx: index("users_created_idx").on(t.createdAt),
@@ -36,6 +37,7 @@ export const contactRequests = pgTable("contact_requests", {
   phone: text("phone").notNull(),
   message: text("message").notNull().default(""),
   status: text("status").notNull().default("nuevo"),
+  acceptedPolicies: boolean("accepted_policies").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`),
 }, (t) => ({
   emailIdx: index("cr_email_idx").on(t.email),
