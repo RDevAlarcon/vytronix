@@ -50,6 +50,13 @@
       "when": 1758760717574,
       "tag": "0008_add_phone_to_users",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1759685285000,
+      "tag": "0009_record_consents",
+      "breakpoints": true
     }
   ]
 }

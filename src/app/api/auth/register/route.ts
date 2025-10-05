@@ -10,7 +10,10 @@ export const runtime = "nodejs";
 const schema = z.object({
   email: z.string().email(),
   name: z.string().min(1).max(80),
-  password: z.string().min(8).max(128)
+  password: z.string().min(8).max(128),
+  acceptedPolicies: z.literal(true, {
+    errorMap: () => ({ message: "Debes aceptar la política de privacidad" }),
+  }),
 });
 
 export async function POST(req: Request) {
@@ -35,8 +38,7 @@ export async function POST(req: Request) {
 
   const passwordHash = await bcrypt.hash(password, 12);
   const id = crypto.randomUUID();
-  await db.insert(users).values({ id, email, name, passwordHash });
+  await db.insert(users).values({ id, email, name, passwordHash, acceptedPolicies: true });
 
   return NextResponse.json({ ok: true });
 }
-
