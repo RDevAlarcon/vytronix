@@ -81,22 +81,23 @@ export default function LandingPaymentBrick({ totalAmount, payerEmail, fallbackU
 
   useEffect(() => {
     let isMounted = true;
+    const publicKey = MP_PUBLIC_KEY;
 
-    if (!MP_PUBLIC_KEY) {
+    if (!publicKey) {
       setError("Mercado Pago public key is not configured. Revisa NEXT_PUBLIC_MP_PUBLIC_KEY.");
       return () => {
         isMounted = false;
       };
     }
 
-    async function bootstrap() {
+    async function bootstrap(pk: string) {
       try {
         await loadMercadoPago();
         if (!isMounted || !window.MercadoPago) {
           return;
         }
 
-        const mercadoPago = new window.MercadoPago(MP_PUBLIC_KEY, { locale: "es-CL" });
+        const mercadoPago = new window.MercadoPago(pk, { locale: "es-CL" });
         const bricks = mercadoPago.bricks();
         const initialization: Record<string, unknown> = {
           amount: totalAmount,
@@ -210,7 +211,7 @@ export default function LandingPaymentBrick({ totalAmount, payerEmail, fallbackU
       }
     }
 
-    bootstrap();
+    bootstrap(publicKey);
 
     return () => {
       isMounted = false;
@@ -228,5 +229,3 @@ export default function LandingPaymentBrick({ totalAmount, payerEmail, fallbackU
     </div>
   );
 }
-
-
