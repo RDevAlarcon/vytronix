@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -9,6 +10,8 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [err, setErr] = useState("");
   const [fieldErrs, setFieldErrs] = useState<{ name?: string; email?: string; password?: string }>({});
+  const [acceptPolicies, setAcceptPolicies] = useState(false);
+  const [consentErr, setConsentErr] = useState<string | null>(null);
 
   const schema = z.object({
     name: z.string().min(1, "El nombre es requerido").max(80, "Máximo 80 caracteres"),
@@ -36,6 +39,23 @@ export default function RegisterPage() {
     e.preventDefault();
     setErr("");
     setFieldErrs({});
+    setConsentErr(null);
+
+    const validation = schema.safeParse({ name, email, password });
+    if (!validation.success) {
+      const fe = validation.error.flatten().fieldErrors;
+      setFieldErrs({
+        name: fe.name?.[0],
+        email: fe.email?.[0],
+        password: fe.password?.[0],
+      });
+      return;
+    }
+
+    if (!acceptPolicies) {
+      setConsentErr("Debes aceptar la Política de Privacidad y los Términos y Condiciones.");
+      return;
+    }
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -130,10 +150,28 @@ export default function RegisterPage() {
           </div>
           {fieldErrs.password && <p className="text-red-600 text-sm mt-1">{fieldErrs.password}</p>}
         </div>
+        <div className="flex items-start gap-2">
+          <input
+            id="register-consent"
+            type="checkbox"
+            checked={acceptPolicies}
+            onChange={(event) => {
+              setAcceptPolicies(event.target.checked);
+              if (consentErr && event.target.checked) {
+                setConsentErr(null);
+              }
+            }}
+            className="mt-1"
+            required
+          />
+          <label htmlFor="register-consent" className="text-sm text-neutral-700">
+            Acepto la <Link href="/privacidad" className="underline">Política de Privacidad</Link> y los <Link href="/terminos" className="underline">Términos y Condiciones</Link> de Vytronix.
+          </label>
+        </div>
+        {consentErr && <p className="text-red-600 text-sm">{consentErr}</p>}
         {err && <p className="text-red-600 text-sm">{err}</p>}
         <button className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white" type="submit">Registrarse</button>
       </form>
     </div>
   );
 }
-
