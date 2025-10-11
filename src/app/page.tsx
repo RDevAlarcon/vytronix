@@ -132,7 +132,7 @@ export default function Home() {
             <h3 className="font-semibold text-lg">Contáctanos</h3>
             <p className="mt-1 text-sm text-neutral-600">Av. Lo Errazuriz 1701, Cerrillos, Región Metropolitana</p>
             <p className="mt-1 text-sm text-neutral-600">Teléfono: +56 9 21657978</p>
-            <p className="mt-1 text-sm text-neutral-600">Email: <a className="underline" href="mailto:vytronixspa@gmail.com">vytronixspa@gmail.com</a></p>
+            <p className="mt-1 text-sm text-neutral-600">Email: <a className="underline" href="mailto:contacto@vytronix.cl">contacto@vytronix.cl</a></p>
           </div>
           <div>
             <h4 className="font-medium">Horarios de atención</h4>
