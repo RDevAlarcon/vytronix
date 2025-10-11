@@ -46,14 +46,14 @@ export default function DiscountCountdown({ initialExpiresAt }: DiscountCountdow
     }
 
     let target: number | null = null;
+    const now = Date.now();
     if (initialFromProp) {
       target = initialFromProp;
-    }
-    if (stored) {
-      target = target ? Math.min(target, stored) : stored;
+    } else if (stored && stored > now) {
+      target = stored;
     }
     if (!target) {
-      target = Date.now() + THIRTY_DAYS_MS;
+      target = now + THIRTY_DAYS_MS;
     }
 
     if (typeof window !== "undefined") {
