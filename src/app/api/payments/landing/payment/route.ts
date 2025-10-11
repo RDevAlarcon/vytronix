@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { verifyJwt } from "@/server/auth/jwt";
 import { db } from "@/server/db/client";
 import { landingPayments, users } from "@/server/db/schema";
+import { sendPaymentNotificationEmail } from "@/server/email/mailer";
 
 const MP_ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN;
 const MP_NOTIFICATION_URL = process.env.MP_NOTIFICATION_URL;
@@ -137,6 +138,7 @@ export async function POST(request: Request) {
   const paymentMethodFromResponse = (data.payment_method as Record<string, unknown> | undefined)?.id;
   const paymentMethod = typeof paymentMethodFromResponse === "string" ? paymentMethodFromResponse : paymentMethodId;
   const payerEmailFromResponse = (data.payer as Record<string, unknown> | undefined)?.email;
+  const notifyEmail = typeof payerEmailFromResponse === "string" ? payerEmailFromResponse : payerEmail;
 
   const mpCreatedAt = typeof data.date_created === "string" ? new Date(data.date_created) : null;
   const mpApprovedAt = typeof data.date_approved === "string" ? new Date(data.date_approved) : null;
@@ -187,6 +189,19 @@ export async function POST(request: Request) {
     } catch (err) {
       console.error("landing discount update error", err);
     }
+
+    if (notifyEmail) {
+      const mailResult = await sendPaymentNotificationEmail({
+        userEmail: notifyEmail,
+        amount: transactionAmount,
+        currency: currencyId,
+        paymentId,
+        status,
+      });
+      if (!mailResult.ok) {
+        console.error("[MAIL] Payment notification error", mailResult.error);
+      }
+    }
   }
 
   return NextResponse.json({
@@ -196,5 +211,4 @@ export async function POST(request: Request) {
     total: transactionAmount,
   });
 }
-
 
