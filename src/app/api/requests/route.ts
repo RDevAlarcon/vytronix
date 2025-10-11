@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/server/db/client";
 import { contactRequests } from "@/server/db/schema";
+import { sendContactNotificationEmail } from "@/server/email/mailer";
 import { rateLimit } from "@/server/utils/rate-limit";
 import { sql } from "drizzle-orm";
 
@@ -46,6 +47,11 @@ export async function POST(req: NextRequest) {
   } catch {
     // Fallback si la columna message aún no existe en la base
     await db.execute(sql`insert into "contact_requests" ("id","name","email","phone","accepted_policies") values (${id}, ${name}, ${email}, ${phone}, ${true})`);
+  }
+
+  const mailResult = await sendContactNotificationEmail({ name, email, phone, message });
+  if (!mailResult.ok) {
+    console.error("[MAIL] Contact notification error", mailResult.error);
   }
 
   return NextResponse.json({ ok: true });
