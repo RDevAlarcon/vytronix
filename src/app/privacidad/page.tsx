@@ -54,7 +54,7 @@ export default function PoliticaPrivacidadPage() {
       <section className="grid gap-3">
         <h2 className="text-xl font-semibold">5. Encargados de tratamiento</h2>
         <p className="text-neutral-700">
-          Utilizamos proveedores para hosting, analítica y pagos bajo contrato y con medidas equivalentes de protección. Proveedores principales: Railway (infraestructura/hosting), Mercado Pago (pagos) y herramientas de analítica cuando corresponda.
+          Utilizamos proveedores para hosting, analítica y pagos bajo contrato y con medidas equivalentes de protección. Proveedores principales: Railway (infraestructura), Cloudflare (hosting) Mercado Pago (pagos) y herramientas de analítica cuando corresponda.
         </p>
       </section>
 
