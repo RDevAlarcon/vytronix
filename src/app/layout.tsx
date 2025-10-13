@@ -5,6 +5,7 @@ import Link from "next/link";
 import { verifyJwt } from "@/server/auth/jwt";
 import Image from "next/image";
 import Script from "next/script";
+import HeaderNav from "@/components/HeaderNav";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "http://localhost:3000";
 const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "Vytronix";
@@ -69,29 +70,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Link href="/" className="flex items-center" aria-label="Ir al inicio">
               <Image src="/logo.png" alt="Vytronix" width={160} height={40} priority className="h-10 w-auto origin-left scale-125 md:scale-[1.61]" />
             </Link>
-            <nav className="flex gap-4 text-sm items-center">
-              <Link href="/quienes-somos">Quiénes somos</Link>
-              <Link href="/proyectos">Proyectos</Link>
-              <Link href="/#servicios">Servicios</Link>
-              <Link href="/#contacto">Contacto</Link>
-              {user ? (
-                <>
-                  {user.role === "admin" ? (
-                    <>
-                      <Link href="/dashboard" className="px-3 py-1 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Dashboard</Link>
-                      <Link href="/admin" className="px-3 py-1 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Admin</Link>
-                    </>
-                  ) : (
-                    <Link href="/perfil" className="px-3 py-1 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Mi perfil</Link>
-                  )}
-                  <form action="/api/auth/logout" method="post">
-                    <button className="px-3 py-1 border rounded" type="submit">Cerrar sesión</button>
-                  </form>
-                </>
-              ) : (
-                <Link href="/login" className="px-3 py-1 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Ingresar</Link>
-              )}
-            </nav>
+            <HeaderNav user={user ?? null} />
           </div>
         </header>
         <main>{children}</main>
