@@ -50,6 +50,7 @@ export default function Home() {
           <video
             className="w-full h-auto block"
             src="/bannerpagina.mp4"
+            autoPlay
             controls
             playsInline
             preload="auto"
