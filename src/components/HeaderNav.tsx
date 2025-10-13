@@ -10,7 +10,7 @@ type HeaderNavProps = {
 };
 
 const baseLinks = [
-  { href: "/quienes-somos", label: "Quiénes somos" },
+  { href: "/quienes-somos", label: "Qui\u00e9nes somos" },
   { href: "/proyectos", label: "Proyectos" },
   { href: "/#servicios", label: "Servicios" },
   { href: "/#contacto", label: "Contacto" },
@@ -91,7 +91,7 @@ export default function HeaderNav({ user }: HeaderNavProps) {
             }
             onClick={close}
           >
-            Cerrar sesión
+            Cerrar sesi\u00f3n
           </button>
         </form>
       </>
@@ -107,7 +107,7 @@ export default function HeaderNav({ user }: HeaderNavProps) {
         aria-controls="mobile-menu"
         onClick={toggle}
       >
-        <span className="sr-only">Abrir menú</span>
+        <span className="sr-only">Abrir men\u00fa</span>
         <svg
           className="h-5 w-5"
           xmlns="http://www.w3.org/2000/svg"
