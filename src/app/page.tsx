@@ -50,20 +50,9 @@ export default function Home() {
           <video
             className="w-full h-auto block"
             src="/bannerpagina.mp4"
-            autoPlay
-            controls={false}
-            muted={false}
-            loop={false}
+            controls
             playsInline
             preload="auto"
-            onEnded={(event) => {
-              const el = event.currentTarget;
-              if ('disablePictureInPicture' in el) {
-                try {
-                  el.disablePictureInPicture = true;
-                } catch {}
-              }
-            }}
           >
             Your browser does not support the video tag.
           </video>
