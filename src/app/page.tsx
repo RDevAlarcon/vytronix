@@ -17,6 +17,22 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
+      <section className="max-w-6xl mx-auto px-4 pt-16 pb-20">
+        <div className="relative w-full overflow-hidden rounded-2xl border bg-black/5 aspect-video">
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            src="/videopagina.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </section>
+
       <section className="max-w-6xl mx-auto px-4 pt-16 pb-20 grid md:grid-cols-2 gap-8 items-center">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold leading-tight">
