@@ -18,10 +18,10 @@ export default function Home() {
   return (
     <>
       <section className="max-w-6xl mx-auto px-4 pt-16 pb-20">
-        <div className="relative w-full overflow-hidden rounded-2xl border bg-black/5 aspect-video">
+        <div className="relative w-full overflow-hidden rounded-2xl border bg-black/5">
           <video
-            className="absolute inset-0 h-full w-full object-cover"
-            src="/videopagina.mp4"
+            className="w-full h-full object-cover"
+            src="/bannerpagina.mp4"
             autoPlay
             muted
             loop
