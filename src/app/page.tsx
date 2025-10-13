@@ -17,23 +17,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <section className="max-w-6xl mx-auto px-4 pt-16 pb-20">
-        <div className="relative w-full overflow-hidden rounded-2xl border bg-black/5">
-          <video
-            className="w-full h-full object-cover"
-            src="/bannerpagina.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          >
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      </section>
-
-      <section className="max-w-6xl mx-auto px-4 pt-16 pb-20 grid md:grid-cols-2 gap-8 items-center">
+      <section className="max-w-6xl mx-auto px-4 pt-1 pb-0 grid md:grid-cols-2 gap-8 items-center">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold leading-tight">
             Tecnología que transforma, soluciones que conectan.
@@ -50,6 +34,22 @@ export default function Home() {
           <video
             className="w-full h-full object-cover"
             src="/LogoVideo.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </section>
+
+      <section className="max-w-6xl mx-auto px-4 pt-10 pb-16">
+        <div className="mx-auto w-full max-w-[600px] md:max-w-[900px] overflow-hidden rounded-2xl border bg-black/5">
+          <video
+            className="w-full h-auto block"
+            src="/bannerpagina.mp4"
             autoPlay
             muted
             loop
