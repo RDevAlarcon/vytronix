@@ -40,26 +40,40 @@
     {
       "idx": 5,
       "version": "7",
+      "when": 1758735000000,
+      "tag": "0005_add_status_to_contact_requests",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1758736000000,
+      "tag": "0006_add_message_to_contact_requests",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
       "when": 1758740928312,
       "tag": "0007_record_landing_payments",
       "breakpoints": true
     },
     {
-      "idx": 6,
+      "idx": 8,
       "version": "7",
       "when": 1758760717574,
       "tag": "0008_add_phone_to_users",
       "breakpoints": true
     },
     {
-      "idx": 7,
+      "idx": 9,
       "version": "7",
       "when": 1759685285000,
       "tag": "0009_record_consents",
       "breakpoints": true
     },
     {
-      "idx": 8,
+      "idx": 10,
       "version": "7",
       "when": 1759687766000,
       "tag": "0010_mark_landing_thankyou",
