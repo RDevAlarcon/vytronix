@@ -91,7 +91,7 @@ export default function HeaderNav({ user }: HeaderNavProps) {
             }
             onClick={close}
           >
-            Cerrar sesi\u00f3n
+            Cerrar sesión
           </button>
         </form>
       </>
