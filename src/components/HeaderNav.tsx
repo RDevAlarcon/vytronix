@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 type UserInfo = { role?: string | null } | null;
@@ -17,7 +17,12 @@ const baseLinks = [
 ];
 
 export default function HeaderNav({ user }: HeaderNavProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    buttonRef.current?.setAttribute("aria-expanded", open ? "true" : "false");
+  }, [open]);
 
   const toggle = () => setOpen((prev) => !prev);
   const close = () => setOpen(false);
@@ -103,7 +108,8 @@ export default function HeaderNav({ user }: HeaderNavProps) {
       <button
         type="button"
         className="md:hidden inline-flex items-center justify-center rounded-md border border-neutral-300 px-3 py-2 text-sm"
-        aria-expanded={open}
+        ref={buttonRef}
+        aria-expanded="false"
         aria-controls="mobile-menu"
         onClick={toggle}
       >
