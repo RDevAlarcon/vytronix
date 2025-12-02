@@ -2,31 +2,56 @@ import Script from "next/script";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 const projects = [
   {
-    id: "Aplicacion móvil Marketplace B2B ",
-    name: "Aplicacion móvil con marketplace B2B de suministros mecánicos",
-    summary: "Suite móvil para compras de insumos mecánicos, roles de superadmin, usuario, tienda y delivery de compras.",
+    id: "green-recycle",
+    name: "Green Recycle",
+    summary: "Aplicación móvil para reciclaje inteligente con seguimiento de puntos de recolección y rutas.",
     outcome: "Aceleración de nuestras ventas en un 35%.",
     services: ["Discovery UX/UI", "Desarrollo full-stack", "Integraciones", "Aplicaciones móviles"],
     stack: ["Next.js", "NestJS", "PostgreSQL", "Flutter", "Azure"],
+    category: "Mobile",
+    tags: ["Mobile", "Firebase", "Maps"],
+    image: "/greenrecycle.jpg",
+    accent: "from-emerald-50 to-emerald-100",
   },
   {
-    id: "Landing Page",
-    name: "Landin Page para servicio de Heladeria-Cafeteria",
-    summary: "Landin Page para tener mas visibilidad en el mercado con SEO técnico y profesional.",
+    id: "sweet-delights",
+    name: "Candys Cream",
+    summary: "Tienda en línea para heladeria & pastelería artesanal con catálogo, pedidos y pago en línea.",
     outcome: "Visibilidad en el mercado gracias al SEO avanzado.",
     services: ["Product Design", "Discovery UX/UI", "Web Design"],
     stack: ["Html", "Css", "Js", "Bootstrap"],
+    category: "E-commerce",
+    tags: ["E-commerce", "Next.js"],
+    image: "/candyscream.jpg",
+    accent: "from-amber-50 to-orange-100",
   },
   {
-    id: "logistics-tracking",
-    name: "Tracking logístico en tiempo real",
-    summary: "Suite web y mobile para recolectores de reciclaje, estados de conexión y alertas.",
+    id: "sistema-pedidos",
+    name: "Sistema de Pedidos",
+    summary: "Aplicación web para gestionar pedidos con panel administrativo y métricas en tiempo real.",
     outcome: "Conectamos con usuarios en tiempo real para poder recolectar material reciclado 24/7",
     services: ["Arquitectura en la nube", "Aplicaciones móviles", "Desarrollo full-stack", "Soporte gestionado"],
     stack: ["React", "Next.js", "Supabase", "AWS"],
+    category: "Web App",
+    tags: ["Web App", "React"],
+    image: "/sistemapedido.jpg",
+    accent: "from-neutral-900 to-neutral-700",
+  },
+  {
+    id: "tech-conference",
+    name: "Tech Conference",
+    summary: "Sitio web para conferencia de tecnología con agenda, registro y versiones responsive.",
+    outcome: "Conectamos con usuarios en tiempo real para poder recolectar material reciclado 24/7",
+    services: ["Product Design", "Discovery UX/UI", "Web Design"],
+    stack: ["Next.js", "Tailwind CSS"],
+    category: "Website",
+    tags: ["Website", "Tailwind CSS"],
+    image: "/techconference.jpg",
+    accent: "from-indigo-100 to-purple-200",
   },
 ];
 
@@ -43,6 +68,7 @@ export const metadata: Metadata = {
 
 export default function ProyectosPage() {
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "http://localhost:3000";
+  const WHATSAPP_URL = "https://wa.me/56921657978?text=Hola,%20vengo%20del%20sitio%20de%20Vytronix.%20Me%20gustaría%20recibir%20asesoría.%20Mi%20nombre%20es%20___.";
 
   return (
     <div className="max-w-6xl mx-auto px-4 pt-16 pb-20 grid gap-12">
@@ -85,26 +111,47 @@ export default function ProyectosPage() {
       {/* Projects grid */}
       <section className="grid gap-6">
         <h2 className="text-2xl font-semibold">Casos recientes</h2>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-3 md:grid-cols-2">
           {projects.map((project) => (
-            <Reveal key={project.id} className="p-6 rounded-2xl border bg-white shadow-sm flex flex-col gap-4">
-              <div>
-                <h3 className="text-lg font-semibold">{project.name}</h3>
-                <p className="mt-2 text-sm text-neutral-700">{project.summary}</p>
+            <Reveal key={project.id} className="rounded-2xl border bg-white shadow-sm overflow-hidden flex flex-col">
+              <div className={`relative aspect-[4/3] bg-gradient-to-br ${project.accent}`}>
+                {project.image ? (
+                  <Image
+                    src={project.image}
+                    alt={project.name}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className={`object-cover ${project.id === "sistema-pedidos" ? "opacity-90" : ""}`}
+                    priority={project.id === "green-recycle"}
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-neutral-500 text-sm">Visual en preparación</div>
+                )}
               </div>
-              <div className="grid gap-1 text-sm">
-                <div className="text-neutral-500 uppercase tracking-wide text-xs">Servicios</div>
-                <ul className="text-neutral-700">
-                  {project.services.map((service) => (
-                    <li key={service}>• {service}</li>
+              <div className="p-1.5 flex flex-col gap-1.5 flex-1">
+                <div className="flex items-start justify-between gap-1.5">
+                  <div className="grid gap-1.5">
+                    <div className="text-xs text-neutral-500 font-semibold uppercase tracking-wide">{project.category}</div>
+                    <h3 className="text-base font-semibold leading-tight">{project.name}</h3>
+                    <p className="text-sm text-neutral-700 leading-relaxed">{project.summary}</p>
+                  </div>
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] font-semibold whitespace-nowrap hover:underline"
+                  >
+                    Lo quiero
+                  </a>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="px-2.5 py-1 rounded-full bg-neutral-100 text-[11px] text-neutral-700 border border-neutral-200">
+                      {tag}
+                    </span>
                   ))}
-                </ul>
+                </div>
               </div>
-              <div className="grid gap-1 text-sm">
-                <div className="text-neutral-500 uppercase tracking-wide text-xs">Stack</div>
-                <div className="text-neutral-700">{project.stack.join(", ")}</div>
-              </div>
-              <div className="text-sm text-neutral-700"><span className="font-medium">Impacto:</span> {project.outcome}</div>
             </Reveal>
           ))}
         </div>
