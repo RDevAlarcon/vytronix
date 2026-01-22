@@ -13,6 +13,7 @@ const baseLinks = [
   { href: "/quienes-somos", label: "Qui\u00e9nes somos" },
   { href: "/proyectos", label: "Proyectos" },
   { href: "/#servicios", label: "Servicios" },
+  { href: "/marketing-digital", label: "Marketing digital" },
   { href: "/#contacto", label: "Contacto" },
 ];
 

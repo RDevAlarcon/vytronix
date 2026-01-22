@@ -105,6 +105,68 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="marketing-digital" className="max-w-6xl mx-auto px-4 py-14">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold">Marketing digital</h2>
+          <p className="mt-1 text-neutral-600">Planes a medida para crecer en tráfico, leads y ventas.</p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            {
+              title: "Plan básico",
+              desc: "Presencia digital mínima y generación de primeros leads. Ideal para empezar.",
+              tag: "Desde CLP $300.000 + IVA",
+              image: {
+                src: "/plan_basico.jpg",
+                alt: "Plan básico marketing digital",
+              },
+            },
+            {
+              title: "Plan medio",
+              desc: "Estrategia sostenida con Ads y optimización para leads recurrentes.",
+              tag: "Desde CLP $550.000 + IVA",
+              image: {
+                src: "/plan_medio.jpg",
+                alt: "Plan medio marketing digital",
+              },
+            },
+            {
+              title: "Plan enterprise",
+              desc: "Adquisición multicanal, automatización y optimización avanzada.",
+              tag: "Desde CLP $1.500.000 + IVA",
+              image: {
+                src: "/plan_enterprise.jpg",
+                alt: "Plan enterprise marketing digital",
+              },
+            },
+          ].map((card) => (
+            <div key={card.title} className="group p-6 rounded-2xl border bg-white shadow-sm transition hover:shadow-md hover:border-neutral-300">
+              <div className="mb-3 h-40 w-full overflow-hidden rounded-xl border bg-neutral-100">
+                <Image
+                  src={card.image.src}
+                  alt={card.image.alt}
+                  width={800}
+                  height={400}
+                  className="h-40 w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:transform-none"
+                  priority={false}
+                />
+              </div>
+              <div className="flex flex-col gap-3">
+                <h3 className="font-semibold">{card.title}</h3>
+                <span className="text-xs rounded-full border px-2 py-1 text-neutral-600 self-start">{card.tag}</span>
+              </div>
+              <p className="mt-2 text-sm text-neutral-600">{card.desc}</p>
+              <Link
+                href="/marketing-digital"
+                className="mt-4 inline-flex text-sm font-medium text-[var(--color-primary)] hover:underline"
+              >
+                Ver detalles
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Teaser: Quiénes somos */}
       <section className="max-w-6xl mx-auto px-4 py-14">
         <div className="p-6 rounded-2xl border bg-white shadow-sm grid md:grid-cols-[1fr_auto] gap-4 items-center">
