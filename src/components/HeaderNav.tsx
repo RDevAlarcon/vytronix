@@ -130,9 +130,15 @@ export default function HeaderNav({ user }: HeaderNavProps) {
         </svg>
       </button>
 
-      <nav className="hidden md:flex gap-4 text-sm items-center">
+      <nav className="hidden md:flex gap-3 text-sm items-center">
         {baseLinks.map((link) => (
-          <Link key={link.href} href={link.href}>{link.label}</Link>
+          <Link
+            key={link.href}
+            href={link.href}
+            className="inline-flex items-center justify-center px-3 py-2 rounded-full border-2 border-neutral-300 text-neutral-700 transition-transform duration-200 hover:scale-105 hover:border-neutral-400 hover:text-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+          >
+            {link.label}
+          </Link>
         ))}
         {renderAuthLinks("desktop")}
       </nav>
@@ -145,7 +151,12 @@ export default function HeaderNav({ user }: HeaderNavProps) {
       >
         <div className="flex flex-col py-2">
           {baseLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="px-4 py-2 text-sm" onClick={close}>
+            <Link
+              key={link.href}
+              href={link.href}
+              className="px-4 py-2 text-sm transition-colors duration-200 hover:text-[var(--color-primary)] focus-visible:text-[var(--color-primary)] focus-visible:outline-none"
+              onClick={close}
+            >
               {link.label}
             </Link>
           ))}

@@ -75,12 +75,38 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </header>
         <main>{children}</main>
         <footer className="border-t mt-20">
-          <div className="max-w-6xl mx-auto px-4 py-6 text-sm grid gap-2 justify-items-center text-center">
-            <div className="text-neutral-600 italic">Tecnología que transforma, soluciones que conectan.</div>
-            <div className="text-neutral-600">© {new Date().getFullYear()} Vytronix</div>
-            <div className="flex flex-wrap gap-3 justify-center">
+          <div className="max-w-6xl mx-auto px-4 py-6 text-sm grid gap-6 md:grid-cols-3 md:divide-x md:divide-neutral-200">
+            <div className="flex flex-col items-center gap-3 text-center md:items-start md:text-left md:pr-6">
               <Link href="/privacidad" className="underline">Política de Privacidad</Link>
               <Link href="/terminos" className="underline">Términos y Condiciones</Link>
+            </div>
+            <div className="flex flex-col items-center gap-2 text-center md:px-6 text-base">
+              <div className="text-neutral-600 italic">Tecnología que transforma, soluciones que conectan.</div>
+              <div className="text-neutral-600">© 2025 Vytronix</div>
+            </div>
+            <div className="flex items-center justify-center md:justify-end md:pl-6">
+              <div className="flex items-center gap-4 text-neutral-600">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-neutral-300 text-black transition-transform duration-200 hover:scale-105 hover:border-neutral-400 hover:text-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="TikTok" tabIndex={0}>
+                  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor" aria-hidden="true">
+                    <path d="M16.5 6.2c-1-.7-1.6-1.8-1.7-3V3h-3.2v10.1a2.7 2.7 0 1 1-1.8-2.6V7.2A5.9 5.9 0 0 0 5 12.9a5.9 5.9 0 1 0 11.8 0V8.4c1.1.8 2.4 1.2 3.7 1.2V6.4c-1.5 0-2.9-.4-4-1.2Z"/>
+                  </svg>
+                </span>
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-neutral-300 text-[#E1306C] transition-transform duration-200 hover:scale-105 hover:border-neutral-400 hover:text-[#C01E5B] focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="Instagram" tabIndex={0}>
+                  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor" aria-hidden="true">
+                    <path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 5.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Zm6.1-1.7a1 1 0 1 0 0 2 1 1 0 0 0 0-2ZM12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z"/>
+                  </svg>
+                </span>
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-neutral-300 text-[#1877F2] transition-transform duration-200 hover:scale-105 hover:border-neutral-400 hover:text-[#0D5CC9] focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="Facebook" tabIndex={0}>
+                  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor" aria-hidden="true">
+                    <path d="M13.5 9H16V6h-2.5C10.8 6 10 7.8 10 9.6V12H8v3h2v6h3v-6h2.4l.6-3H13V9.9c0-.6.3-.9.9-.9Z"/>
+                  </svg>
+                </span>
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-neutral-300 text-[#0A66C2] transition-transform duration-200 hover:scale-105 hover:border-neutral-400 hover:text-[#084C93] focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="LinkedIn" tabIndex={0}>
+                  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor" aria-hidden="true">
+                    <path d="M6.5 9H4v11h2.5V9ZM5.2 4a1.3 1.3 0 1 0 0 2.6A1.3 1.3 0 0 0 5.2 4ZM20 14.1V20h-2.5v-5.2c0-1.3-.5-2.2-1.6-2.2-.9 0-1.5.6-1.7 1.2-.1.2-.1.6-.1.9V20H11.6V9h2.5v1.5c.3-.7 1.2-1.7 2.9-1.7 2.1 0 3.6 1.4 3.6 4.3Z"/>
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </footer>
@@ -102,4 +128,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     </html>
   );
 }
+
+
 
