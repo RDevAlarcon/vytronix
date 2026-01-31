@@ -28,8 +28,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0B1220;
-    --foreground: #E5E7EB;
+    /* Match light theme even when system is dark */
+    --color-text: #0B1220;
+    --color-muted: #64748B;
+    --color-bg: #F8FAFC;
+    --color-surface: #FFFFFF;
+    --background: var(--color-bg);
+    --foreground: var(--color-text);
+    color-scheme: light;
+  }
+
+  html,
+  body {
+    background: var(--color-bg) !important;
+    color: var(--color-text) !important;
+    color-scheme: light;
   }
 }
 
