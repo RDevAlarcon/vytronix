@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Marketing digital | Vytronix",
-  description: "Planes de marketing digital a medida: básico, medio y enterprise. Estrategia, contenidos y Ads para crecer.",
+  description: "Planes de marketing digital a medida: básico, medio y avanzado. Estrategia, contenidos y Ads para crecer.",
   alternates: { canonical: "/marketing-digital" },
   openGraph: {
     title: "Marketing digital | Vytronix",
@@ -22,16 +22,23 @@ const plans = [
       src: "/plan_basico.jpg",
       alt: "Plan básico marketing digital",
     },
-    price: "CLP $300.000 + IVA",
-    ads: "CLP $60.000 - $120.000 (pagado directamente por el cliente)",
+    price: "CLP $300.000 + IVA / mes",
+    billing: "Contrato mínimo 3 meses · Pago mensual por adelantado",
     sections: [
       {
-        title: "Alcance del servicio",
+        title: "Piezas incluidas",
         items: [
-          "Estrategia básica inicial",
-          "Gestión de perfiles sociales",
-          "8 publicaciones mensuales",
-          "Diseño gráfico simple alineado a marca Empresa",
+          "6 publicaciones feed (imagen o carrusel)",
+          "2 stories estáticas",
+          "Total: 8 piezas mensuales",
+        ],
+      },
+      {
+        title: "Incluye",
+        items: [
+          "Estrategia básica basada en diagnóstico",
+          "Gestión de redes sociales",
+          "Diseño gráfico alineado a la marca",
           "1 campaña Ads básica",
           "Reporte mensual",
         ],
@@ -40,8 +47,8 @@ const plans = [
         title: "Condiciones",
         items: [
           "Contrato mínimo 3 meses",
-          "Pago 100% anticipado",
-          "Ads no incluidos en el fee",
+          "Pago mensual por adelantado",
+          "Inversión publicitaria no incluida (campañas Ads pagadas directamente por el cliente a la plataforma)",
         ],
       },
     ],
@@ -54,83 +61,82 @@ const plans = [
       src: "/plan_medio.jpg",
       alt: "Plan medio marketing digital",
     },
-    price: "CLP $550.000 + IVA",
-    ads: "CLP $150.000 - $300.000 (pagado directamente por el cliente)",
+    price: "CLP $400.000 + IVA / mes",
+    billing: "Contrato mínimo 3 meses · Pago mensual por adelantado",
     sections: [
       {
-        title: "Alcance del servicio",
+        title: "Piezas incluidas",
         items: [
-          "Estrategia mensual basada en datos",
-          "Gestión profesional de redes sociales (12 piezas)",
-          "Diseño gráfico avanzado alineado a marca",
-          "Gestión y optimización de 2 campañas Ads",
-          "Landing page orientada a conversión",
-          "Reporte mensual",
+          "8 publicaciones feed (imagen o carrusel)",
+          "4 stories (estáticas o animadas simples)",
+          "Total: 12 piezas mensuales",
         ],
       },
       {
-        title: "Indicadores y enfoque",
+        title: "Incluye",
         items: [
-          "CTR, CPC y CPL como métricas de referencia",
-          "Optimización continua basada en rendimiento",
+          "Estrategia mensual personalizada",
+          "Gestión profesional de redes sociales",
+          "Diseño gráfico avanzado",
+          "Gestión y optimización de campañas Ads",
+          "Optimización continua basada en métricas",
+          "Reporte mensual con indicadores clave",
         ],
       },
       {
-        title: "Forma de pago",
-        items: ["Pago 100% por adelantado al inicio de cada mes"],
+        title: "Indicadores",
+        items: ["Alcance, interacción, CTR y leads"],
       },
       {
-        title: "Consideraciones importantes",
+        title: "Condiciones",
         items: [
-          "El fee no incluye inversión publicitaria",
-          "No se garantizan resultados específicos, ventas o métricas exactas",
-          "El rendimiento depende del mercado, producto, presupuesto y respuesta del público",
-          "Las optimizaciones se realizan en base a datos y mejores prácticas",
+          "Contrato mínimo 3 meses",
+          "Pago mensual por adelantado",
+          "Inversión publicitaria no incluida (campañas Ads pagadas directamente por el cliente a la plataforma)",
         ],
       },
     ],
   },
   {
-    id: "plan-enterprise",
-    name: "Plan enterprise",
-    summary: "Escalar adquisición de clientes con campañas multicanal y automatización avanzada.",
+    id: "plan-avanzado",
+    name: "Plan avanzado",
+    summary: "Escalar adquisición de clientes con estrategia digital integral.",
     image: {
       src: "/plan_enterprise.jpg",
-      alt: "Plan enterprise marketing digital",
+      alt: "Plan avanzado marketing digital",
     },
-    price: "CLP $1.500.000 + IVA",
-    ads: "Desde CLP $500.000 (pagado directamente por el cliente)",
+    price: "CLP $500.000 + IVA / mes",
+    billing: "Contrato mínimo 3 meses · Pago mensual por adelantado",
     sections: [
       {
-        title: "Alcance del servicio",
+        title: "Piezas incluidas",
         items: [
-          "Estrategia multicanal integral",
-          "Producción de contenido profesional (16 piezas)",
-          "Gestión avanzada y optimización continua de Ads",
-          "Diseño e implementación de embudos completos",
-          "Integración CRM",
-          "A/B testing y mejora continua",
-          "Dashboard y reportes quincenales",
+          "10 publicaciones feed (imagen o carrusel)",
+          "6 stories",
+          "Total: 16 piezas mensuales",
         ],
       },
       {
-        title: "Indicadores y enfoque",
+        title: "Incluye",
         items: [
-          "CPA, ROAS y tasa de conversión",
-          "Optimización por cohortes y audiencias",
+          "Estrategia digital integral",
+          "Gestión avanzada de redes sociales",
+          "Diseño creativo y branding digital",
+          "Gestión y optimización continua de Ads",
+          "Análisis de audiencias y contenido",
+          "Reporte estratégico con recomendaciones",
         ],
       },
       {
-        title: "Forma de pago",
-        items: ["Pago 100% por adelantado al inicio de cada mes"],
+        title: "Indicadores",
+        items: ["Leads, CPL y rendimiento de campañas"],
       },
       {
-        title: "Consideraciones importantes",
+        title: "Condiciones",
         items: [
-          "El fee no incluye inversión publicitaria",
-          "No se garantizan resultados específicos, ventas o métricas exactas",
-          "El rendimiento depende del mercado, producto, presupuesto y respuesta del público",
-          "Las optimizaciones se realizan en base a datos y mejores prácticas",
+          "Contrato mínimo 3 meses",
+          "Pago mensual por adelantado",
+          "Inversión publicitaria no incluida (campañas Ads pagadas directamente por el cliente a la plataforma)",
         ],
       },
     ],
@@ -171,8 +177,8 @@ export default function MarketingDigitalPage() {
               </span>
             </div>
             <div className="mt-4 text-sm text-neutral-700">
-              <p className="font-medium">Presupuesto Ads</p>
-              <p className="text-neutral-600">{plan.ads}</p>
+              <p className="font-medium">Condiciones</p>
+              <p className="text-neutral-600">{plan.billing}</p>
             </div>
             <div className="mt-6 flex">
               <a href={`#${plan.id}`} className="text-sm font-medium text-[var(--color-primary)] hover:underline">
@@ -194,7 +200,7 @@ export default function MarketingDigitalPage() {
               <h2 className="text-2xl font-semibold">{plan.name}</h2>
               <div className="text-sm text-neutral-600 sm:text-right">
                 <div className="font-medium whitespace-nowrap">{plan.price}</div>
-                <div className="text-neutral-500">{plan.ads}</div>
+                <div className="text-neutral-500">{plan.billing}</div>
               </div>
             </div>
             <p className="mt-2 text-neutral-600">{plan.summary}</p>
@@ -213,6 +219,26 @@ export default function MarketingDigitalPage() {
             </div>
           </article>
         ))}
+      </section>
+
+      <section className="mt-12 rounded-2xl border bg-white p-6 shadow-sm grid gap-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div>
+            <h2 className="text-2xl font-semibold">Diagnóstico digital (servicio independiente)</h2>
+            <p className="mt-1 text-sm text-neutral-600">CLP $120.000 + IVA · Pago único (no incluye ejecución)</p>
+          </div>
+        </div>
+        <ul className="text-sm text-neutral-700 list-disc pl-5">
+          <li>Análisis de redes sociales actuales</li>
+          <li>Revisión de contenido, diseño y coherencia de marca</li>
+          <li>Evaluación de presencia digital</li>
+          <li>Detección de errores y oportunidades de mejora</li>
+          <li>Recomendaciones estratégicas personalizadas</li>
+        </ul>
+        <p className="text-sm text-neutral-600">
+          Este diagnóstico es requisito previo para contratar cualquier plan mensual.
+        </p>
+        <p className="text-sm text-neutral-600">Contrato mínimo 3 meses · Pago mensual por adelantado</p>
       </section>
 
       <section className="mt-12 rounded-2xl border bg-white p-6 shadow-sm grid md:grid-cols-[1fr_auto] gap-4 items-center">

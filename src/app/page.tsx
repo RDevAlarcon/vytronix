@@ -115,7 +115,7 @@ export default function Home() {
             {
               title: "Plan básico",
               desc: "Presencia digital mínima y generación de primeros leads. Ideal para empezar.",
-              tag: "Desde CLP $300.000 + IVA",
+              tag: "CLP $300.000 + IVA / mes",
               image: {
                 src: "/plan_basico.jpg",
                 alt: "Plan básico marketing digital",
@@ -124,19 +124,19 @@ export default function Home() {
             {
               title: "Plan medio",
               desc: "Estrategia sostenida con Ads y optimización para leads recurrentes.",
-              tag: "Desde CLP $550.000 + IVA",
+              tag: "CLP $400.000 + IVA / mes",
               image: {
                 src: "/plan_medio.jpg",
                 alt: "Plan medio marketing digital",
               },
             },
             {
-              title: "Plan enterprise",
-              desc: "Adquisición multicanal, automatización y optimización avanzada.",
-              tag: "Desde CLP $1.500.000 + IVA",
+              title: "Plan avanzado",
+              desc: "Estrategia digital integral, branding y optimización continua.",
+              tag: "CLP $500.000 + IVA / mes",
               image: {
                 src: "/plan_enterprise.jpg",
-                alt: "Plan enterprise marketing digital",
+                alt: "Plan avanzado marketing digital",
               },
             },
           ].map((card) => (
