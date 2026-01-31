@@ -98,7 +98,7 @@ export default function ProyectosPage() {
       <section className="grid md:grid-cols-2 gap-8 items-center">
         <Reveal>
           <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">Proyectos que impulsan crecimiento</h1>
-          <p className="mt-4 text-neutral-700">
+          <p className="mt-4 text-neutral-800">
             Diseñamos y construimos plataformas digitales listas para operar. Con foco en negocio, seguridad y desempeño, entregamos software que acelera ventas, operaciones y soporte.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
@@ -177,10 +177,10 @@ export default function ProyectosPage() {
       </section>
 
       {/* CTA final */}
-      <section className="grid md:grid-cols-2 gap-4 items-center">
-        <div className="text-neutral-700">
+      <section className="rounded-2xl border bg-white shadow-sm p-6 grid md:grid-cols-2 gap-4 items-center">
+        <div className="text-neutral-800">
           <h2 className="text-xl font-semibold">¿Listo para tu próximo proyecto?</h2>
-          <p className="mt-1 text-sm">Contactanos y pongamos tu producto digital en producción.</p>
+          <p className="mt-1 text-sm">Contáctanos y pongamos tu producto digital en producción.</p>
         </div>
         <div className="flex gap-3 md:justify-end">
           <Link href="/#contacto" className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Contáctanos</Link>

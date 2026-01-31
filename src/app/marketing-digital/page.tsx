@@ -148,7 +148,7 @@ export default function MarketingDigitalPage() {
     <main className="max-w-6xl mx-auto px-4 py-12">
       <section className="grid gap-4">
         <h1 className="text-3xl md:text-4xl font-bold">Marketing digital</h1>
-        <p className="text-neutral-600 max-w-3xl">
+        <p className="text-neutral-700 max-w-3xl">
           Planes a medida para posicionar tu marca, generar leads calificados y sostener resultados con estrategia y
           optimización continua.
         </p>

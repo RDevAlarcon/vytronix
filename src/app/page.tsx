@@ -19,10 +19,10 @@ export default function Home() {
     <>
       <section className="max-w-6xl mx-auto px-4 pt-1 pb-0 grid md:grid-cols-2 gap-8 items-center">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold leading-tight">
+          <h1 className="text-3xl md:text-4xl font-bold leading-tight text-neutral-900 drop-shadow-sm">
             Tecnología que transforma, soluciones que conectan.
           </h1>
-          <p className="mt-4 text-neutral-600">
+          <p className="mt-4 text-neutral-700 drop-shadow-sm">
             Impulsamos tu crecimiento con tecnología a medida.
           </p>
           <div className="mt-6 flex gap-3">
@@ -62,8 +62,8 @@ export default function Home() {
 
       <section id="servicios" className="max-w-6xl mx-auto px-4 py-14">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold">Soluciones web y móviles a tu medida</h2>
-          <p className="mt-1 text-neutral-600">Desarrollamos productos rápidos, seguros y escalables para tu negocio.</p>
+          <h2 className="text-2xl font-bold text-neutral-900 drop-shadow-sm">Soluciones web y móviles a tu medida</h2>
+          <p className="mt-1 text-neutral-700 drop-shadow-sm">Desarrollamos productos rápidos, seguros y escalables para tu negocio.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
         {[
@@ -107,8 +107,8 @@ export default function Home() {
 
       <section id="marketing-digital" className="max-w-6xl mx-auto px-4 py-14">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold">Marketing digital</h2>
-          <p className="mt-1 text-neutral-600">Planes a medida para crecer en tráfico, leads y ventas.</p>
+          <h2 className="text-2xl font-bold text-neutral-900 drop-shadow-sm">Marketing digital</h2>
+          <p className="mt-1 text-neutral-700 drop-shadow-sm">Planes a medida para crecer en tráfico, leads y ventas.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {[
@@ -172,7 +172,7 @@ export default function Home() {
         <div className="p-6 rounded-2xl border bg-white shadow-sm grid md:grid-cols-[1fr_auto] gap-4 items-center">
           <div>
             <h2 className="text-xl font-semibold">Quiénes somos</h2>
-            <p className="mt-1 text-neutral-700 text-sm">
+            <p className="mt-1 text-neutral-800 text-sm">
               Impulsamos a pymes y startups con software a medida rápido, seguro y escalable, alineado a los objetivos del negocio.
             </p>
           </div>
