@@ -13,6 +13,11 @@ const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "Vytronix";
 export const metadata: Metadata = {
   title: "Vytronix | Soluciones Web & Móviles",
   description: "Desarrollo a medida y soluciones tecnológicas",
+  icons: {
+    icon: "/favicon-32x32.png",
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
