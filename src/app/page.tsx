@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   },
 };
 
+const VYAUDIT_URL = process.env.NEXT_PUBLIC_VYAUDIT_URL || "https://audit.vytronix.cl";
+
 export default function Home() {
   return (
     <>
@@ -60,12 +62,33 @@ export default function Home() {
         </div>
       </section>
 
+
+      <section id="vyaudit" className="max-w-6xl mx-auto px-4 pb-14">
+        <div className="p-6 rounded-2xl border bg-white shadow-sm grid md:grid-cols-[1fr_auto] gap-4 items-center">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-primary)]">Nuevo servicio</p>
+            <h2 className="mt-1 text-2xl font-bold text-neutral-900">VyAudit: Auditoría inteligente de tu sitio web</h2>
+            <p className="mt-2 text-sm text-neutral-700">
+              Obtén un diagnóstico profesional de rendimiento, SEO técnico, accesibilidad, UX y seguridad,
+              con informe PDF y prioridades de implementación.
+            </p>
+            <p className="mt-2 text-sm text-neutral-700">
+              Servicio de pago único por dominio, ideal para tomar decisiones técnicas y comerciales con datos claros.
+            </p>
+          </div>
+          <div className="flex gap-3 md:justify-end">
+            <a href={VYAUDIT_URL} className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Solicitar VyAudit</a>
+            <a href={VYAUDIT_URL} className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Ver muestra de informe</a>
+          </div>
+        </div>
+      </section>
+
       <section id="servicios" className="max-w-6xl mx-auto px-4 py-14">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-neutral-900 drop-shadow-sm">Soluciones web y móviles a tu medida</h2>
           <p className="mt-1 text-neutral-700 drop-shadow-sm">Desarrollamos productos rápidos, seguros y escalables para tu negocio.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
           {
             title: "Apps móviles",
@@ -85,6 +108,12 @@ export default function Home() {
             src: "/integracionesapi.jpg",
             alt: "Integraciones y APIs",
             desc: "Conectamos tu producto con pagos, CRM y terceros. Integraciones seguras y escalables para tu operación.",
+          },
+          {
+            title: "VyAudit (auditoria web)",
+            src: "/plan_medio.jpg",
+            alt: "VyAudit",
+            desc: "Informe tecnico-comercial profesional para detectar brechas de performance, SEO, UX y seguridad en una corrida.",
           },
         ].map((card) => (
           <div key={card.title} className="group p-6 rounded-2xl border bg-white shadow-sm transition hover:shadow-md hover:border-neutral-300">
@@ -199,6 +228,19 @@ export default function Home() {
         </div>
       </section>
 
+
+      <section className="max-w-6xl mx-auto px-4 pb-8">
+        <div className="p-6 rounded-2xl border bg-white shadow-sm grid md:grid-cols-[1fr_auto] gap-4 items-center">
+          <div>
+            <h2 className="text-xl font-semibold">Tu sitio convierte menos de lo esperado?</h2>
+            <p className="mt-1 text-neutral-700 text-sm">Solicita VyAudit y recibe un informe accionable para mejorar resultados.</p>
+          </div>
+          <div className="flex gap-3 md:justify-end">
+            <a href={VYAUDIT_URL} className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Solicitar VyAudit</a>
+          </div>
+        </div>
+      </section>
+
       <section id="contacto" className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-6 items-start">
         <div>
           {/* Formulario de solicitudes de clientes */}
@@ -234,4 +276,5 @@ export default function Home() {
     </>
   );
 }
+
 
