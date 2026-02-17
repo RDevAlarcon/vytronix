@@ -14,7 +14,7 @@ Aplicación Next.js con gestión de solicitudes de contacto, autenticación con 
 - `DATABASE_URL`: cadena de conexión a Postgres
 - `JWT_SECRET`: cadena aleatoria larga (para firmar el JWT)
 - (Opcional) `RESEND_API_KEY` y `MAIL_FROM` para envío de correo de recuperación
-- (Opcional) `VYAUDIT_BASE_URL`, `BRIDGE_SHARED_SECRET` y `BRIDGE_ISSUER` para abrir VyAudit desde `/admin` con token seguro de admin
+- (Opcional) `VYAUDIT_BASE_URL`, `BRIDGE_SHARED_SECRET` y `BRIDGE_ISSUER` para abrir VyAudit desde `/admin` con token seguro de admin`r`n- (Opcional) `VYAUDIT_ADMIN_ACCESS_KEY`, `VYAUDIT_CHECKOUT_SECRET` y `VYAUDIT_PRICE_CLP` para cobrar VyAudit por Mercado Pago y redirigir a enlace único
 
 2) Instala dependencias e inicia en desarrollo:
 
@@ -85,3 +85,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+

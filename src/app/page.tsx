@@ -1,4 +1,4 @@
-﻿import ContactForm from "@/components/ContactForm";
+import ContactForm from "@/components/ContactForm";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   },
 };
 
-const VYAUDIT_URL = process.env.NEXT_PUBLIC_VYAUDIT_URL || "https://audit.vytronix.cl";
+const VYAUDIT_CHECKOUT_URL = "/vyaudit";
+const VYAUDIT_DEMO_URL = process.env.NEXT_PUBLIC_VYAUDIT_DEMO_URL || "https://audit.vytronix.cl";
 
 export default function Home() {
   return (
@@ -77,8 +78,8 @@ export default function Home() {
             </p>
           </div>
           <div className="flex gap-3 md:justify-end">
-            <a href={VYAUDIT_URL} className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Solicitar VyAudit</a>
-            <a href={VYAUDIT_URL} className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Ver muestra de informe</a>
+            <a href={VYAUDIT_CHECKOUT_URL} className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Solicitar VyAudit</a>
+            <a href={VYAUDIT_DEMO_URL} target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Ver muestra de informe</a>
           </div>
         </div>
       </section>
@@ -232,11 +233,11 @@ export default function Home() {
       <section className="max-w-6xl mx-auto px-4 pb-8">
         <div className="p-6 rounded-2xl border bg-white shadow-sm grid md:grid-cols-[1fr_auto] gap-4 items-center">
           <div>
-            <h2 className="text-xl font-semibold">Tu sitio convierte menos de lo esperado?</h2>
+            <h2 className="text-xl font-semibold">¿Tu sitio convierte menos de lo esperado?</h2>
             <p className="mt-1 text-neutral-700 text-sm">Solicita VyAudit y recibe un informe accionable para mejorar resultados.</p>
           </div>
           <div className="flex gap-3 md:justify-end">
-            <a href={VYAUDIT_URL} className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Solicitar VyAudit</a>
+            <a href={VYAUDIT_CHECKOUT_URL} className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Solicitar VyAudit</a>
           </div>
         </div>
       </section>
@@ -276,5 +277,9 @@ export default function Home() {
     </>
   );
 }
+
+
+
+
 
 
