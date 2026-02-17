@@ -109,7 +109,7 @@ export default function VyAuditCheckoutPage() {
           <button
             type="submit"
             disabled={loading}
-            className="rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-xl px-6 py-3 font-semibold transition bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-600 disabled:hover:bg-slate-300"
           >
             {loading ? "Preparando pago..." : "Continuar al pago"}
           </button>
