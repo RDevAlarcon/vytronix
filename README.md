@@ -1,21 +1,20 @@
 ﻿## Vytronix
 
-AplicaciÃ³n Next.js con gestiÃ³n de solicitudes de contacto, autenticaciÃ³n con JWT en cookie y panel de administraciÃ³n.
+Aplicación Next.js con gestión de solicitudes de contacto, autenticación con JWT en cookie y panel de administración.
 
 ### Requisitos
 
 - Node 18+ y npm
 - Base de datos PostgreSQL (variable `DATABASE_URL`)
 
-### ConfiguraciÃ³n
+### Configuración
 
 1) Copia el archivo `.env.example` a `.env.local` y completa los valores:
 
-   - `DATABASE_URL`: cadena de conexiÃ³n a Postgres
-   - `JWT_SECRET`: cadena aleatoria larga (para firmar el JWT)
-   - (Opcional) `RESEND_API_KEY` y `MAIL_FROM` para envÃ­o de correo de recuperaciÃ³n
-   
-   - (Opcional) VYAUDIT_BASE_URL, BRIDGE_SHARED_SECRET y BRIDGE_ISSUER para abrir VyAudit desde /admin con token seguro de admin
+- `DATABASE_URL`: cadena de conexión a Postgres
+- `JWT_SECRET`: cadena aleatoria larga (para firmar el JWT)
+- (Opcional) `RESEND_API_KEY` y `MAIL_FROM` para envío de correo de recuperación
+- (Opcional) `VYAUDIT_BASE_URL`, `BRIDGE_SHARED_SECRET` y `BRIDGE_ISSUER` para abrir VyAudit desde `/admin` con token seguro de admin
 
 2) Instala dependencias e inicia en desarrollo:
 
@@ -43,12 +42,12 @@ npm run seed:admin
 - `npm run dev` / `build` / `start`: ciclo de Next.js
 - `npm run db:generate` / `db:migrate`: Drizzle Kit
 - `npm run db:apply:message` / `db:apply:status`: migraciones utilitarias (compatibilidad)
-- `npm run db:check`: verificaciÃ³n de esquema y muestra de datos
+- `npm run db:check`: verificación de esquema y muestra de datos
 - `npm run seed:admin`: crea un admin usando variables `ADMIN_*`
 
 ---
 
-DocumentaciÃ³n base de Next.js a continuaciÃ³n.
+Documentación base de Next.js a continuación.
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
@@ -86,4 +85,3 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
