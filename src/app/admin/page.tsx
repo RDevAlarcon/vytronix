@@ -201,6 +201,21 @@ export default async function AdminPage() {
       <h1 className="text-2xl font-bold">Panel de Administración</h1>
       <p className="mt-2 text-sm text-neutral-600">Hola {user?.name || user?.email} - Rol: {user?.role}</p>
 
+      <div className="mt-4 p-4 border rounded-lg bg-white flex items-center justify-between gap-3">
+        <div>
+          <h2 className="font-semibold">Acceso rápido a VyAudit</h2>
+          <p className="text-sm text-neutral-600">Abre la plataforma de auditoría para ejecutar análisis como administrador.</p>
+        </div>
+        <a
+          href="/api/vyaudit/admin-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-md border border-blue-600 bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+        >
+          Ir a VyAudit
+        </a>
+      </div>
+
       <div className="mt-6 grid gap-6">
         <div className="p-4 border rounded-lg bg-white">
           <div className="flex items-center justify-between">
@@ -350,6 +365,9 @@ export default async function AdminPage() {
 }
 import type { Metadata } from "next";
 export const metadata: Metadata = { robots: { index: false, follow: false } };
+
+
+
 
 
 
