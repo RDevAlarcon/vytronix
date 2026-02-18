@@ -11,12 +11,20 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "ht
 const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "Vytronix";
 
 export const metadata: Metadata = {
-  title: "Vytronix | Soluciones Web & Móviles",
-  description: "Desarrollo a medida y soluciones tecnológicas",
+  metadataBase: new URL(SITE_URL),
+  title: "Vytronix | Soluciones Web & Moviles",
+  description: "Desarrollo a medida y soluciones tecnologicas",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: {
-    icon: "/favicon-32x32.png",
-    apple: "/apple-touch-icon.png",
-    shortcut: "/favicon.ico",
+    icon: "/logo-transparent.png",
+    apple: "/logo-transparent.png",
+    shortcut: "/logo-transparent.png",
   },
 };
 

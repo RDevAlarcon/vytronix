@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 const VYAUDIT_CHECKOUT_URL = "/vyaudit";
-const VYAUDIT_DEMO_URL = process.env.NEXT_PUBLIC_VYAUDIT_DEMO_URL || "https://audit.vytronix.cl";
+const VYAUDIT_DEMO_URL = "/vyaudit/demo";
 
 export default function Home() {
   return (
@@ -79,7 +79,7 @@ export default function Home() {
           </div>
           <div className="flex gap-3 md:justify-end">
             <a href={VYAUDIT_CHECKOUT_URL} className="px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white">Solicitar VyAudit</a>
-            <a href={VYAUDIT_DEMO_URL} target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Ver muestra de informe</a>
+            <a href={VYAUDIT_DEMO_URL} className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50">Ver muestra de informe</a>
           </div>
         </div>
       </section>
