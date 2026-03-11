@@ -76,4 +76,24 @@ export const landingPayments = pgTable("landing_payments", {
   referenceIdx: index("landing_payments_reference_idx").on(t.externalReference),
 }));
 
+
+export const aiAgentRuns = pgTable("ai_agent_runs", {
+  id: text("id").primaryKey(),
+  contactRequestId: text("contact_request_id").notNull().references(() => contactRequests.id, { onDelete: "cascade" }),
+  agent: text("agent").notNull(),
+  status: text("status").notNull(),
+  engineRunId: text("engine_run_id"),
+  provider: text("provider"),
+  model: text("model"),
+  durationMs: integer("duration_ms"),
+  attemptCount: integer("attempt_count"),
+  parsedOutput: jsonb("parsed_output"),
+  errorCode: text("error_code"),
+  errorMessage: text("error_message"),
+  createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`),
+}, (t) => ({
+  contactRequestIdx: index("ai_agent_runs_contact_request_idx").on(t.contactRequestId),
+  createdIdx: index("ai_agent_runs_created_idx").on(t.createdAt),
+  statusIdx: index("ai_agent_runs_status_idx").on(t.status),
+}));
 export type ContactRequest = typeof contactRequests.$inferSelect;

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/server/db/client";
-import { contactRequests } from "@/server/db/schema";
+import { aiAgentRuns, contactRequests } from "@/server/db/schema";
 import { sendContactNotificationEmail } from "@/server/email/mailer";
 import { rateLimit } from "@/server/utils/rate-limit";
 import { isAiEngineEnabled, runLeadAgentForContact } from "@/server/ai/engine";
@@ -60,9 +60,40 @@ export async function POST(req: NextRequest) {
     void runLeadAgentForContact({ name, email, phone, message })
       .then((aiResult) => {
         if (!aiResult.success) {
+          void db
+            .insert(aiAgentRuns)
+            .values({
+              id: crypto.randomUUID(),
+              contactRequestId: id,
+              agent: "lead",
+              status: "error",
+              errorCode: aiResult.error?.code ?? null,
+              errorMessage: aiResult.error?.message ?? "Unknown AI engine error"
+            })
+            .catch((persistError) => {
+              console.error("[AI] Failed to persist error run", persistError);
+            });
+
           console.error("[AI] Lead classification failed", aiResult.error);
           return;
         }
+
+        void db
+          .insert(aiAgentRuns)
+          .values({
+            id: crypto.randomUUID(),
+            contactRequestId: id,
+            agent: "lead",
+            status: "success",
+            engineRunId: aiResult.data?.runId ?? null,
+            provider: aiResult.data?.metadata.provider ?? null,
+            model: aiResult.data?.metadata.model ?? null,
+            durationMs: aiResult.data?.metadata.durationMs ?? null,
+            parsedOutput: aiResult.data?.parsedOutput ?? null
+          })
+          .catch((persistError) => {
+            console.error("[AI] Failed to persist successful run", persistError);
+          });
 
         console.log("[AI] Lead classified", {
           runId: aiResult.data?.runId,
@@ -71,6 +102,20 @@ export async function POST(req: NextRequest) {
         });
       })
       .catch((error) => {
+        void db
+          .insert(aiAgentRuns)
+          .values({
+            id: crypto.randomUUID(),
+            contactRequestId: id,
+            agent: "lead",
+            status: "error",
+            errorCode: "AI_UNEXPECTED_ERROR",
+            errorMessage: error instanceof Error ? error.message : "Unknown error"
+          })
+          .catch((persistError) => {
+            console.error("[AI] Failed to persist unexpected error run", persistError);
+          });
+
         console.error("[AI] Unexpected lead classification error", error);
       });
   }
