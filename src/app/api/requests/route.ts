@@ -4,7 +4,7 @@ import { db } from "@/server/db/client";
 import { aiAgentRuns, contactRequests } from "@/server/db/schema";
 import { sendContactNotificationEmail } from "@/server/email/mailer";
 import { rateLimit } from "@/server/utils/rate-limit";
-import { isAiEngineEnabled, runLeadAgentForContact } from "@/server/ai/engine";
+import { isAiEngineEnabled, runAgentForContact, selectAgentsForContact, type AgentName } from "@/server/ai/engine";
 import { sql } from "drizzle-orm";
 
 export const runtime = "nodejs";
@@ -18,6 +18,37 @@ const schema = z.object({
     .boolean()
     .refine((value) => value === true, { message: "Debes aceptar la politica de privacidad" })
 });
+
+const persistAiRun = async (
+  params: {
+    contactRequestId: string;
+    agent: AgentName;
+    status: "success" | "error";
+    engineRunId?: string | null;
+    provider?: string | null;
+    model?: string | null;
+    durationMs?: number | null;
+    attemptCount?: number | null;
+    parsedOutput?: Record<string, unknown> | null;
+    errorCode?: string | null;
+    errorMessage?: string | null;
+  }
+): Promise<void> => {
+  await db.insert(aiAgentRuns).values({
+    id: crypto.randomUUID(),
+    contactRequestId: params.contactRequestId,
+    agent: params.agent,
+    status: params.status,
+    engineRunId: params.engineRunId ?? null,
+    provider: params.provider ?? null,
+    model: params.model ?? null,
+    durationMs: params.durationMs ?? null,
+    attemptCount: params.attemptCount ?? null,
+    parsedOutput: params.parsedOutput ?? null,
+    errorCode: params.errorCode ?? null,
+    errorMessage: params.errorMessage ?? null
+  });
+};
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
@@ -57,67 +88,47 @@ export async function POST(req: NextRequest) {
 
   // Integracion opcional con Vytronix AI Engine (no bloqueante)
   if (isAiEngineEnabled()) {
-    void runLeadAgentForContact({ name, email, phone, message })
-      .then((aiResult) => {
-        if (!aiResult.success) {
-          void db
-            .insert(aiAgentRuns)
-            .values({
-              id: crypto.randomUUID(),
-              contactRequestId: id,
-              agent: "lead",
-              status: "error",
-              errorCode: aiResult.error?.code ?? null,
-              errorMessage: aiResult.error?.message ?? "Unknown AI engine error"
-            })
-            .catch((persistError) => {
-              console.error("[AI] Failed to persist error run", persistError);
-            });
+    const contactInput = { name, email, phone, message };
+    const selectedAgents = selectAgentsForContact(contactInput);
 
-          console.error("[AI] Lead classification failed", aiResult.error);
+    void Promise.allSettled(
+      selectedAgents.map(async (agent) => {
+        const aiResult = await runAgentForContact(agent, contactInput);
+
+        if (!aiResult.success) {
+          await persistAiRun({
+            contactRequestId: id,
+            agent,
+            status: "error",
+            errorCode: aiResult.error?.code ?? null,
+            errorMessage: aiResult.error?.message ?? "Unknown AI engine error"
+          });
+
+          console.error(`[AI] ${agent} run failed`, aiResult.error);
           return;
         }
 
-        void db
-          .insert(aiAgentRuns)
-          .values({
-            id: crypto.randomUUID(),
-            contactRequestId: id,
-            agent: "lead",
-            status: "success",
-            engineRunId: aiResult.data?.runId ?? null,
-            provider: aiResult.data?.metadata.provider ?? null,
-            model: aiResult.data?.metadata.model ?? null,
-            durationMs: aiResult.data?.metadata.durationMs ?? null,
-            parsedOutput: aiResult.data?.parsedOutput ?? null
-          })
-          .catch((persistError) => {
-            console.error("[AI] Failed to persist successful run", persistError);
-          });
+        await persistAiRun({
+          contactRequestId: id,
+          agent,
+          status: "success",
+          engineRunId: aiResult.data?.runId ?? null,
+          provider: aiResult.data?.metadata.provider ?? null,
+          model: aiResult.data?.metadata.model ?? null,
+          durationMs: aiResult.data?.metadata.durationMs ?? null,
+          attemptCount: aiResult.data?.metadata.attemptCount ?? null,
+          parsedOutput: aiResult.data?.parsedOutput ?? null
+        });
 
-        console.log("[AI] Lead classified", {
+        console.log(`[AI] ${agent} run success`, {
           runId: aiResult.data?.runId,
-          leadTemperature: aiResult.data?.parsedOutput.lead_temperature,
-          detectedService: aiResult.data?.parsedOutput.detected_service
+          model: aiResult.data?.metadata.model,
+          durationMs: aiResult.data?.metadata.durationMs
         });
       })
-      .catch((error) => {
-        void db
-          .insert(aiAgentRuns)
-          .values({
-            id: crypto.randomUUID(),
-            contactRequestId: id,
-            agent: "lead",
-            status: "error",
-            errorCode: "AI_UNEXPECTED_ERROR",
-            errorMessage: error instanceof Error ? error.message : "Unknown error"
-          })
-          .catch((persistError) => {
-            console.error("[AI] Failed to persist unexpected error run", persistError);
-          });
-
-        console.error("[AI] Unexpected lead classification error", error);
-      });
+    ).catch((error) => {
+      console.error("[AI] Unexpected multi-agent pipeline error", error);
+    });
   }
 
   return NextResponse.json({ ok: true });
