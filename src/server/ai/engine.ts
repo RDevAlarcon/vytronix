@@ -1,4 +1,4 @@
-﻿import { z } from "zod";
+import { z } from "zod";
 
 type ContactLeadInput = {
   name: string;
@@ -44,12 +44,12 @@ const boolFromEnv = (value: string | undefined, fallback: boolean): boolean => {
 };
 
 const timeoutFromEnv = (): number => {
-  const raw = Number(process.env.AI_ENGINE_TIMEOUT_MS ?? 3500);
-  if (!Number.isFinite(raw) || raw < 500) {
-    return 3500;
+  const raw = Number(process.env.AI_ENGINE_TIMEOUT_MS ?? 90000);
+  if (!Number.isFinite(raw) || raw < 1000) {
+    return 90000;
   }
-  if (raw > 20000) {
-    return 20000;
+  if (raw > 120000) {
+    return 120000;
   }
   return Math.trunc(raw);
 };
@@ -169,3 +169,4 @@ export const runLeadAgentForContact = async (input: ContactLeadInput): Promise<L
     clearTimeout(timeoutId);
   }
 };
+

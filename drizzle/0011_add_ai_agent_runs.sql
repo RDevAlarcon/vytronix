@@ -1,4 +1,4 @@
-﻿--> statement-breakpoint
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "ai_agent_runs" (
   "id" text PRIMARY KEY NOT NULL,
   "contact_request_id" text NOT NULL,
