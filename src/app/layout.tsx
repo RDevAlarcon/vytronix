@@ -6,6 +6,7 @@ import { verifyJwt } from "@/server/auth/jwt";
 import Image from "next/image";
 import Script from "next/script";
 import HeaderNav from "@/components/HeaderNav";
+import AiChatWidget from "@/components/AiChatWidget";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "http://localhost:3000";
 const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "Vytronix";
@@ -124,6 +125,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </footer>
 
+        <AiChatWidget />
+
         {/* WhatsApp floating button */}
         <a
           href="https://wa.me/56921657978?text=Hola,%20vengo%20del%20sitio%20de%20Vytronix.%20Me%20gustaria%20recibir%20asesoria.%20Mi%20nombre%20es%20___."
@@ -142,6 +145,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     </html>
   );
 }
+
+
 
 
 
