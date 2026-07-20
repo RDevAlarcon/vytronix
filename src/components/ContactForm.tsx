@@ -80,33 +80,42 @@ export default function ContactForm() {
   }
 
   const inputClass =
-    "w-full rounded-2xl border border-slate-200 bg-white/80 p-3 outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100";
+    "w-full rounded-2xl border border-white/80 bg-white/76 px-4 py-3 text-slate-950 outline-none shadow-[0_10px_24px_rgba(9,26,52,0.045)] transition placeholder:text-slate-400 focus:border-blue-200 focus:bg-white focus:ring-4 focus:ring-blue-100";
 
   return (
-    <div className="surface-card rounded-3xl p-6 md:p-8">
-      <p className="eyebrow">Nueva solicitud</p>
-      <h3 className="mt-2 text-2xl font-black text-slate-950">Solicita nuestros servicios</h3>
+    <div className="surface-card section-dashboard rounded-[1.75rem] p-6 md:p-8">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="eyebrow">Nueva solicitud</p>
+          <h3 className="mt-2 text-3xl font-black text-slate-950">Solicita nuestros servicios</h3>
+        </div>
+        <span className="hidden rounded-full bg-cyan-100 px-3 py-2 text-xs font-black text-blue-800 shadow-sm sm:inline-flex">
+          Brief express
+        </span>
+      </div>
       {sent ? (
-        <p className="mt-3 rounded-2xl bg-emerald-50 p-4 text-sm font-semibold text-emerald-800">
+        <p className="mt-5 rounded-2xl border border-emerald-100 bg-emerald-50 p-4 text-sm font-black text-emerald-800">
           ¡Gracias! Te contactaremos pronto.
         </p>
       ) : (
-        <form onSubmit={submit} className="mt-5 grid gap-4">
+        <form onSubmit={submit} className="mt-6 grid gap-4">
           <div>
             <input className={inputClass} placeholder="Nombre" value={name} onChange={(e) => { setName(e.target.value); if (fieldErrs.name) validateField("name", e.target.value); }} onBlur={(e) => validateField("name", e.target.value)} />
             {fieldErrs.name && <p className="mt-1 text-sm text-red-600">{fieldErrs.name}</p>}
           </div>
-          <div>
-            <input className={inputClass} placeholder="Email" type="email" value={email} onChange={(e) => { setEmail(e.target.value); if (fieldErrs.email) validateField("email", e.target.value); }} onBlur={(e) => validateField("email", e.target.value)} />
-            {fieldErrs.email && <p className="mt-1 text-sm text-red-600">{fieldErrs.email}</p>}
-          </div>
-          <div>
-            <input className={inputClass} placeholder="Teléfono" value={phone} onChange={(e) => { setPhone(e.target.value); if (fieldErrs.phone) validateField("phone", e.target.value); }} onBlur={(e) => validateField("phone", e.target.value)} />
-            {fieldErrs.phone && <p className="mt-1 text-sm text-red-600">{fieldErrs.phone}</p>}
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <input className={inputClass} placeholder="Email" type="email" value={email} onChange={(e) => { setEmail(e.target.value); if (fieldErrs.email) validateField("email", e.target.value); }} onBlur={(e) => validateField("email", e.target.value)} />
+              {fieldErrs.email && <p className="mt-1 text-sm text-red-600">{fieldErrs.email}</p>}
+            </div>
+            <div>
+              <input className={inputClass} placeholder="Teléfono" value={phone} onChange={(e) => { setPhone(e.target.value); if (fieldErrs.phone) validateField("phone", e.target.value); }} onBlur={(e) => validateField("phone", e.target.value)} />
+              {fieldErrs.phone && <p className="mt-1 text-sm text-red-600">{fieldErrs.phone}</p>}
+            </div>
           </div>
           <div>
             <textarea
-              className={`${inputClass} h-32 resize-y`}
+              className={`${inputClass} h-44 resize-y`}
               placeholder="Cuéntanos qué necesitas (alcance, plazos, presupuesto, etc.)"
               value={message}
               onChange={(e) => { setMessage(e.target.value); if (fieldErrs.message) validateField("message", e.target.value); }}
@@ -114,25 +123,32 @@ export default function ContactForm() {
             />
             {fieldErrs.message && <p className="mt-1 text-sm text-red-600">{fieldErrs.message}</p>}
           </div>
-          <div className="flex items-start gap-2">
-            <input
-              id="contact-consent"
-              type="checkbox"
-              checked={acceptedPolicies}
-              onChange={(event) => {
-                setAcceptedPolicies(event.target.checked);
-                if (consentErr && event.target.checked) setConsentErr(null);
-              }}
-              className="mt-1"
-              required
-            />
-            <label htmlFor="contact-consent" className="text-sm text-slate-700">
-              Acepto la <Link href="/privacidad" className="font-semibold underline">Política de Privacidad</Link> y los <Link href="/terminos" className="font-semibold underline">Términos y Condiciones</Link> de Vytronix.
-            </label>
+          <div className="rounded-2xl border border-white/80 bg-white/60 p-3">
+            <div className="flex items-start gap-2">
+              <input
+                id="contact-consent"
+                type="checkbox"
+                checked={acceptedPolicies}
+                onChange={(event) => {
+                  setAcceptedPolicies(event.target.checked);
+                  if (consentErr && event.target.checked) setConsentErr(null);
+                }}
+                className="mt-1 h-4 w-4 rounded border-slate-300 accent-[var(--color-primary)]"
+                required
+              />
+              <label htmlFor="contact-consent" className="text-sm leading-6 text-slate-700">
+                Acepto la <Link href="/privacidad" className="font-black underline">Política de Privacidad</Link> y los <Link href="/terminos" className="font-black underline">Términos y Condiciones</Link> de Vytronix.
+              </label>
+            </div>
           </div>
           {consentErr && <p className="text-sm text-red-600">{consentErr}</p>}
           {err && <p className="text-sm text-red-600">{err}</p>}
-          <button className="btn-primary w-full" type="submit">Enviar solicitud</button>
+          <button className="btn-primary btn-hero min-h-14 w-full" type="submit">Enviar solicitud</button>
+          <div className="grid gap-2 rounded-2xl border border-cyan-100 bg-gradient-to-r from-cyan-50 to-blue-50 p-3 text-xs font-black text-slate-700 sm:grid-cols-3 sm:text-center">
+            <span>Respuesta en 24h</span>
+            <span>Propuesta clara</span>
+            <span>Sin compromiso</span>
+          </div>
         </form>
       )}
     </div>
