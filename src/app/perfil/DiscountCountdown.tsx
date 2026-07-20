@@ -60,14 +60,16 @@ export default function DiscountCountdown({ initialExpiresAt }: DiscountCountdow
       window.localStorage.setItem(STORAGE_KEY, new Date(target).toISOString());
     }
 
-    setExpiresAt(target);
-    setTimeLeft(getTimeParts(target));
+    window.setTimeout(() => {
+      setExpiresAt(target);
+      setTimeLeft(getTimeParts(target));
+    }, 0);
   }, [initialFromProp]);
 
   useEffect(() => {
     if (!expiresAt) return;
     if (expiresAt <= Date.now()) {
-      setTimeLeft(getTimeParts(expiresAt));
+      window.setTimeout(() => setTimeLeft(getTimeParts(expiresAt)), 0);
       return;
     }
     const tick = () => setTimeLeft(getTimeParts(expiresAt));

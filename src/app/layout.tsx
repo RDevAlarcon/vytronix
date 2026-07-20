@@ -12,8 +12,8 @@ const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "Vytronix";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Vytronix | Soluciones Web & Moviles",
-  description: "Desarrollo a medida y soluciones tecnologicas",
+  title: "Vytronix | Soluciones web y móviles",
+  description: "Desarrollo a medida, auditoría web y soluciones tecnológicas para negocios digitales.",
   alternates: {
     canonical: "/",
   },
@@ -78,24 +78,24 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             }),
           }}
         />
-        <header className="sticky top-0 bg-white/65 backdrop-blur-md border-b border-sky-200/70">
-          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <header className="sticky top-0 z-50 border-b border-white/50 bg-white/58 backdrop-blur-2xl">
+          <div className="shell-section flex items-center justify-between py-3">
             <Link href="/" className="flex items-center" aria-label="Ir al inicio">
-              <Image src="/logo-transparent.png" alt="Vytronix" width={160} height={40} priority className="h-10 w-auto origin-left scale-125 md:scale-[1.61]" />
+              <Image src="/logo-transparent.png" alt="Vytronix" width={160} height={40} priority className="h-11 w-auto origin-left scale-110 md:scale-125" />
             </Link>
             <HeaderNav user={user ?? null} />
           </div>
         </header>
         <main>{children}</main>
-        <footer className="border-t mt-20">
-          <div className="max-w-6xl mx-auto px-4 py-6 text-sm grid gap-6 md:grid-cols-3 md:divide-x md:divide-neutral-400">
+        <footer className="mt-20 border-t border-white/60 bg-white/55 backdrop-blur-xl">
+          <div className="shell-section grid gap-6 py-8 text-sm md:grid-cols-3 md:divide-x md:divide-slate-200">
             <div className="flex flex-col items-center gap-3 text-center md:items-start md:text-left md:pr-6">
-              <Link href="/privacidad" className="underline">Política de Privacidad</Link>
-              <Link href="/terminos" className="underline">Términos y Condiciones</Link>
+              <Link href="/privacidad" className="font-semibold text-slate-700 hover:text-[var(--color-primary)]">Política de Privacidad</Link>
+              <Link href="/terminos" className="font-semibold text-slate-700 hover:text-[var(--color-primary)]">Términos y Condiciones</Link>
             </div>
             <div className="flex flex-col items-center gap-2 text-center md:px-6 text-base">
-              <div className="text-neutral-800 italic">Tecnología que transforma, soluciones que conectan.</div>
-              <div className="text-neutral-800">© 2025 Vytronix</div>
+              <div className="text-slate-800 italic">Tecnología que transforma, soluciones que conectan.</div>
+              <div className="text-slate-700">© 2026 Vytronix</div>
             </div>
             <div className="flex items-center justify-center md:justify-end md:pl-6">
               <div className="flex items-center gap-4 text-neutral-700">

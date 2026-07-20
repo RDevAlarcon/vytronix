@@ -10,96 +10,52 @@ type HeaderNavProps = {
 };
 
 const baseLinks = [
-  { href: "/quienes-somos", label: "Qui\u00e9nes somos" },
+  { href: "/quienes-somos", label: "Quiénes somos" },
   { href: "/proyectos", label: "Proyectos" },
   { href: "/#servicios", label: "Servicios" },
-  { href: "/marketing-digital", label: "Marketing digital" },
   { href: "/#contacto", label: "Contacto" },
 ];
 
 export default function HeaderNav({ user }: HeaderNavProps) {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     buttonRef.current?.setAttribute("aria-expanded", open ? "true" : "false");
   }, [open]);
 
-  const toggle = () => setOpen((prev) => !prev);
   const close = () => setOpen(false);
 
-  const renderAuthLinks = (variant: "desktop" | "mobile") => {
+  const authLinks = (variant: "desktop" | "mobile") => {
+    const isDesktop = variant === "desktop";
+    const linkClass = isDesktop
+      ? "inline-flex items-center rounded-full border border-white/60 bg-white/70 px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-white"
+      : "rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50";
+
     if (!user) {
+      return null;
+    }
+
+    if (user.role === "admin") {
       return (
-        <Link
-          href="/login"
-          className={
-            variant === "desktop"
-              ? "px-3 py-1 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50"
-              : "block px-4 py-2 text-sm text-[var(--color-primary)]"
-          }
-          onClick={close}
-        >
-          Ingresar
-        </Link>
+        <>
+          <Link href="/dashboard" className={linkClass} onClick={close}>
+            Dashboard
+          </Link>
+          <Link href="/admin" className={linkClass} onClick={close}>
+            Admin
+          </Link>
+          {logoutForm(variant, close)}
+        </>
       );
     }
 
-    const adminLinks = user.role === "admin";
-
     return (
       <>
-        {adminLinks ? (
-          <>
-            <Link
-              href="/dashboard"
-              className={
-                variant === "desktop"
-                  ? "px-3 py-1 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50"
-                  : "block px-4 py-2 text-sm"
-              }
-              onClick={close}
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/admin"
-              className={
-                variant === "desktop"
-                  ? "px-3 py-1 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50"
-                  : "block px-4 py-2 text-sm"
-              }
-              onClick={close}
-            >
-              Admin
-            </Link>
-          </>
-        ) : (
-          <Link
-            href="/perfil"
-            className={
-              variant === "desktop"
-                ? "px-3 py-1 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-neutral-50"
-                : "block px-4 py-2 text-sm"
-            }
-            onClick={close}
-          >
-            Mi perfil
-          </Link>
-        )}
-        <form action="/api/auth/logout" method="post" className={variant === "desktop" ? "" : "px-4 py-2"}>
-          <button
-            type="submit"
-            className={
-              variant === "desktop"
-                ? "px-3 py-1 border rounded"
-                : "w-full rounded border border-neutral-300 px-3 py-2 text-left text-sm"
-            }
-            onClick={close}
-          >
-            Cerrar sesión
-          </button>
-        </form>
+        <Link href="/perfil" className={linkClass} onClick={close}>
+          Mi perfil
+        </Link>
+        {logoutForm(variant, close)}
       </>
     );
   };
@@ -108,61 +64,65 @@ export default function HeaderNav({ user }: HeaderNavProps) {
     <div className="relative">
       <button
         type="button"
-        className="md:hidden inline-flex items-center justify-center rounded-md border border-neutral-300 px-3 py-2 text-sm"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/70 bg-white/80 text-slate-900 shadow-sm md:hidden"
         ref={buttonRef}
         aria-expanded="false"
         aria-controls="mobile-menu"
-        onClick={toggle}
+        onClick={() => setOpen((prev) => !prev)}
       >
-        <span className="sr-only">Abrir men\u00fa</span>
-        <svg
-          className="h-5 w-5"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <span className="sr-only">Abrir menú</span>
+        <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           {open ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M6 18L18 6M6 6l12 12" />
           ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 7h16M4 12h16M4 17h16" />
           )}
         </svg>
       </button>
 
-      <nav className="hidden md:flex gap-3 text-sm items-center">
+      <nav className="hidden items-center gap-1 rounded-full border border-white/60 bg-white/55 p-1.5 shadow-sm backdrop-blur-xl md:flex">
         {baseLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
-            className="inline-flex items-center justify-center px-3 py-2 rounded-full border-2 border-neutral-300 text-neutral-700 transition-transform duration-200 hover:scale-105 hover:border-neutral-400 hover:text-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            className="rounded-full px-3.5 py-2 text-sm font-semibold text-slate-700 transition hover:bg-white hover:text-slate-950"
           >
             {link.label}
           </Link>
         ))}
-        {renderAuthLinks("desktop")}
+        <div className="ml-1 flex items-center gap-1">{authLinks("desktop")}</div>
       </nav>
 
       <div
         id="mobile-menu"
-        className={`absolute right-0 z-40 mt-3 w-48 rounded-xl border bg-white shadow-lg transition-all duration-200 md:hidden ${
-          open ? "opacity-100 scale-100" : "pointer-events-none opacity-0 scale-95"
+        className={`absolute right-0 z-40 mt-3 w-64 overflow-hidden rounded-3xl border border-white/70 bg-white/95 p-2 shadow-2xl backdrop-blur-xl transition-all duration-200 md:hidden ${
+          open ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"
         }`}
       >
-        <div className="flex flex-col py-2">
+        <div className="flex flex-col">
           {baseLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="px-4 py-2 text-sm transition-colors duration-200 hover:text-[var(--color-primary)] focus-visible:text-[var(--color-primary)] focus-visible:outline-none"
-              onClick={close}
-            >
+            <Link key={link.href} href={link.href} className="rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50" onClick={close}>
               {link.label}
             </Link>
           ))}
-          {renderAuthLinks("mobile")}
+          {user ? <div className="mt-1 grid gap-1 border-t border-slate-100 pt-2">{authLinks("mobile")}</div> : null}
         </div>
       </div>
     </div>
+  );
+}
+
+function logoutForm(variant: "desktop" | "mobile", close: () => void) {
+  const buttonClass =
+    variant === "desktop"
+      ? "rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-white"
+      : "w-full rounded-xl border border-slate-200 px-4 py-3 text-left text-sm font-semibold text-slate-700";
+
+  return (
+    <form action="/api/auth/logout" method="post" className={variant === "mobile" ? "px-3 py-2" : ""}>
+      <button type="submit" className={buttonClass} onClick={close}>
+        Cerrar sesión
+      </button>
+    </form>
   );
 }
