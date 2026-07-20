@@ -15,11 +15,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
   return [
-    {
-      url: `${origin}/`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 1
-    }
-  ];
+    { path: "/", changeFrequency: "weekly", priority: 1 },
+    { path: "/quienes-somos", changeFrequency: "monthly", priority: 0.8 },
+    { path: "/proyectos", changeFrequency: "monthly", priority: 0.85 },
+    { path: "/vyaudit", changeFrequency: "monthly", priority: 0.75 },
+    { path: "/privacidad", changeFrequency: "yearly", priority: 0.25 },
+    { path: "/terminos", changeFrequency: "yearly", priority: 0.25 },
+  ].map((item) => ({
+    url: `${origin}${item.path}`,
+    lastModified: now,
+    changeFrequency: item.changeFrequency as MetadataRoute.Sitemap[number]["changeFrequency"],
+    priority: item.priority,
+  }));
 }

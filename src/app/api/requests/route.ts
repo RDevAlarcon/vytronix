@@ -3,7 +3,7 @@ import { z } from "zod";
 import { db } from "@/server/db/client";
 import { contactRequests } from "@/server/db/schema";
 import { sendContactNotificationEmail } from "@/server/email/mailer";
-import { rateLimit } from "@/server/utils/rate-limit";
+import { getClientIp, rateLimit } from "@/server/utils/rate-limit";
 import { sql } from "drizzle-orm";
 
 export const runtime = "nodejs";
@@ -31,14 +31,17 @@ export async function POST(req: NextRequest) {
 
   const { name, email, phone, message } = parsed.data;
 
-  // Rate limit: 5 por 10 minutos por IP/email
-  const ip = (req.headers.get("x-forwarded-for") || "").split(",")[0]?.trim() || "unknown";
+  const ip = getClientIp(req.headers);
   const WINDOW = 10 * 60 * 1000;
   const MAX = 5;
   const rl1 = rateLimit(`req:ip:${ip}`, WINDOW, MAX);
   const rl2 = rateLimit(`req:email:${email}`, WINDOW, MAX);
   if (!rl1.ok || !rl2.ok) {
-    return NextResponse.json({ error: "rate_limited" }, { status: 429 });
+    const retryAfterMs = !rl1.ok ? rl1.retryAfterMs : !rl2.ok ? rl2.retryAfterMs : WINDOW;
+    return NextResponse.json(
+      { error: "rate_limited" },
+      { status: 429, headers: { "Retry-After": String(Math.ceil(retryAfterMs / 1000)) } }
+    );
   }
 
   const id = crypto.randomUUID();

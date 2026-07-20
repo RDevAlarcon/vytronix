@@ -5,16 +5,34 @@ import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 import { signJwt } from "@/server/auth/jwt";
+import { getClientIp, rateLimit } from "@/server/utils/rate-limit";
 
 export const runtime = "nodejs";
 
 const schema = z.object({ email: z.string().email(), password: z.string().min(8) });
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  const ip = getClientIp(req.headers);
+  const gate = rateLimit(`auth:login:ip:${ip}`, 10 * 60 * 1000, 20);
+  if (!gate.ok) {
+    return NextResponse.json(
+      { error: "rate_limited" },
+      { status: 429, headers: { "Retry-After": String(Math.ceil(gate.retryAfterMs / 1000)) } }
+    );
+  }
+
+  const body = await req.json().catch(() => ({}));
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "invalid" }, { status: 400 });
   const { email, password } = parsed.data;
+
+  const emailGate = rateLimit(`auth:login:email:${email.toLowerCase()}`, 10 * 60 * 1000, 8);
+  if (!emailGate.ok) {
+    return NextResponse.json(
+      { error: "rate_limited" },
+      { status: 429, headers: { "Retry-After": String(Math.ceil(emailGate.retryAfterMs / 1000)) } }
+    );
+  }
 
   const [user] = await db.select().from(users).where(eq(users.email, email));
   if (!user) return NextResponse.json({ error: "bad_credentials" }, { status: 401 });

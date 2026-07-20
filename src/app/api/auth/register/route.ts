@@ -4,6 +4,7 @@ import { users } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { z } from "zod";
+import { getClientIp, rateLimit } from "@/server/utils/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -17,7 +18,16 @@ const schema = z.object({
 });
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  const ip = getClientIp(req.headers);
+  const gate = rateLimit(`auth:register:ip:${ip}`, 60 * 60 * 1000, 8);
+  if (!gate.ok) {
+    return NextResponse.json(
+      { error: "rate_limited" },
+      { status: 429, headers: { "Retry-After": String(Math.ceil(gate.retryAfterMs / 1000)) } }
+    );
+  }
+
+  const body = await req.json().catch(() => ({}));
   const parsed = schema.safeParse(body);
   if (!parsed.success) {
     const flattened = parsed.error.flatten();

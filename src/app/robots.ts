@@ -17,7 +17,22 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/admin", "/dashboard", "/perfil", "/run/"]
+        disallow: [
+          "/api/",
+          "/admin",
+          "/dashboard",
+          "/perfil",
+          "/login",
+          "/register",
+          "/recuperar",
+          "/reset",
+          "/run/",
+          "/*?*"
+        ]
+      },
+      {
+        userAgent: ["AhrefsBot", "SemrushBot", "MJ12bot", "DotBot", "BLEXBot", "DataForSeoBot"],
+        disallow: "/"
       }
     ],
     sitemap: `${site.origin}/sitemap.xml`,
