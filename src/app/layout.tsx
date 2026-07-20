@@ -108,24 +108,34 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   <p className="mt-2 text-sm font-semibold text-slate-500">© 2026 Vytronix</p>
                 </div>
 
-                <div className="flex items-center justify-start gap-3 md:justify-end">
-                  {[
-                    { label: "TikTok", color: "text-slate-950", path: "M16.5 6.2c-1-.7-1.6-1.8-1.7-3V3h-3.2v10.1a2.7 2.7 0 1 1-1.8-2.6V7.2A5.9 5.9 0 0 0 5 12.9a5.9 5.9 0 1 0 11.8 0V8.4c1.1.8 2.4 1.2 3.7 1.2V6.4c-1.5 0-2.9-.4-4-1.2Z" },
-                    { label: "Instagram", color: "text-[#E1306C]", path: "M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 5.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Zm6.1-1.7a1 1 0 1 0 0 2 1 1 0 0 0 0-2ZM12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z" },
-                    { label: "Facebook", color: "text-[#1877F2]", path: "M13.5 9H16V6h-2.5C10.8 6 10 7.8 10 9.6V12H8v3h2v6h3v-6h2.4l.6-3H13V9.9c0-.6.3-.9.9-.9Z" },
-                    { label: "LinkedIn", color: "text-[#0A66C2]", path: "M6.5 9H4v11h2.5V9ZM5.2 4a1.3 1.3 0 1 0 0 2.6A1.3 1.3 0 0 0 5.2 4ZM20 14.1V20h-2.5v-5.2c0-1.3-.5-2.2-1.6-2.2-.9 0-1.5.6-1.7 1.2-.1.2-.1.6-.1.9V20H11.6V9h2.5v1.5c.3-.7 1.2-1.7 2.9-1.7 2.1 0 3.6 1.4 3.6 4.3Z" },
-                  ].map((item) => (
-                    <span
-                      key={item.label}
-                      className={`grid h-11 w-11 place-items-center rounded-2xl border border-white/80 bg-white/72 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:bg-white ${item.color}`}
-                      aria-label={item.label}
-                      tabIndex={0}
-                    >
-                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
-                        <path d={item.path} />
-                      </svg>
-                    </span>
-                  ))}
+                <div className="flex flex-col items-start gap-4 md:items-end">
+                  <div className="flex items-center justify-start gap-3 md:justify-end">
+                    {[
+                      { label: "TikTok", color: "text-slate-950", path: "M16.5 6.2c-1-.7-1.6-1.8-1.7-3V3h-3.2v10.1a2.7 2.7 0 1 1-1.8-2.6V7.2A5.9 5.9 0 0 0 5 12.9a5.9 5.9 0 1 0 11.8 0V8.4c1.1.8 2.4 1.2 3.7 1.2V6.4c-1.5 0-2.9-.4-4-1.2Z" },
+                      { label: "Instagram", color: "text-[#E1306C]", path: "M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 5.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Zm6.1-1.7a1 1 0 1 0 0 2 1 1 0 0 0 0-2ZM12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z" },
+                      { label: "Facebook", color: "text-[#1877F2]", path: "M13.5 9H16V6h-2.5C10.8 6 10 7.8 10 9.6V12H8v3h2v6h3v-6h2.4l.6-3H13V9.9c0-.6.3-.9.9-.9Z" },
+                      { label: "LinkedIn", color: "text-[#0A66C2]", path: "M6.5 9H4v11h2.5V9ZM5.2 4a1.3 1.3 0 1 0 0 2.6A1.3 1.3 0 0 0 5.2 4ZM20 14.1V20h-2.5v-5.2c0-1.3-.5-2.2-1.6-2.2-.9 0-1.5.6-1.7 1.2-.1.2-.1.6-.1.9V20H11.6V9h2.5v1.5c.3-.7 1.2-1.7 2.9-1.7 2.1 0 3.6 1.4 3.6 4.3Z" },
+                    ].map((item) => (
+                      <span
+                        key={item.label}
+                        className={`grid h-11 w-11 place-items-center rounded-2xl border border-white/80 bg-white/72 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:bg-white ${item.color}`}
+                        aria-label={item.label}
+                        tabIndex={0}
+                      >
+                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+                          <path d={item.path} />
+                        </svg>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex flex-col gap-2 text-sm font-black text-slate-700 md:text-right">
+                    <a href="mailto:contacto@vytronix.cl" className="transition hover:text-[var(--color-primary)]">
+                      contacto@vytronix.cl
+                    </a>
+                    <a href="tel:+56921657978" className="transition hover:text-[var(--color-primary)]">
+                      +56 9 2165 7978
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
