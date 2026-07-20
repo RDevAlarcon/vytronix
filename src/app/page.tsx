@@ -1,6 +1,6 @@
 ﻿import ContactForm from "@/components/ContactForm";
+import ServicesCarousel from "@/components/ServicesCarousel";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -17,49 +17,10 @@ export const metadata: Metadata = {
 const VYAUDIT_CHECKOUT_URL = "/vyaudit";
 const VYAUDIT_DEMO_URL = "/vyaudit/demo";
 
-const services = [
-  {
-    title: "Apps móviles",
-    src: "/apps.png",
-    alt: "Apps móviles",
-    desc: "Aplicaciones nativas o multiplataforma con arquitectura escalable, QA y despliegue listo para crecer.",
-    meta: "Mobile · UX · APIs",
-    output: "iOS / Android",
-    href: "/#contacto",
-  },
-  {
-    title: "Sitios web",
-    src: "/sitiosweb.jpg",
-    alt: "Sitios web",
-    desc: "Landing pages, sitios corporativos y e-commerce rápidos, accesibles y pensados para convertir.",
-    meta: "SEO · Performance · CMS",
-    output: "Core Web Vitals",
-    href: "/#contacto",
-  },
-  {
-    title: "Integraciones & APIs",
-    src: "/integracionesapi.jpg",
-    alt: "Integraciones y APIs",
-    desc: "Conectamos pagos, CRM, automatizaciones y plataformas externas con seguridad y trazabilidad.",
-    meta: "Pagos · CRM · Automatización",
-    output: "Operación conectada",
-    href: "/#contacto",
-  },
-  {
-    title: "VyAudit",
-    src: "/plan_medio.jpg",
-    alt: "VyAudit",
-    desc: "Informe técnico-comercial para detectar brechas de performance, SEO, UX, accesibilidad y seguridad.",
-    meta: "Auditoría · Score · PDF",
-    output: "Informe accionable",
-    href: VYAUDIT_CHECKOUT_URL,
-  },
-];
-
 const metrics = [
-  { value: "10d", label: "Entrega base landing", icon: "M4 12h16M12 4v16" },
-  { value: "24/7", label: "Canales digitales activos", icon: "M12 6v6l4 2" },
-  { value: "5", label: "Áreas auditadas por VyAudit", icon: "M5 13l4 4L19 7" },
+  { title: "Entrega rápida", detail: "Primera versión en 10 días hábiles.", icon: "M4 12h16M12 4v16" },
+  { title: "Operación activa", detail: "Automatizaciones y canales conectados 24/7.", icon: "M12 6v6l4 2" },
+  { title: "Mejora medible", detail: "Auditoría en rendimiento, SEO, UX y seguridad.", icon: "M5 13l4 4L19 7" },
 ];
 
 const stackGroups = [
@@ -102,10 +63,10 @@ export default function Home() {
           <div className="flex flex-col justify-center py-4">
             <p className="eyebrow">Vytronix · Software para crecer</p>
             <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[1.02] text-slate-950 md:text-5xl lg:text-6xl">
-              Tecnología clara para negocios que necesitan avanzar.
+              Desarrollamos tecnología para hacer crecer tu empresa.
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-650 text-slate-700">
-              Creamos sitios, apps, integraciones y auditorías web con foco en rendimiento, seguridad y resultados comerciales.
+              Desarrollamos aplicaciones web, móviles e integraciones que ayudan a las empresas a crecer.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/#contacto" className="btn-primary btn-hero">
@@ -117,16 +78,16 @@ export default function Home() {
             </div>
             <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
               {metrics.map((metric) => (
-                <div key={metric.label} className="metric-tile p-4">
+                <div key={metric.title} className="metric-tile p-4">
                   <div className="flex items-start justify-between gap-3">
-                    <div className="text-3xl font-black tracking-tight text-slate-950">{metric.value}</div>
+                    <div className="max-w-[8rem] text-base font-black leading-5 tracking-tight text-slate-950">{metric.title}</div>
                     <span className="metric-icon" aria-hidden="true">
                       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                         <path d={metric.icon} />
                       </svg>
                     </span>
                   </div>
-                  <div className="mt-3 max-w-[9rem] text-[0.68rem] font-black uppercase leading-4 tracking-[0.12em] text-slate-500">{metric.label}</div>
+                  <div className="mt-3 text-xs font-bold leading-5 text-slate-600">{metric.detail}</div>
                 </div>
               ))}
             </div>
@@ -216,35 +177,7 @@ export default function Home() {
             Diseñamos cada entrega para que sea operable, medible y fácil de escalar cuando el negocio lo pida.
           </p>
         </div>
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {services.map((card, index) => (
-            <article key={card.title} className="surface-card section-dashboard group flex min-h-[24rem] flex-col overflow-hidden rounded-[1.75rem] transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(9,26,52,0.14)]">
-              <div className="relative h-44 overflow-hidden bg-slate-100">
-                <Image src={card.src} alt={card.alt} fill sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/72 via-slate-950/10 to-transparent" />
-                <div className="absolute left-3 top-3 rounded-full border border-white/50 bg-white/86 px-3 py-1 text-xs font-bold text-slate-700 shadow-sm backdrop-blur">
-                  {card.meta}
-                </div>
-                <div className="absolute bottom-3 right-3 grid h-10 w-10 place-items-center rounded-2xl border border-white/18 bg-white/14 text-sm font-black text-white shadow-xl backdrop-blur">
-                  0{index + 1}
-                </div>
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <div className="mb-4 inline-flex w-fit rounded-full border border-cyan-100 bg-cyan-50 px-3 py-1 text-[0.65rem] font-black uppercase tracking-[0.1em] text-blue-700">
-                  {card.output}
-                </div>
-                <h3 className="text-xl font-black text-slate-950">{card.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{card.desc}</p>
-                <div className="mt-auto pt-5">
-                  <Link href={card.href} className="inline-flex items-center gap-2 text-sm font-black text-[var(--color-primary)] transition hover:gap-3">
-                    Explorar servicio
-                    <span aria-hidden="true">→</span>
-                  </Link>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+        <ServicesCarousel />
       </section>
 
       <section id="vyaudit" className="shell-section pb-16">
@@ -417,3 +350,5 @@ export default function Home() {
     </>
   );
 }
+
+
