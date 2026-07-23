@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/", changeFrequency: "weekly", priority: 1 },
     { path: "/quienes-somos", changeFrequency: "monthly", priority: 0.8 },
     { path: "/proyectos", changeFrequency: "monthly", priority: 0.85 },
+    { path: "/contacto", changeFrequency: "monthly", priority: 0.8 },
     { path: "/vyaudit", changeFrequency: "monthly", priority: 0.75 },
     { path: "/privacidad", changeFrequency: "yearly", priority: 0.25 },
     { path: "/terminos", changeFrequency: "yearly", priority: 0.25 },

@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Alarcon;Ricardo;;;
+FN:Ricardo Alarcon
+ORG:Vytronix
+TITLE:Founder | Full Stack Developer
+TEL;TYPE=CELL,VOICE:+56921657978
+EMAIL;TYPE=WORK:contacto@vytronix.cl
+URL:https://www.vytronix.cl/contacto
+ADR;TYPE=WORK:;;Santiago;;;Chile
+NOTE:Desarrollo web, apps moviles, integraciones, chatbots, VyAudit y analisis de datos.
+END:VCARD
