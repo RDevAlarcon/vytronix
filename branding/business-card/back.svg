@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="485" viewBox="0 0 1040 485">
+  <image href="back-qr-base.png" x="0" y="0" width="1040" height="485" preserveAspectRatio="none"/>
+
+  <g transform="translate(110.2 -58.6) scale(0.346)">
+    <image href="./logodarktransparente.svg" x="0" y="0" width="1440" height="1024" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+
+  <g transform="translate(759 145) scale(0.088)">
+    <image href="./qr-code.svg" x="0" y="0" width="2277" height="2277" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+</svg>
