@@ -26,6 +26,7 @@ export default function DigitalCardLeadForm() {
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
+    if (loading) return;
     setErr("");
     setFieldErrs({});
 
@@ -42,10 +43,13 @@ export default function DigitalCardLeadForm() {
     }
 
     setLoading(true);
+    const controller = new AbortController();
+    const requestTimeout = window.setTimeout(() => controller.abort(), 8000);
     try {
       const response = await fetch("/api/requests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({
           name,
           email,
@@ -66,7 +70,10 @@ export default function DigitalCardLeadForm() {
       } else {
         setErr("No se pudo enviar tu solicitud. Intenta nuevamente.");
       }
+    } catch {
+      setErr("La solicitud está tardando demasiado. Intenta nuevamente en unos segundos.");
     } finally {
+      window.clearTimeout(requestTimeout);
       setLoading(false);
     }
   }
