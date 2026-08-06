@@ -52,7 +52,14 @@ export async function POST(req: NextRequest) {
     await db.execute(sql`insert into "contact_requests" ("id","name","email","phone","accepted_policies") values (${id}, ${name}, ${email}, ${phone}, ${true})`);
   }
 
-  const mailResult = await sendContactNotificationEmail({ name, email, phone, message });
+  // El correo es una notificacion secundaria: no debe dejar el formulario bloqueado
+  // si el servidor SMTP tarda o no responde.
+  const mailResult = await Promise.race([
+    sendContactNotificationEmail({ name, email, phone, message }),
+    new Promise<{ ok: false; error: Error }>((resolve) =>
+      setTimeout(() => resolve({ ok: false, error: new Error("SMTP timeout") }), 5000)
+    ),
+  ]);
   if (!mailResult.ok) {
     console.error("[MAIL] Contact notification error", mailResult.error);
   }
