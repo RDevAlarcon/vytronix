@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useState } from "react";
 import { z } from "zod";
@@ -25,6 +26,7 @@ export default function ContactForm() {
   const [fieldErrs, setFieldErrs] = useState<{ name?: string; email?: string; phone?: string; message?: string }>({});
   const [sent, setSent] = useState(false);
   const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
   const [acceptedPolicies, setAcceptedPolicies] = useState(false);
   const [consentErr, setConsentErr] = useState<string | null>(null);
 
@@ -41,8 +43,11 @@ export default function ContactForm() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (loading) return;
+
     setErr("");
     setConsentErr(null);
+    setSent(false);
 
     const parsed = schema.safeParse({ name, email, phone, message });
     if (!parsed.success) {
@@ -50,32 +55,42 @@ export default function ContactForm() {
       setFieldErrs({ name: fe.name?.[0], email: fe.email?.[0], phone: fe.phone?.[0], message: fe.message?.[0] });
       return;
     }
+
     if (!acceptedPolicies) {
       setConsentErr("Debes aceptar la Política de Privacidad y los Términos y Condiciones.");
       return;
     }
-    const res = await fetch("/api/requests", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, phone, message, acceptedPolicies }),
-    });
-    if (res.ok) {
-      setSent(true);
-      setName("");
-      setEmail("");
-      setPhone("");
-      setMessage("");
-      setFieldErrs({});
-      setAcceptedPolicies(false);
-    } else if (res.status === 429) {
-      setErr("Demasiadas solicitudes. Intenta más tarde.");
-    } else {
-      try {
-        const data = await res.json();
-        const fe = data?.details?.fieldErrors || {};
-        setFieldErrs({ name: fe.name?.[0], email: fe.email?.[0], phone: fe.phone?.[0], message: fe.message?.[0] });
-      } catch {}
-      setErr("No se pudo enviar tu solicitud");
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone, message, acceptedPolicies }),
+      });
+
+      if (res.ok) {
+        setSent(true);
+        setName("");
+        setEmail("");
+        setPhone("");
+        setMessage("");
+        setFieldErrs({});
+        setAcceptedPolicies(false);
+      } else if (res.status === 429) {
+        setErr("Demasiadas solicitudes. Intenta nuevamente en unos minutos.");
+      } else {
+        try {
+          const data = await res.json();
+          const fe = data?.details?.fieldErrors || {};
+          setFieldErrs({ name: fe.name?.[0], email: fe.email?.[0], phone: fe.phone?.[0], message: fe.message?.[0] });
+        } catch {}
+        setErr("No se pudo enviar tu solicitud. Intenta nuevamente.");
+      }
+    } catch {
+      setErr("No se pudo enviar tu solicitud. Revisa tu conexión e intenta nuevamente.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -95,7 +110,7 @@ export default function ContactForm() {
       </div>
       {sent ? (
         <p className="mt-5 rounded-2xl border border-emerald-100 bg-emerald-50 p-4 text-sm font-black text-emerald-800">
-          ¡Gracias! Te contactaremos pronto.
+          Gracias. Tu solicitud quedó registrada y pronto te contactaré.
         </p>
       ) : (
         <form onSubmit={submit} className="mt-6 grid gap-4">
@@ -141,9 +156,11 @@ export default function ContactForm() {
               </label>
             </div>
           </div>
-          {consentErr && <p className="text-sm text-red-600">{consentErr}</p>}
-          {err && <p className="text-sm text-red-600">{err}</p>}
-          <button className="btn-primary btn-hero min-h-14 w-full" type="submit">Enviar solicitud</button>
+          {consentErr && <p className="text-sm font-bold text-red-600">{consentErr}</p>}
+          {err && <p className="text-sm font-bold text-red-600">{err}</p>}
+          <button className="btn-primary btn-hero min-h-14 w-full disabled:cursor-not-allowed disabled:opacity-70" type="submit" disabled={loading}>
+            {loading ? "Enviando..." : "Enviar solicitud"}
+          </button>
           <div className="grid gap-2 rounded-2xl border border-cyan-100 bg-gradient-to-r from-cyan-50 to-blue-50 p-3 text-xs font-black text-slate-700 sm:grid-cols-3 sm:text-center">
             <span>Respuesta en 24h</span>
             <span>Propuesta clara</span>
