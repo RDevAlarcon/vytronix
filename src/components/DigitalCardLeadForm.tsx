@@ -93,16 +93,18 @@ export default function DigitalCardLeadForm() {
     <form onSubmit={submit} className="mt-6 grid gap-3 rounded-3xl border border-cyan-100 bg-white p-4 shadow-sm">
       <p className="text-xs font-black uppercase tracking-[0.18em] text-[var(--color-primary)]">Solicitud rápida</p>
       <div>
-        <input className={inputClass} placeholder="Nombre" value={name} onChange={(event) => setName(event.target.value)} />
+        <input id="digital-card-name" name="name" className={inputClass} placeholder="Nombre" value={name} onChange={(event) => setName(event.target.value)} />
         {fieldErrs.name && <p className="mt-1 text-xs font-bold text-red-600">{fieldErrs.name}</p>}
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
-          <input className={inputClass} placeholder="Email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
+          <input id="digital-card-email" name="email" className={inputClass} placeholder="Email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
           {fieldErrs.email && <p className="mt-1 text-xs font-bold text-red-600">{fieldErrs.email}</p>}
         </div>
         <div>
           <input
+            id="digital-card-phone"
+            name="phone"
             className={inputClass}
             placeholder="+56 9 1234 5678"
             value={phone}
@@ -116,6 +118,8 @@ export default function DigitalCardLeadForm() {
       </div>
       <label className="flex items-start gap-2 rounded-2xl bg-slate-50 p-3 text-xs font-semibold leading-5 text-slate-600">
         <input
+          id="digital-card-consent"
+          name="acceptedPolicies"
           type="checkbox"
           checked={acceptedPolicies}
           onChange={(event) => setAcceptedPolicies(event.target.checked)}
