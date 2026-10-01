@@ -20,6 +20,7 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Fast-forward empresa mirror
         env:
@@ -28,8 +29,9 @@ jobs:
         run: |
           set -euo pipefail
 
-          git remote add empresa "https://x-access-token:${EMPRESA_REPO_TOKEN}@github.com/vytronix/vytronix.git"
-          empresa_sha="$(git ls-remote empresa refs/heads/main | awk '{print $1}')"
+          auth_header="basic $(printf 'x-access-token:%s' "$EMPRESA_REPO_TOKEN" | base64 -w0)"
+          empresa_url="https://github.com/vytronix/vytronix.git"
+          empresa_sha="$(git -c "http.extraheader=AUTHORIZATION: $auth_header" ls-remote "$empresa_url" refs/heads/main | awk '{print $1}')"
 
           if [ -z "$empresa_sha" ]; then
             echo "empresa/main no existe; se cancela la sincronización."
@@ -41,4 +43,4 @@ jobs:
             exit 1
           fi
 
-          git push empresa "$VALIDATED_SHA:refs/heads/main"
+          git -c "http.extraheader=AUTHORIZATION: $auth_header" push "$empresa_url" "$VALIDATED_SHA:refs/heads/main"
