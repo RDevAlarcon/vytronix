@@ -115,16 +115,16 @@ export default function ContactForm() {
       ) : (
         <form onSubmit={submit} className="mt-6 grid gap-4">
           <div>
-            <input id="contact-name" name="name" className={inputClass} placeholder="Nombre" value={name} onChange={(e) => { setName(e.target.value); if (fieldErrs.name) validateField("name", e.target.value); }} onBlur={(e) => validateField("name", e.target.value)} />
+            <input id="contact-name" name="name" autoComplete="name" className={inputClass} placeholder="Nombre" value={name} onChange={(e) => { setName(e.target.value); if (fieldErrs.name) validateField("name", e.target.value); }} onBlur={(e) => validateField("name", e.target.value)} />
             {fieldErrs.name && <p className="mt-1 text-sm text-red-600">{fieldErrs.name}</p>}
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <input id="contact-email" name="email" className={inputClass} placeholder="Email" type="email" value={email} onChange={(e) => { setEmail(e.target.value); if (fieldErrs.email) validateField("email", e.target.value); }} onBlur={(e) => validateField("email", e.target.value)} />
+              <input id="contact-email" name="email" autoComplete="email" className={inputClass} placeholder="Email" type="email" value={email} onChange={(e) => { setEmail(e.target.value); if (fieldErrs.email) validateField("email", e.target.value); }} onBlur={(e) => validateField("email", e.target.value)} />
               {fieldErrs.email && <p className="mt-1 text-sm text-red-600">{fieldErrs.email}</p>}
             </div>
             <div>
-              <input id="contact-phone" name="phone" className={inputClass} placeholder="Teléfono" value={phone} onChange={(e) => { setPhone(e.target.value); if (fieldErrs.phone) validateField("phone", e.target.value); }} onBlur={(e) => validateField("phone", e.target.value)} />
+              <input id="contact-phone" name="phone" autoComplete="tel" className={inputClass} placeholder="Teléfono" value={phone} onChange={(e) => { setPhone(e.target.value); if (fieldErrs.phone) validateField("phone", e.target.value); }} onBlur={(e) => validateField("phone", e.target.value)} />
               {fieldErrs.phone && <p className="mt-1 text-sm text-red-600">{fieldErrs.phone}</p>}
             </div>
           </div>
