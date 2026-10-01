@@ -8,6 +8,7 @@ on:
 
 jobs:
   build-and-check:
+    if: ${{ github.repository == 'RDevAlarcon/vytronix' }}
     runs-on: ubuntu-latest
 
     steps:

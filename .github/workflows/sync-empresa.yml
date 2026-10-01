@@ -1,0 +1,44 @@
+name: Sync empresa mirror
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    if: ${{ github.repository == 'RDevAlarcon/vytronix' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout validated commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Fast-forward empresa mirror
+        env:
+          EMPRESA_REPO_TOKEN: ${{ secrets.EMPRESA_REPO_TOKEN }}
+          VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+
+          git remote add empresa "https://x-access-token:${EMPRESA_REPO_TOKEN}@github.com/vytronix/vytronix.git"
+          empresa_sha="$(git ls-remote empresa refs/heads/main | awk '{print $1}')"
+
+          if [ -z "$empresa_sha" ]; then
+            echo "empresa/main no existe; se cancela la sincronización."
+            exit 1
+          fi
+
+          if ! git merge-base --is-ancestor "$empresa_sha" "$VALIDATED_SHA"; then
+            echo "empresa/main no es ancestro del SHA validado; se cancela la sincronización."
+            exit 1
+          fi
+
+          git push empresa "$VALIDATED_SHA:refs/heads/main"
